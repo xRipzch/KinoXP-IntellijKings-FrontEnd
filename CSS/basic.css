@@ -1,0 +1,103 @@
+:root {
+    --color-light-gray: #F1F2F4;
+    --color-gray: #B3B3B3;
+    --color-dark-gray: #171617;
+    --color-black: #211E1E;
+
+    --color-light-blue: #02BDFB;
+    --color-medium-blue: #017FB5;
+    --color-magenta: #9E0D59;
+
+    --color-red: #CB4C4E;
+    --color-green: #5ca351;
+
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+
+
+}
+h1 {
+    text-align: center;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr)); /* Flexible columns */
+    text-align: center; /* TODO */
+    gap:5px;
+    /*border-radius: 20px;*/
+}
+
+.grid-item {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 20px;
+    align-items: center;
+    position: relative; /* Ensure that absolute positioning works within this grid item */
+}
+
+.image-container {
+    position: relative;
+    width: 350px;
+    height: 200px;
+    padding-left: 50px;
+}
+
+.grid-image img {
+    width: 100%;
+    height: auto;
+    max-width: 250px; /* Adjust image size */
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.grid-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.grid-text h3 {
+    text-align: center;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.grid-text p {
+    margin: 10px 0;
+    font-size: 1rem;
+    color: #555;
+}
+
+.format-label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background to ensure readability */
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.button-red{
+    background-color: var(--color-red);
+    color: var(--color-light-gray);
+}
+.button-green{
+    background-color: var(--color-green);
+    color: var(--color-light-gray);
+}
+.button-blue{
+    background-color: var(--color-light-blue);
+    color: var(--color-light-gray);
+}
+
