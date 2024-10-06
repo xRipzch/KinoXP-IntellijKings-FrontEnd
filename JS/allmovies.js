@@ -32,7 +32,7 @@ function displayMoviesAsGrid(movies) {
             
                 <!-- Title at top -->
                 <div class="grid-top">
-                    <h3>${movie.title} <sup>(${releaseYear})</sup></h3>
+                    <h2>${movie.title} <sup class="release-text">(${releaseYear})</sup></h2>
                 </div>
             
                 <div class="grid-content">
@@ -46,16 +46,17 @@ function displayMoviesAsGrid(movies) {
                         <span class="format-label-right" title="Duration">${hours}<sup>h</sup> ${minutes}<sup>m</sup></span>
                         <span class="format-label-bottom" title="Movie ID">${movie.id}</span>
                         <img src="${movie.imageUrl}" alt="${movie.title} Poster" class="image-container">
+<!--                        If URL == null -> standard picture.-->
                     </div>
 
                     <!-- Right side - buttons + description -->
                     <div class="grid-right">
                         
-                        <div class="upper-right">
+                        <div class="right-upper">
                             <p>${movie.description}</p
                         </div>
                     
-                        <div class="lower-right">
+                        <div class="right-lower">
                             <button class="button-blue">Change</button>
                             <button class="button-red">Delete</button>
                         </div>
@@ -74,7 +75,7 @@ function displayMoviesAsGrid(movies) {
                 event.stopPropagation(); // Prevents the click event from bubbling up to the anchor
             });
         });
-        
+
     });
 
     const addNewMovieItem = document.createElement('div');

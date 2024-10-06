@@ -23,7 +23,7 @@ body {
 h1 {
     text-align: center;
     color: var(--color-dark-gray);
-    font-size: 2rem;
+    /*font-size: large;*/
     margin-bottom: 20px;
 }
 
@@ -56,10 +56,8 @@ h1 {
     text-align: center;
 }
 
-.grid-top h3 {
+.grid-top h2 {
     margin: 0;
-    font-size: 1.8rem;
-    color: var(--color-dark-gray);
 }
 
 /* Image and labels */
@@ -93,7 +91,7 @@ h1 {
     color: var(--color-light-gray);
     padding: 5px 10px;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: small;
     font-weight: bold;
 }
 
@@ -118,7 +116,7 @@ h1 {
     color: var(--color-light-gray);
     padding: 5px 10px;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: small;
     font-weight: bold;
 }
 
@@ -141,7 +139,7 @@ h1 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: small;
     color: var(--color-light-gray);
     text-align: center;
 }
@@ -154,15 +152,15 @@ h1 {
     background-color: var(--color-light-blue);
 }
 
-.upper-right{
-    font-size: 1rem;
+.right-upper{
+    font-size: small;
     color: var(--color-dark-gray);
     flex-grow: 1;
     max-height: 4.5em; /* Control the height to display up to 3 lines, adjust as needed */
 
 }
 
-.lower-right{    display: flex;
+.right-lower{    display: flex;
     flex-direction: column;
     gap: 0px;
 }
@@ -185,5 +183,9 @@ a {
 }
 
 a:hover {
-    color: var(--color-medium-blue); /* Optional: Add a hover effect */
+    color: var(--color-light-blue); /* Optional: Add a hover effect */
+}
+
+.release-text{
+    font-size: small;
 }
