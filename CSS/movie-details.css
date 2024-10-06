@@ -1,0 +1,59 @@
+body {
+    margin: 0;
+    background-color: #171617;
+    color: #F1F2F4;
+    font-family: "Inter-Medium",sans-serif;
+}
+
+.movie-container {
+    display: flex;
+    justify-content: center;
+    padding: 3vw 0 ;
+}
+
+#movie-img {
+    width: 20vw;
+    height: 27.5vw;
+    border-radius: 0.4rem;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
+}
+
+.left-column {
+    margin-right: 1vw;
+}
+
+.right-column {
+    margin-left: 1vw;
+    display: flex;
+    min-width: 45vw;
+    max-width: 45vw;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: 3rem;
+    font-family: "Guardian-Bold", sans-serif;
+    margin: 0.5vw 0 0 0;
+}
+
+h2 {
+    margin-bottom: 0;
+    font-size: larger;
+}
+
+#is-3d {
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-right-color: #ffffff36;
+    padding-right: 10px;
+}
+
+#movie-duration-in-minutes {
+    margin-left: 10px;
+}
+
+p {
+    font-size: medium;
+    line-height: 1.5;
+    margin-block-start: 2em;
+}
