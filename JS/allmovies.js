@@ -14,40 +14,82 @@ fetch('http://localhost:8080/movies')
     .catch(error => {
         console.error('Error fetching movies:', error); // Log any errors that occur during the fetch
     });
-
 function displayMoviesAsGrid(movies) {
-    const movieGrid = document.getElementById('movie-grid'); // Get the element where movies will be displayed
-    // movieGrid.innerHTML = ''; // Clear previous content
+    const movieGrid = document.getElementById('movie-grid');
 
-    // Iterate over each movie and create a list item
     movies.forEach(movie => {
-        const movieItem = document.createElement('div');
-        const releaseYear = new Date(movie.releaseYear).getFullYear();
+        const movieItem = document.createElement('a'); // This not the container??
 
-        const durationInMinutes = movie.durationInMinutes;  // Gets movie duration.
-        const hours = Math.floor(durationInMinutes / 60);   // Calculates number of hours.
-        const minutes = durationInMinutes % 60;             // Calculates remaing minutes.
+        movieItem.href = `/movie/${movie.id}`;
+
+        const releaseYear = new Date(movie.releaseYear).getFullYear();
+        const durationInMinutes = movie.durationInMinutes;
+        const hours = Math.floor(durationInMinutes / 60);
+        const minutes = durationInMinutes % 60;
 
         movieItem.innerHTML = `
-            <div class="grid-item"><!--  TODO make entire box clickable          -->
-                    <h3>${movie.title} (${releaseYear})</h3>
-                <div class="grid-image">
-                    <p class>${movie.is3d ? '3D' : '2D'}             
-                           <!--POSTER??!? TODO-->
-                    <img src="${movie.imageUrl}" alt="${movie.title} Poster" class="image-container"> <br>
+            <div class="grid-item">
+            
+                <!-- Title at top -->
+                <div class="grid-top">
+                    <h3>${movie.title} <sup>(${releaseYear})</sup></h3>
                 </div>
-                <div class="grid-text">
-                    <p>${hours}h ${minutes}m</p>
-                        <button class="button-red">Delete</button>
-                        <button class="button-blue">Change</button>
+            
+                <div class="grid-content">
+            
+                 <!-- Content -->
+                <div class="grid-content">
+                
+                    <!-- Left side - image + 2D/3D label -->
+                    <div class="grid-image">
+                        <span class="format-label-left">${movie.is3d ? '3D' : '2D'}</span>
+                        <span class="format-label-right" title="Duration">${hours}<sup>h</sup> ${minutes}<sup>m</sup></span>
+                        <span class="format-label-bottom" title="Movie ID">${movie.id}</span>
+                        <img src="${movie.imageUrl}" alt="${movie.title} Poster" class="image-container">
+                    </div>
+
+                    <!-- Right side - buttons + description -->
+                    <div class="grid-right">
+                        
+                        <div class="upper-right">
+                            <p>${movie.description}</p
+                        </div>
+                    
+                        <div class="lower-right">
+                            <button class="button-blue">Change</button>
+                            <button class="button-red">Delete</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         `;
 
+// After appending the movieItem to the DOM
         movieGrid.appendChild(movieItem);
+
+// Add event listeners to the buttons inside this movie card
+        const buttons = movieItem.querySelectorAll('.button-blue, .button-red');
+        buttons.forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.stopPropagation(); // Prevents the click event from bubbling up to the anchor
+            });
+        });
+        
     });
 
-    // deleteButton.EventListener("click", deleteMovie);
+    const addNewMovieItem = document.createElement('div');
+    addNewMovieItem.classList.add('grid-item', 'add-movie-container');
 
+    addNewMovieItem.innerHTML = `
+        <div class="add-movie-content">
+            <p>Add New Movie</p>
+        </div>
+    `;
 
+    movieGrid.appendChild(addNewMovieItem);
 }
+
+// deleteButton.EventListener("click", deleteMovie);
+
+
+
