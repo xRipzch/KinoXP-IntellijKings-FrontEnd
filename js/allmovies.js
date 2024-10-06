@@ -99,6 +99,18 @@ function displayMoviesAsGrid(movies) {
         });
 
     });
+
+    const addNewMovieItem = document.createElement('div');
+    addNewMovieItem.classList.add('grid-item', 'add-movie-container');
+
+    addNewMovieItem.innerHTML = `
+        <div class="add-movie-content">
+            <p>Add New Movie</p>
+        </div>
+    `;
+
+    movieGrid.appendChild(addNewMovieItem);
+
 }
 
 
