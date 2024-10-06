@@ -12,15 +12,16 @@ fetch('http://localhost:8080/movies')
         displayMoviesAsGrid(data); // Call a function to display the movies on the page
     })
     .catch(error => {
-        console.error('Error fetching movies:', error); // Log any errors that occur during the fetch
+        console.error('Error fetching movies:', error);
     });
+
 function displayMoviesAsGrid(movies) {
     const movieGrid = document.getElementById('movie-grid');
 
     movies.forEach(movie => {
         const movieItem = document.createElement('a'); // This not the container??
 
-        movieItem.href = `/movie/${movie.id}`;
+        movieItem.href = `/movie/${movie.id}`; // Link to movie details
 
         const releaseYear = new Date(movie.releaseYear).getFullYear();
         const durationInMinutes = movie.durationInMinutes;
@@ -29,15 +30,12 @@ function displayMoviesAsGrid(movies) {
 
         movieItem.innerHTML = `
             <div class="grid-item">
-            
-                <!-- Title at top -->
+                <!-- Title -->
                 <div class="grid-top">
-                    <h3>${movie.title} <sup>(${releaseYear})</sup></h3>
+                    <h2>${movie.title} <sup class="release-text">(${releaseYear})</sup></h2>
                 </div>
-            
-                <div class="grid-content">
-            
-                 <!-- Content -->
+
+                <!-- Content -->
                 <div class="grid-content">
                 
                     <!-- Left side - image + 2D/3D label -->
@@ -46,16 +44,17 @@ function displayMoviesAsGrid(movies) {
                         <span class="format-label-right" title="Duration">${hours}<sup>h</sup> ${minutes}<sup>m</sup></span>
                         <span class="format-label-bottom" title="Movie ID">${movie.id}</span>
                         <img src="${movie.imageUrl}" alt="${movie.title} Poster" class="image-container">
+<!--                        If URL == null -> standard picture.-->
                     </div>
 
                     <!-- Right side - buttons + description -->
                     <div class="grid-right">
-                        
-                        <div class="upper-right">
-                            <p>${movie.description}</p
+                  
+                        <div class="right-upper">
+                            <p>${movie.description}</p>
                         </div>
                     
-                        <div class="lower-right">
+                        <div class="right-lower">
                             <button class="button-blue">Change</button>
                             <button class="button-red">Delete</button>
                         </div>
@@ -67,14 +66,38 @@ function displayMoviesAsGrid(movies) {
 // After appending the movieItem to the DOM
         movieGrid.appendChild(movieItem);
 
-// Add event listeners to the buttons inside this movie card
-        const buttons = movieItem.querySelectorAll('.button-blue, .button-red');
-        buttons.forEach(button => {
-            button.addEventListener('click', function(event) {
-                event.stopPropagation(); // Prevents the click event from bubbling up to the anchor
-            });
+        // Add event listener to the Delete button
+        const deleteButton = movieItem.querySelector('.button-red');
+        deleteButton.addEventListener('click', function (event) {
+            event.stopPropagation(); // Prevents the anchor from being triggered
+
+            // Confirmation dialog
+            const confirmDelete = confirm(`Are you sure you want to delete the movie "${movie.title}"?`);
+            if (confirmDelete) {
+                // DELETE request to backend
+                fetch(`http://localhost:8080/movie/${movie.id}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to delete movie: ' + response.statusText);
+                        }
+                        return response.text(); // Get response text (optional)
+                    })
+                    .then(result => {
+                        console.log(result); // Optional: Log the result
+                        movieItem.remove(); // Remove the movie card from the DOM
+                        alert('Movie deleted successfully!');
+
+                    })
+                    .catch(error => {
+                        console.error('Error deleting movie:', error);
+                        alert('Failed to delete the movie. Please try again.');
+                    });
+                window.location.href = '/all-movies.html';// TODO NO WORKING
+            }
         });
-        
+
     });
 
     const addNewMovieItem = document.createElement('div');
@@ -87,9 +110,8 @@ function displayMoviesAsGrid(movies) {
     `;
 
     movieGrid.appendChild(addNewMovieItem);
-}
 
-// deleteButton.EventListener("click", deleteMovie);
+}
 
 
 
