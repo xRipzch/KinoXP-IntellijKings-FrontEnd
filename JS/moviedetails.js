@@ -34,7 +34,7 @@ async function updateInnerHtml(container, movie) {
 function calculateMinutesToHours(movieMinutes) {
     let hours = Math.floor(movieMinutes / 60);
     let minutes = movieMinutes % 60;
-    return hours + " HR " + minutes + " MIN";
+    return hours + "H " + minutes + "M";
 }
 
 // Format date from (YYYY-MM-DD) to (Mon-DD-YYYY)
