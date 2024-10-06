@@ -2,10 +2,10 @@ console.log('allmovies.js loaded');
 
 fetch('http://localhost:8080/movies')
     .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok: ' + response.statusText);
+        if (!response.ok) { // Error handling if not ok
+            throw new Error('Network response was not ok: ' + response.statusText); // Error response
         }
-        return response.json();
+        return response.json(); // Parse the JSON from the response if ok
     })
     .then(data => {
         console.log(data); // Log the fetched data to the console for debugging
@@ -19,7 +19,7 @@ function displayMoviesAsGrid(movies) {
     const movieGrid = document.getElementById('movie-grid');
 
     movies.forEach(movie => {
-        const movieItem = document.createElement('a'); // Anchor element for the movie
+        const movieItem = document.createElement('a'); // This not the container??
 
         movieItem.href = `/movie/${movie.id}`; // Link to movie details
 
@@ -32,26 +32,29 @@ function displayMoviesAsGrid(movies) {
             <div class="grid-item">
                 <!-- Title -->
                 <div class="grid-top">
-                    <h3>${movie.title} <sup>(${releaseYear})</sup></h3>
+                    <h2>${movie.title} <sup class="release-text">(${releaseYear})</sup></h2>
                 </div>
 
                 <!-- Content -->
                 <div class="grid-content">
+                
                     <!-- Left side - image + 2D/3D label -->
                     <div class="grid-image">
                         <span class="format-label-left">${movie.is3d ? '3D' : '2D'}</span>
                         <span class="format-label-right" title="Duration">${hours}<sup>h</sup> ${minutes}<sup>m</sup></span>
                         <span class="format-label-bottom" title="Movie ID">${movie.id}</span>
                         <img src="${movie.imageUrl}" alt="${movie.title} Poster" class="image-container">
+<!--                        If URL == null -> standard picture.-->
                     </div>
 
                     <!-- Right side - buttons + description -->
                     <div class="grid-right">
-                        <div class="upper-right">
-                            <p>${movie.description}</p> <!-- Fixed: Closing '>' -->
+                  
+                        <div class="right-upper">
+                            <p>${movie.description}</p>
                         </div>
-
-                        <div class="lower-right">
+                    
+                        <div class="right-lower">
                             <button class="button-blue">Change</button>
                             <button class="button-red">Delete</button>
                         </div>
@@ -60,7 +63,7 @@ function displayMoviesAsGrid(movies) {
             </div>
         `;
 
-        // Append movieItem to the DOM
+// After appending the movieItem to the DOM
         movieGrid.appendChild(movieItem);
 
         // Add event listener to the Delete button
@@ -97,3 +100,6 @@ function displayMoviesAsGrid(movies) {
 
     });
 }
+
+
+
