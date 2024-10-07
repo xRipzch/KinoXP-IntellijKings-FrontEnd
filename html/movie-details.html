@@ -3,25 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Movie Details</title>
-    <link rel="stylesheet" href="../css/movie-details.css">
+    <link rel="stylesheet" href="../CSS/movie-details.css">
+    <link rel="stylesheet" href="../CSS/navbar.css">
 </head>
 <body>
-<!--<div class="top-container">
-    <div class="inner-container">
-        <img id="movie-img" alt="Movie Poster"/>
-        <a id="is-3d"></a>
-        <a id="movie-title"></a>
-        <a id="movie-release-year"></a>
+<nav-bar></nav-bar>
+<div class="movie-container" style="display: none">
+    <div class="left-column">
+        <img id="movie-img" crossorigin="anonymous"/>
     </div>
-    <div class="inner-container">
-        <a id="movie-description"></a>
-        <a id="movie-duration-in-minutes"></a>
+    <div class="right-column">
+        <h1 id="movie-title"></h1>
+        <h2><span id="is-3d"></span><span id="movie-duration-in-minutes"></span></h2>
+        <h2 id="movie-release-date"></h2>
+        <p id="movie-description"></p>
     </div>
-</div>-->
-<div class="movie-container"></div>
-<input id="movie-id" type="text">
-<button id="set-movie-id" type="submit">Submit</button>
+</div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
-<script src="../js/moviedetails.js"></script>
+<script src="../JS/moviedetails.js"></script>
+<script src="../JS/navbar.js"></script>
 </html>
