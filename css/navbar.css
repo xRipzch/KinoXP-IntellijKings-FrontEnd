@@ -1,0 +1,29 @@
+/* navbar.css */
+nav {
+    background-color: #333; /* Dark background */
+    overflow: hidden; /* Clear floats */
+}
+
+nav ul {
+    list-style-type: none; /* Remove bullets */
+    margin: 0; /* Remove margin */
+    padding: 0; /* Remove padding */
+    display: flex; /* Horizontal layout */
+}
+
+nav ul li {
+    flex: 1; /* Equal space for each item */
+}
+
+nav ul li a {
+    display: block; /* Make the entire area clickable */
+    color: white; /* White text */
+    text-align: center; /* Center text */
+    padding: 14px 16px; /* Padding for clickable area */
+    text-decoration: none; /* Remove underline */
+}
+
+nav ul li a:hover {
+    background-color: #ddd; /* Light background on hover */
+    color: black; /* Dark text on hover */
+}
