@@ -1,6 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
     const addMovieForm = document.getElementById("add-movie-form");
 
+    document.getElementById('imageUrl').addEventListener('input', function() {
+        const imageUrl = this.value;
+        const imagePreview = document.getElementById('imagePreview');
+        if (imageUrl) {
+            imagePreview.src = imageUrl;
+            imagePreview.style.display = 'block';
+        } else {
+            imagePreview.style.display = 'none';
+        }
+    });
+
     addMovieForm.addEventListener('submit', async function (event) {
         event.preventDefault();
         const form = event.currentTarget;

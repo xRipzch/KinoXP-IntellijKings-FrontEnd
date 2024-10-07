@@ -15,9 +15,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const imagePreview = document.getElementById('imagePreview');
         if (imageUrl) {
             imagePreview.src = imageUrl;
-            imagePreview.style.display = 'block'; // Show the image
+            imagePreview.style.display = 'block';
         } else {
-            imagePreview.style.display = 'none'; // Hide if URL is empty
+            imagePreview.style.display = 'none';
         }
     });
 
