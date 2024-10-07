@@ -35,7 +35,7 @@ function displayMoviesAsGrid(movies) {
     movies.forEach(movie => {
         const movieItem = document.createElement('a'); // This not the container??
 
-        movieItem.href = `/movie/${movie.id}`; // Link to movie details
+        movieItem.href = `../html/movie-details.html?id=${movie.id}`; // Link to movie details
 
         const releaseYear = new Date(movie.releaseDate).getFullYear();
         const durationInMinutes = movie.durationInMinutes;
@@ -44,7 +44,37 @@ function displayMoviesAsGrid(movies) {
 
 // After appending the movieItem to the DOM
 
-// After appending the movieItem to the DOM
+        movieItem.innerHTML = `
+            <div class="grid-item">
+                <!-- Title -->
+                <div class="grid-top">
+                    <h2>${movie.title} <sup class="release-text">(${releaseYear})</sup></h2>
+                </div>
+
+                <!-- Content -->
+<!--                <div class="grid-content">-->
+                
+                    <!-- Left side - image + 2D/3D label -->
+                    <div class="grid-image">
+                        <span class="format-label-left">${movie.is3d ? '3D' : '2D'}</span>
+                        <span class="format-label-right" title="Duration">${hours}<sup>h</sup> ${minutes}<sup>m</sup></span>
+                        <span class="format-label-bottom" title="Movie ID">${movie.id}</span>
+                        
+                        <!-- Delete button with trash icon -->
+                        <button class="format-label-button-delete" title="Delete Movie" style="display: none">
+                        <i class="fas fa-trash"></i>
+                        </button>
+
+                        <!-- Edit button with edit icon -->
+                        <button class="format-label-button-edit" title="Edit Movie" style="display: none">
+                        <i class="fas fa-edit"></i>
+                        </button><img src="${movie.imageUrl}" alt="${movie.title} Poster" class="image-container">
+                    </div>
+
+<!--                        </div>-->
+                </div>
+            </div>
+        `
         movieGrid.appendChild(movieItem);
 
         // Add event listener for mouseover to show the delete button
@@ -130,3 +160,19 @@ function displayMoviesAsGrid(movies) {
             deleteButton.style.display = 'flex';
         }
 
+        function hideDeleteButton(movieItem) {
+            const deleteButton = movieItem.querySelector('.format-label-button-delete');
+            deleteButton.style.display = 'none';
+        }
+
+        function showEditButton(movieItem) {
+            const deleteButton = movieItem.querySelector('.format-label-button-edit');
+            deleteButton.style.display = 'flex';
+        }
+
+        function hideEditButton(movieItem) {
+            const deleteButton = movieItem.querySelector('.format-label-button-edit');
+            deleteButton.style.display = 'none';
+        }
+    });
+}
