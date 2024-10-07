@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/basic.css">
+    <link rel="stylesheet" href="../css/form.css">
+    <script src="../js/EditMovie.js"></script>
+</head>
+<body>
+<h1>Edit Movie</h1>
+
+<!-- Form to search for a movie -->
+<form id="search-movie-form">
+    <label for="search">Movie ID:</label>
+    <input type="text" id="search" name="search" required>
+    <button type="submit">Search</button>
+</form>
+
+<!-- Form to edit movie details -->
+<form id="edit-movie-form" style="display:none;">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description" required>
+
+    <label for="duration">Duration: (In Minutes)</label>
+    <input type="text" id="duration" name="duration" required>
+
+    <label for="releaseYear">Release Date:</label>
+    <input type="date" id="releaseYear" name="releaseYear" required>
+
+    <label for="is3D">Is 3D:</label>
+    <input type="checkbox" id="is3D" name="is3D">
+
+    <label for="imageUrl">Image URL:</label>
+    <input type="text" id="imageUrl" name="imageUrl" required>
+
+    <button type="submit">Save Changes</button>
+</form>
+
+
+</body>
+</html>
