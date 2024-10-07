@@ -18,7 +18,7 @@
 </form>
 
 <!-- Form to edit movie details -->
-<form id="edit-movie-form" style="display:none;">
+<form id="edit-movie-form">
     <label for="title">Title:</label>
     <input type="text" id="title" name="title" required>
 
@@ -28,14 +28,15 @@
     <label for="duration">Duration: (In Minutes)</label>
     <input type="text" id="duration" name="duration" required>
 
-    <label for="releaseYear">Release Date:</label>
-    <input type="date" id="releaseYear" name="releaseYear" required>
+    <label for="releaseDate">Release Date:</label>
+    <input type="date" id="releaseDate" name="releaseDate" required>
 
     <label for="is3D">Is 3D:</label>
     <input type="checkbox" id="is3D" name="is3D">
 
     <label for="imageUrl">Image URL:</label>
     <input type="text" id="imageUrl" name="imageUrl" required>
+    <img id="imagePreview" src="" alt="Image Preview">
 
     <button type="submit">Save Changes</button>
 </form>

@@ -10,6 +10,17 @@ document.addEventListener("DOMContentLoaded", function () {
         saveMovieDetails();
     });
 
+    document.getElementById('imageUrl').addEventListener('input', function() {
+        const imageUrl = this.value;
+        const imagePreview = document.getElementById('imagePreview');
+        if (imageUrl) {
+            imagePreview.src = imageUrl;
+            imagePreview.style.display = 'block'; // Show the image
+        } else {
+            imagePreview.style.display = 'none'; // Hide if URL is empty
+        }
+    });
+
     function fetchMovieDetails(searchValue) {
         fetch(`http://localhost:8080/api/movies?search=${encodeURIComponent(searchValue)}`)
             .then(response => {
@@ -22,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById('title').value = data.title;
                 document.getElementById('description').value = data.description;
                 document.getElementById('duration').value = data.durationInMinutes;
-                document.getElementById('releaseYear').value = data.releaseYear;
+                document.getElementById('releaseDate').value = formatDateForInput(data.releaseDate); // Ensure correct key
                 document.getElementById('is3D').checked = data.is3d;
                 document.getElementById('imageUrl').value = data.imageUrl;
                 document.getElementById('edit-movie-form').style.display = 'block';
@@ -33,12 +44,20 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
+    function formatDateForInput(dateString) {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
     function saveMovieDetails() {
         const movieDetails = {
             title: document.getElementById('title').value,
             description: document.getElementById('description').value,
             durationInMinutes: document.getElementById('duration').value,
-            releaseDate: document.getElementById('releaseYear').value,
+            releaseDate: document.getElementById('releaseDate').value, // Ensure correct key
             is3d: document.getElementById('is3D').checked,
             imageUrl: document.getElementById('imageUrl').value
         };
@@ -65,5 +84,4 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(error => console.error('Error saving movie details:', error));
     }
-
 });
