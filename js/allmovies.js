@@ -18,61 +18,64 @@ fetch('http://localhost:8080/movies')
 function displayMoviesAsGrid(movies) {
     const movieGrid = document.getElementById('movie-grid');
 
+
+    const addNewMovieItem = document.createElement('a');
+    addNewMovieItem.classList.add('grid-item', 'add-movie-container');
+
+    addNewMovieItem.innerHTML = `
+        <div class="add-movie-content">
+            <p>Add New Movie</p>
+        </div>
+    `;
+
+    movieGrid.appendChild(addNewMovieItem);
+
+    addNewMovieItem.href = '../html/add-movie.html';
+
     movies.forEach(movie => {
         const movieItem = document.createElement('a'); // This not the container??
 
         movieItem.href = `/movie/${movie.id}`; // Link to movie details
 
-        const releaseYear = new Date(movie.releaseYear).getFullYear();
+        const releaseYear = new Date(movie.releaseDate).getFullYear();
         const durationInMinutes = movie.durationInMinutes;
         const hours = Math.floor(durationInMinutes / 60);
         const minutes = durationInMinutes % 60;
 
-        movieItem.innerHTML = `
-            <div class="grid-item">
-                <!-- Title -->
-                <div class="grid-top">
-                    <h2>${movie.title} <sup class="release-text">(${releaseYear})</sup></h2>
-                </div>
-
-                <!-- Content -->
-                <div class="grid-content">
-                
-                    <!-- Left side - image + 2D/3D label -->
-                    <div class="grid-image">
-                        <span class="format-label-left">${movie.is3d ? '3D' : '2D'}</span>
-                        <span class="format-label-right" title="Duration">${hours}<sup>h</sup> ${minutes}<sup>m</sup></span>
-                        <span class="format-label-bottom" title="Movie ID">${movie.id}</span>
-                        <img src="${movie.imageUrl}" alt="${movie.title} Poster" class="image-container">
-<!--                        If URL == null -> standard picture.-->
-                    </div>
-
-                    <!-- Right side - buttons + description -->
-                    <div class="grid-right">
-                  
-                        <div class="right-upper">
-                            <p>${movie.description}</p>
-                        </div>
-                    
-                        <div class="right-lower">
-                            <button class="button-blue">Change</button>
-                            <button class="button-red">Delete</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
+// After appending the movieItem to the DOM
 
 // After appending the movieItem to the DOM
         movieGrid.appendChild(movieItem);
 
-        // Add event listener to the Delete button
-        const deleteButton = movieItem.querySelector('.button-red');
-        deleteButton.addEventListener('click', function (event) {
-            event.stopPropagation(); // Prevents the anchor from being triggered
+        // Add event listener for mouseover to show the delete button
+        movieItem.addEventListener('mouseover', () => showDeleteButton(movieItem));
 
+        // Add event listener for mouseout to hide the delete button
+        movieItem.addEventListener('mouseout', () => hideDeleteButton(movieItem));
+
+        // Add event listener for mouseover to show the edit button
+        movieItem.addEventListener('mouseover', () => showEditButton(movieItem));
+
+        // Add event listener for mouseout to hide the edit button
+        movieItem.addEventListener('mouseout', () => hideEditButton(movieItem));
+        const delbutton = movieItem.querySelector('.format-label-button-delete');
+        const editButton = movieItem.querySelector('.format-label-button-edit')
+        editButton.addEventListener('click', function (event) {
+            event.preventDefault()
+            event.stopPropagation()
+            redirectToEdit(movie.id)
+        })
+        delbutton.addEventListener('click', function (event) {
+            event.preventDefault()
+            event.stopPropagation(); // Prevent the anchor from being triggered
+            deleteMovie(movie.id); // Call deleteMovie with the current movie ID
+        });
+
+
+        // DEL FUNCITON //
+        function deleteMovie(movieId) {// Add event listener to the Delete button
             // Confirmation dialog
-            const confirmDelete = confirm(`Are you sure you want to delete the movie "${movie.title}"?`);
+            const confirmDelete = confirm(`Are you sure you want to delete "${movie.title}"?`);
             if (confirmDelete) {
                 // DELETE request to backend
                 fetch(`http://localhost:8080/movie/${movie.id}`, {
@@ -111,7 +114,19 @@ function displayMoviesAsGrid(movies) {
 
     movieGrid.appendChild(addNewMovieItem);
 
-}
+        }
 
+        // Redirect to edit //
 
+        function redirectToEdit(movieId) {
+            window.location.href = "../html/editmovie"
+
+        }
+
+        // HOVER FUNCTIONS //
+
+        function showDeleteButton(movieItem) {
+            const deleteButton = movieItem.querySelector('.format-label-button-delete');
+            deleteButton.style.display = 'flex';
+        }
 

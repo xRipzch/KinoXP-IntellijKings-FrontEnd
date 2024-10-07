@@ -1,4 +1,3 @@
-/* Root color variables */
 :root {
     --color-light-gray: #F1F2F4;
     --color-gray: #B3B3B3;
@@ -23,14 +22,14 @@ body {
 h1 {
     text-align: center;
     color: var(--color-dark-gray);
-    font-size: 2rem;
+    font-size: xx-large;
     margin-bottom: 20px;
 }
 
 /* Grid container to hold all movies */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 15px;
     padding: 15px;
 
@@ -53,12 +52,14 @@ h1 {
     width: 100%;
     text-align: center;
     overflow: hidden; /* Ensures that overflow is hidden */
+    text-overflow: ellipsis;
+    white-space: nowrap;
     /*background-color: var(--color-magenta); !* TESTING *!*/
 }
 
 .grid-top h3 {
     margin: 0;
-    font-size: 1.8rem;
+    font-size: x-large;
     color: var(--color-dark-gray);
     white-space: nowrap; /* Prevents the title from wrapping to the next line */
     overflow: hidden; /* Ensures that the overflowing text is hidden */
@@ -100,7 +101,7 @@ h1 {
     color: var(--color-light-gray);
     padding: 5px 10px;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: small;
     font-weight: bold;
 }
 
@@ -125,16 +126,16 @@ h1 {
     color: var(--color-light-gray);
     padding: 5px 10px;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: small;
     font-weight: bold;
 }
 
 /* Buttons on the right */
 .grid-right {
-    display: flex;
-    flex-direction: column; /* Stack items vertically */
+    /*display: flex;*/
+    /*flex-direction: column; !* Stack items vertically *!*/
     /*justify-content: space-between; !* Push the buttons to the bottom *!*/
-    height: 100%; /* Ensure it takes up the full height of the container */
+    /*height: 100%; !* Ensure it takes up the full height of the container *!*/
     /*background-color: #5ca351;*/
 
 }
@@ -148,37 +149,45 @@ h1 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: small;
     color: var(--color-light-gray);
     text-align: center;
 }
 
-.button-red {
+.format-label-button-delete {
     background-color: var(--color-red);
+    position: absolute;
+    right: 70px;
+    bottom: 10px;
+    font-size: large;
 }
 
-.button-blue {
+.format-label-button-edit {
     background-color: var(--color-light-blue);
+    position: absolute;
+    bottom: 10px;
+    left: 70px;
+    font-size: large;
 }
 
 .upper-right {
-    /*font-size: 1rem;*/
+    /*font-size: small;*/
     /*color: var(--color-dark-gray);*/
     /*max-height: 4.5em; !* Control the height to display up to 3 lines, adjust as needed *!*/
-    margin-bottom: 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    /*margin-bottom: 10px;*/
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
     /*max-width: 100%;*/
-    height: 50%;
+    /*height: 50%;*/
 
 }
 
 .lower-right {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    height: 50%;
-    bottom: 1px;
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*gap: 5px;*/
+    /*height: 50%;*/
+    /*bottom: 1px;*/
 }
 
 .add-movie-container {
@@ -195,7 +204,7 @@ h1 {
 
 .add-movie-container h2 {
     color: var(--color-light-gray);
-    font-size: 1.5rem;
+    font-size: xx-large;
     margin: 0;
 
 }
@@ -208,3 +217,23 @@ a {
 a:hover {
     color: var(--color-medium-blue); /* Optional: Add a hover effect */
 }
+
+/* Default button styling */
+.hover-button {
+    background-color: #017FB5;
+    color: #FFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.hover-button:hover {
+    background-color: #005F8A; /* Darken color */
+    transform: scale(1.1); /* Slightly increase size */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow */
+}
+
+
