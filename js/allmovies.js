@@ -1,5 +1,6 @@
 console.log('allmovies.js loaded');
 
+
 fetch('http://localhost:8080/movies')
     .then(response => {
         if (!response.ok) { // Error handling if not ok
@@ -121,28 +122,29 @@ function displayMoviesAsGrid(movies) {
                         console.log(result); // Optional: Log the result
                         movieItem.remove(); // Remove the movie card from the DOM
                         alert('Movie deleted successfully!');
-
+                        window.location.replace('../html/all-movies.html');
                     })
                     .catch(error => {
                         console.error('Error deleting movie:', error);
                         alert('Failed to delete the movie. Please try again.');
                     });
-                window.location.href = '/all-movies.html';// TODO NO WORKING
             }
-        });
+        }
 
-    });
 
-    const addNewMovieItem = document.createElement('div');
-    addNewMovieItem.classList.add('grid-item', 'add-movie-container');
+        /// ADD MOVIE FUNCTION ///
+        function addMovie() {
 
-    addNewMovieItem.innerHTML = `
-        <div class="add-movie-content">
-            <p>Add New Movie</p>
+            const addNewMovieItem = document.createElement('div');
+            addNewMovieItem.classList.add('grid-item', 'add-movie-container');
+
+            addNewMovieItem.innerHTML = `
+        <div class="add-movie-container">
+            <h2>Add New Movie</>
         </div>
     `;
 
-    movieGrid.appendChild(addNewMovieItem);
+            movieGrid.appendChild(addNewMovieItem);
 
         }
 
