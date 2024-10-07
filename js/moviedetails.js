@@ -1,35 +1,12 @@
 const movieContainer = document.querySelector(".movie-container");
-const inpButton = document.getElementById("set-movie-id");
-const inpMovieId = document.getElementById("movie-id");
+const img = document.getElementById('movie-img');
+const is3d = document.getElementById('is-3d');
+const title = document.getElementById('movie-title');
+const releaseDate = document.getElementById('movie-release-date');
+const durationInMin = document.getElementById('movie-duration-in-minutes');
+const description = document.getElementById('movie-description');
 
 //////////////////////////////////////////////////
-
-// Create and update the HTML content for the movie details
-// Take the container element and the movie object as input
-async function updateInnerHtml(container, movie) {
-    container.innerHTML = "";
-
-    // Create and update the HTML for displaying movie details
-    container.innerHTML = `
-    <div class="movie-container">
-        <div class="left-column">
-            <img id="movie-img" crossorigin="anonymous" alt="Movie Poster" src="${movie.imageUrl}"/>
-        </div>
-        <div class="right-column">
-            <h1 id="movie-title">${movie.title}</h1>
-            <h2><span id="is-3d">${get3dValue(movie.is3d)}</span><span id="movie-duration-in-minutes">${calculateMinutesToHours(movie.durationInMinutes)}</span></h2>
-            <h2 id="movie-release-year">${formatDateToShortMonth(movie.releaseYear)}</h2>
-            <p id="movie-description">${movie.description}</p>
-        </div>
-    </div>
-    `;
-
-    // Wait for img to load, then set the background
-    const img = document.getElementById("movie-img");
-    img.onload = function() {
-        setBackgroundFromDominantImgColor(img);
-    };
-}
 
 function calculateMinutesToHours(movieMinutes) {
     let hours = Math.floor(movieMinutes / 60);
@@ -82,65 +59,30 @@ async function getMovieById(movieId) {
     }
 }
 
-// Fetch and display movie details inside the specified container
-async function showMovie(container, display) {
-    const movie = await getMovieById(inpMovieId.value);
-    display(container, movie);
+// Update elements with movie details
+function displayMovie(movie) {
+    img.src = movie.imageUrl;
+    is3d.innerText = get3dValue(movie.is3d);
+    title.innerText = movie.title;
+    releaseDate.innerText = formatDateToShortMonth(movie.releaseDate);
+    durationInMin.innerText = calculateMinutesToHours(movie.durationInMinutes);
+    description.innerText = movie.description;
+
+    // Set the background color based on the dominant color in the movie image
+    img.onload = function() {
+        setBackgroundFromDominantImgColor(img);
+    };
+
+    // Display movie container after everything has loaded
+    movieContainer.style.display = 'flex';
 }
 
 //////////////////////////////////////////////////
 
-inpButton.addEventListener('click', async () => {
-    showMovie(movieContainer, updateInnerHtml);
-});
-
-
-//////////////////////////////////////////////////
-//////////////////////////////////////////////////
-//----1st draft (Tror ikke det er sÃ¥dan man skal lave det) ----\\
-//////////////////////////////////////////////////
-//////////////////////////////////////////////////
-
-// This was an initial idea of fetching and displaying movie details on window load.
-/*
 window.onload = async function() {
-    // Fetch movie details from some URL (urlMovie would need to be defined)
-    const movie = await fetchAnyUrlJson(urlMovie);
-    console.log(movie);
-
-    // Update DOM elements with movie details
-    img.src = movie.imageUrl;
-    is3d.innerText = get3dValue(movie.is3d);
-    title.innerText = movie.title;
-    releaseYear.innerText = formatDateToShortMonth(movie.releaseYear);
-    durationInMin.innerText = calculateMinutesToHours(movie.durationInMinutes);
-    description.innerText = movie.description;
-
-    // Set the background color based on the dominant color in the movie image
-    img.onload = function() {
-        setBackgroundFromDominantImgColor(img);
-    };
+    const params = new URLSearchParams(window.location.search);
+    const movieId = params.get('id'); // Retrieves 'id' from the URL like ?id=123
+    const movie = await getMovieById(movieId);
+    // Show loading indicator
+    displayMovie(movie)
 };
-
-// Helper function to fetch and parse JSON data from a URL
-function fetchAnyUrlJson(url) {
-    return fetch(url).then(response => response.json());
-}
-
-async function showMovieDetails(movie) {
-    console.log(movie);
-
-    // Update DOM elements with the fetched movie details
-    img.src = movie.imageUrl;
-    is3d.innerText = get3dValue(movie.is3d);
-    title.innerText = movie.title;
-    releaseYear.innerText = formatDateToShortMonth(movie.releaseYear);
-    durationInMin.innerText = calculateMinutesToHours(movie.durationInMinutes);
-    description.innerText = movie.description;
-
-    // Set the background color based on the dominant color in the movie image
-    img.onload = function() {
-        setBackgroundFromDominantImgColor(img);
-    };
-}
-*/
