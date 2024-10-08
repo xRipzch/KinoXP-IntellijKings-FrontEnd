@@ -12,7 +12,7 @@ class NavBar extends HTMLElement {
                     <li><a href="../html/login.html">Log in</a></li>
                     <li><a href="../html/admin.html">Admin</a></li>
                     <li><a href="../html/movie-details.html">Movie details</a></li>
-                    <li><a href="../html/showings.html">Showings</a></li>
+                    <li><a href="../html/all-showings.html">Showings</a></li>
                 </ul>
             </nav>
         `; // adding html navbar to custom element.

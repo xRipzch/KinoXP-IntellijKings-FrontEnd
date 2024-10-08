@@ -1,57 +1,64 @@
-console.log('allmovies.js loaded');
+console.log('allshowings.js loaded');
 
-
-fetch('http://localhost:8080/movies')
+fetch('http://localhost:8080/showings')
     .then(response => {
-        if (!response.ok) { // Error handling if not ok
-            throw new Error('Network response was not ok: ' + response.statusText); // Error response
-        }
-        return response.json(); // Parse the JSON from the response if ok
-    })
+    if (!response.ok) {
+        throw new Error('Network response was not ok: ' + response.statusText);
+    }
+    return response.json();
+})
     .then(data => {
-        console.log(data); // Log the fetched data to the console for debugging
-        displayMoviesAsGrid(data); // Call a function to display the movies on the page
-    })
+    console.log(data);
+    displayShowingsAsGrid(data);
+})
     .catch(error => {
-        console.error('Error fetching movies:', error);
-    });
-
-function displayMoviesAsGrid(movies) {
-    const movieGrid = document.getElementById('movie-grid');
+        console.error('Error fetching showings:', error)
+    })
 
 
-    const addNewMovieItem = document.createElement('a');
-    addNewMovieItem.classList.add('grid-item');
+function displayShowingsAsGrid(showings) {
+    const showingGrid = document.getElementById('showing-grid');
 
-    addNewMovieItem.innerHTML = `
+    const addNewShowingItem = document.createElement('a');
+    addNewShowingItem.classList.add('grid-item');
+
+    addNewShowingItem.innerHTML = `
         <div class="grid-image add-new-container">
-            <i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 2.5em"></i>
+            <h2>Add New Showing </>
         </div>
     `;
 
-    movieGrid.appendChild(addNewMovieItem);
+    showingGrid.appendChild(addNewShowingItem);
 
-    addNewMovieItem.href = '../html/add-movie.html';
+    addNewShowingItem.href = '../html/?????.html';
 
-    movies.forEach(movie => {
-        const movieItem = document.createElement('a'); // This not the container??
 
-        movieItem.href = `../html/movie-details.html?id=${movie.id}`; // Link to movie details
+    showings.forEach(showing => {
+        const showingItem = document.createElement('a'); // This not the container??
 
-        const releaseYear = new Date(movie.releaseDate).getFullYear();
-        const durationInMinutes = movie.durationInMinutes;
-        const hours = Math.floor(durationInMinutes / 60);
-        const minutes = durationInMinutes % 60;
+        showingItem.href = `../html/showing-details.html?id=${showing.id}`; // Link to showing details
 
-// After appending the movieItem to the DOM
+        const movie = showing.movie;
+        const theater = showing.theater;
 
-        movieItem.innerHTML = `
+        const movieReleaseYear = new Date(movie.releaseDate).getFullYear();
+        const movieDurationInMinutes = movie.durationInMinutes;
+        const movieHours = Math.floor(movieDurationInMinutes / 60);
+        const movieMinutes = movieDurationInMinutes % 60;
+
+        const showingStartTime = new Date(showing.startTime);
+        const showingEndTime = showingStartTime + movieDurationInMinutes;
+        const showingReadyForNextShowingTime = Math.ceil((showingEndTime + 30) / 15) * 15; // Rounded up to the nearest 15 minutes
+
+        const theaterName = theater.name;
+        
+        showingItem.innerHTML = `
             <div class="grid-item">
                 <!-- Left side - image + 2D/3D label -->
                 <div class="grid-image">
                     <span class="format-label-left">${movie.is3d ? '3D' : '2D'}</span>
-                    <span class="format-label-right" title="Duration">${hours}<sup>h</sup> ${minutes}<sup>m</sup></span>
-                    <span class="format-label-bottom" title="Movie ID">${movie.id}</span>
+                    <span class="format-label-right" title="Duration">${movieHours}<sup>h</sup> ${movieMinutes}<sup>m</sup></span>
+                    <span class="format-label-bottom" title="Movie ID">${theaterName}</span>
                     
                     <!-- Delete button with trash icon -->
                     <button class="format-label-button button-delete" title="Delete Movie">
@@ -65,47 +72,47 @@ function displayMoviesAsGrid(movies) {
                 </div>
 
                 <!-- Title -->
-                <div class="grid-bottom">
-                    <h2>${movie.title}</h2><h3 class="release-text">(${releaseYear})</h3>
+                <div class="grid-right">
+                    <h2>${showingStartTime}</h2><h3 class="release-text">(${movieReleaseYear})</h3>
                 </div>
 
                 </div>
             </div>
         `
-        movieGrid.appendChild(movieItem);
+        showingGrid.appendChild(showingItem);
 
         // Add event listener for mouseover to show the delete button
-        movieItem.addEventListener('mouseover', () => showDeleteButton(movieItem));
+        showingItem.addEventListener('mouseover', () => showDeleteButton(showingItem));
 
         // Add event listener for mouseout to hide the delete button
-        movieItem.addEventListener('mouseout', () => hideDeleteButton(movieItem));
+        showingItem.addEventListener('mouseout', () => hideDeleteButton(showingItem));
 
         // Add event listener for mouseover to show the edit button
-        movieItem.addEventListener('mouseover', () => showEditButton(movieItem));
+        showingItem.addEventListener('mouseover', () => showEditButton(showingItem));
 
         // Add event listener for mouseout to hide the edit button
-        movieItem.addEventListener('mouseout', () => hideEditButton(movieItem));
-        const delbutton = movieItem.querySelector('.button-delete');
-        const editButton = movieItem.querySelector('.button-edit')
+        showingItem.addEventListener('mouseout', () => hideEditButton(showingItem));
+        const delbutton = showingItem.querySelector('.button-delete');
+        const editButton = showingItem.querySelector('.button-edit')
         editButton.addEventListener('click', function (event) {
             event.preventDefault()
             event.stopPropagation()
-            redirectToEdit(movie.id)
+            redirectToEdit(showing.id)
         })
         delbutton.addEventListener('click', function (event) {
             event.preventDefault()
             event.stopPropagation(); // Prevent the anchor from being triggered
-            deleteMovie(movie.id); // Call deleteMovie with the current movie ID
+            deleteMovie(showing.id); // Call deleteMovie with the current movie ID
         });
 
 
         // DEL FUNCITON //
         function deleteMovie(movieId) {// Add event listener to the Delete button
             // Confirmation dialog
-            const confirmDelete = confirm(`Are you sure you want to delete "${movie.title}"?`);
+            const confirmDelete = confirm(`Are you sure you want to delete "${showing.title}"?`);
             if (confirmDelete) {
                 // DELETE request to backend
-                fetch(`http://localhost:8080/movie/${movie.id}`, {
+                fetch(`http://localhost:8080/movie/${showing.id}`, {
                     method: 'DELETE'
                 })
                     .then(response => {
@@ -140,14 +147,14 @@ function displayMoviesAsGrid(movies) {
             addNewMovieItem.classList.add('grid-item');
 
             addNewMovieItem.innerHTML = `
-        <div class="grid-image add-new-container">
-            <div class="add-new-container">
+        <div class="grid-image add-movie-container">
+            <div class="add-movie-container">
                 <h2>Add New Movie</>
             </div>
         </div>
     `;
 
-    movieGrid.appendChild(addNewMovieItem);
+            movieGrid.appendChild(addNewMovieItem);
 
         }
 
