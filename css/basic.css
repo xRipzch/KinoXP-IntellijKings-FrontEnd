@@ -181,7 +181,7 @@ h1 {
 
 .button-delete {
     background-color: var(--color-red);
-    right: 27%;
+    right: 10%;
     font-size: 0.8vw;
 }
 
@@ -191,7 +191,7 @@ h1 {
 
 .button-edit {
     background-color: var(--color-light-blue);
-    left: 27%;
+    left: 45%;
     font-size: 0.8vw;
 }
 
