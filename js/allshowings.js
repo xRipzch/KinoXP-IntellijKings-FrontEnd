@@ -23,13 +23,13 @@ function displayShowingsAsGrid(showings) {
 
     addNewShowingItem.innerHTML = `
         <div class="grid-image add-new-container">
-            <h2>Add New Showing </>
+            <i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 2.5em"></i>
         </div>
     `;
 
     showingGrid.appendChild(addNewShowingItem);
 
-    addNewShowingItem.href = '../html/?????.html';
+    addNewShowingItem.href = '../html/add-showing.html';
 
     showings.forEach(showing => {
         const showingItem = document.createElement('a'); // This not the container??
@@ -79,7 +79,7 @@ function displayShowingsAsGrid(showings) {
                     <!-- Edit button with edit icon -->
                     <button class="format-label-button button-edit" title="Edit Movie">
                     <i class="fas fa-edit"></i>
-<!--                    const movieTitle = movie.title;-->
+<!--                    const movieTitle = movie.title;TODO--> 
                     </button><img src="${movie.imageUrl}" alt="${movie.title} Poster" class="image-container">
                 </div>
 
@@ -116,66 +116,45 @@ function displayShowingsAsGrid(showings) {
         delbutton.addEventListener('click', function (event) {
             event.preventDefault()
             event.stopPropagation(); // Prevent the anchor from being triggered
-            deleteMovie(showing.id); // Call deleteMovie with the current movie ID
+            deleteShowing(showing.id); // Call deleteMovie with the current movie ID
         });
 
 
-        // DEL FUNCITON //
-        function deleteMovie(movieId) {// Add event listener to the Delete button
-            // Confirmation dialog
-            const confirmDelete = confirm(`Are you sure you want to delete "${showing.title}"?`);
+        function deleteShowing(showingId) {
+            const confirmDelete = confirm(`Are you sure you want to delete the showing: ${movie.title} at ${formattedShowingStartTime}?`);
             if (confirmDelete) {
-                // DELETE request to backend
-                fetch(`http://localhost:8080/movie/${showing.id}`, {
+                fetch(`http://localhost:8080/showing/${showingId}`, {
                     method: 'DELETE'
                 })
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error('Failed to delete movie: ' + response.statusText);
+                            throw new Error('Failed to delete showing: ' + response.statusText);
                         }
-                        return response.text(); // Get response text (optional)
+                        return response.text();
                     })
                     .then(result => {
-                        console.log(result); // Optional: Log the result
-                        movieItem.remove(); // Remove the movie card from the DOM
+                        console.log(result); // Log the result if needed
+                        showingItem.remove(); // Remove the showing item from the DOM after deletion
                         Swal.fire({
-                            title: 'Movie deleted successfully!',
+                            title: 'Showing deleted successfully!',
                             icon: 'success',
                             timer: 1000,
                             showConfirmButton: false
                         });
-                        // window.location.replace('../html/all-movies.html');
                     })
                     .catch(error => {
-                        console.error('Error deleting movie:', error);
-                        alert('Failed to delete the movie. Please try again.');
+                        console.error('Error deleting showing:', error);
+                        alert('Failed to delete the showing. Please try again.');
                     });
             }
         }
 
 
-        /// ADD MOVIE FUNCTION ///
-        function addMovie() {
-
-            const addNewMovieItem = document.createElement('div');
-            addNewMovieItem.classList.add('grid-item');
-
-            addNewMovieItem.innerHTML = `
-        <div class="grid-image add-movie-container">
-            <div class="add-movie-container">
-                <h2>Add New Movie</>
-            </div>
-        </div>
-    `;
-
-            movieGrid.appendChild(addNewMovieItem);
-
-        }
 
         // Redirect to edit //
 
         function redirectToEdit(movieId) {
-            window.location.href = "../html/edit-movie.html"
+            window.location.href = "../html/edit-showing.html"
 
         }
 

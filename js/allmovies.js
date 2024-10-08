@@ -133,24 +133,6 @@ function displayMoviesAsGrid(movies) {
         }
 
 
-        /// ADD MOVIE FUNCTION ///
-        function addMovie() {
-
-            const addNewMovieItem = document.createElement('div');
-            addNewMovieItem.classList.add('grid-item');
-
-            addNewMovieItem.innerHTML = `
-        <div class="grid-image add-new-container">
-            <div class="add-new-container">
-                <h2>Add New Movie</>
-            </div>
-        </div>
-    `;
-
-    movieGrid.appendChild(addNewMovieItem);
-
-        }
-
         // Redirect to edit //
 
         function redirectToEdit(movieId) {
