@@ -22,7 +22,7 @@ body {
 
 h1 {
     color: var(--color-light-gray);
-    font-size: xxx-large;
+    font-size: xx-large;
     margin-bottom: 20px;
     padding: 20px 0 20px 0;
     border-bottom: #f1f2f43b 1px solid;
@@ -35,7 +35,7 @@ h1 {
 /* Grid container to hold all movies */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(8vw, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(9vw, 1fr));
     gap: 15px;
     padding: 15px;
 
@@ -60,7 +60,7 @@ h1 {
 }
 
 .grid-bottom h2 {
-    font-size: x-large;
+    font-size: large;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -70,6 +70,7 @@ h1 {
 
 .grid-bottom h3 {
     margin-top: 0.3vw;
+    font-size: medium;
 }
 
 
@@ -240,6 +241,7 @@ h1 {
     color: var(--color-light-gray);
     margin: 0;
     text-align: center;
+    font-size: large;
 }
 
 a {
