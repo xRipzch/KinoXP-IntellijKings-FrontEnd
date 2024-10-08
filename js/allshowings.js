@@ -15,7 +15,6 @@ fetch('http://localhost:8080/showings')
         console.error('Error fetching showings:', error)
     })
 
-
 function displayShowingsAsGrid(showings) {
     const showingGrid = document.getElementById('showing-grid');
 
@@ -31,7 +30,6 @@ function displayShowingsAsGrid(showings) {
     showingGrid.appendChild(addNewShowingItem);
 
     addNewShowingItem.href = '../html/?????.html';
-
 
     showings.forEach(showing => {
         const showingItem = document.createElement('a'); // This not the container??
@@ -49,6 +47,19 @@ function displayShowingsAsGrid(showings) {
         const showingStartTime = new Date(showing.startTime);
         const showingEndTime = showingStartTime + movieDurationInMinutes;
         const showingReadyForNextShowingTime = Math.ceil((showingEndTime + 30) / 15) * 15; // Rounded up to the nearest 15 minutes
+
+        const now = new Date();
+        const showingYear = showingStartTime.getFullYear();
+        const isCurrentYear = showingYear === now.getFullYear();
+
+        const formattedShowingStartTime = `${showingStartTime.toLocaleDateString([], {
+            month: 'short',
+            day: '2-digit',
+            ...(isCurrentYear ? {} : { year: 'numeric' })  // Add year if not current year
+        })} ${showingStartTime.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit'
+        })}`;
 
         const theaterName = theater.name;
         
@@ -68,12 +79,15 @@ function displayShowingsAsGrid(showings) {
                     <!-- Edit button with edit icon -->
                     <button class="format-label-button button-edit" title="Edit Movie">
                     <i class="fas fa-edit"></i>
+<!--                    const movieTitle = movie.title;-->
                     </button><img src="${movie.imageUrl}" alt="${movie.title} Poster" class="image-container">
                 </div>
 
                 <!-- Title -->
                 <div class="grid-right">
-                    <h2>${showingStartTime}</h2><h3 class="release-text">(${movieReleaseYear})</h3>
+                    <h2 class="date-text">${formattedShowingStartTime}</h2><br>
+<!--                    <h3>${showingEndTime}</h3>-->
+                    
                 </div>
 
                 </div>
