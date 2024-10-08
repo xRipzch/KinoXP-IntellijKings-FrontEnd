@@ -21,9 +21,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const movieData = {
                 title: formData.get('title'),
                 description: formData.get('description'),
-                durationInMinutes: parseInt(formData.get('duration'), 10), // Update key to match backend
-                releaseYear: formData.get('releaseYear'),
-                is3d: formData.get('is3D') !== null, // Update key to match backend
+                durationInMinutes: parseInt(formData.get('duration'), 10),
+                releaseDate: formData.get('releaseDate'),
+                is3d: formData.get('is3D') !== null, // TO match backend
                 imageUrl: formData.get('imageUrl').replace(/['"]+/g, ''), // Remove any quotes
             };
             console.log("Movie data being sent:", movieData);
