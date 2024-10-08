@@ -44,7 +44,7 @@ async function getMovieById(movieId) {
 
     // Specify fetch request options (GET method)
     const fetchOptions = {
-        method: "GET",
+        method: "GET", //todo boiler plate
     };
 
     // Fetch movie details

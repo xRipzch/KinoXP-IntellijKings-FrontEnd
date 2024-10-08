@@ -122,7 +122,6 @@ function displayMoviesAsGrid(movies) {
                         console.log(result); // Optional: Log the result
                         movieItem.remove(); // Remove the movie card from the DOM
                         alert('Movie deleted successfully!');
-                        window.location.replace('../html/all-movies.html');
                     })
                     .catch(error => {
                         console.error('Error deleting movie:', error);
@@ -144,7 +143,7 @@ function displayMoviesAsGrid(movies) {
         </div>
     `;
 
-            movieGrid.appendChild(addNewMovieItem);
+    movieGrid.appendChild(addNewMovieItem);
 
         }
 
