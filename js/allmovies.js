@@ -69,11 +69,6 @@ function displayMoviesAsGrid(movies) {
                     <h2>${movie.title}</h2><h3 class="release-text">(${releaseYear})</h3>
                 </div>
 
-                <!-- Content -->
-<!--                <div class="grid-content">-->
-                
-
-<!--                        </div>-->
                 </div>
             </div>
         `
@@ -122,7 +117,8 @@ function displayMoviesAsGrid(movies) {
                     .then(result => {
                         console.log(result); // Optional: Log the result
                         movieItem.remove(); // Remove the movie card from the DOM
-                        alert('Movie deleted successfully!');
+                    //     alert('Movie deleted successfully!');
+                        window.location.replace('../html/all-movies.html');
                     })
                     .catch(error => {
                         console.error('Error deleting movie:', error);
