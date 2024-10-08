@@ -2,14 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>KinoXP</title>
+    <title>Title</title>
     <link rel="stylesheet" href="../css/basic.css">
     <link rel="stylesheet" href="../css/form.css">
-    <script src="../js/add-movie-form.js"></script>
+    <script src="../js/EditMovie.js"></script>
 </head>
 <body>
-<h1>Add a New Movie</h1>
-<form id="add-movie-form">
+<h1>Edit Movie</h1>
+
+<!-- Form to search for a movie -->
+<form id="search-movie-form">
+    <label for="search">Movie ID:</label>
+    <input type="text" id="search" name="search" required>
+    <button type="submit">Search</button>
+</form>
+
+<!-- Form to edit movie details -->
+<form id="edit-movie-form">
     <label for="title">Title:</label>
     <input type="text" id="title" name="title" required>
 
@@ -17,9 +26,9 @@
     <input type="text" id="description" name="description" required>
 
     <label for="duration">Duration: (In Minutes)</label>
-    <input type="number" id="duration" name="duration" required>
+    <input type="text" id="duration" name="duration" required>
 
-    <label for="releaseDate">Release Year:</label>
+    <label for="releaseDate">Release Date:</label>
     <input type="date" id="releaseDate" name="releaseDate" required>
 
     <label for="is3D">Is 3D:</label>
@@ -29,8 +38,9 @@
     <input type="text" id="imageUrl" name="imageUrl" required>
     <img id="imagePreview" src="" alt="Image Preview">
 
-
-    <button type="submit">Add Movie</button>
+    <button type="submit">Save Changes</button>
 </form>
+
+
 </body>
 </html>

@@ -71,3 +71,28 @@ button:focus {
         width: 90%;
     }
 }
+#search-movie-form {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto 20px;
+}
+#edit-movie-form {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+}
+#imagePreview {
+    display: none; /* Initially hidden */
+    max-width: 100%; /* Ensure it doesn't exceed the container's width */
+    margin-top: 20px; /* Add some space above the image */
+    border-radius: 10px; /* Optional: Add rounded corners */
+    object-fit: cover;
+}
