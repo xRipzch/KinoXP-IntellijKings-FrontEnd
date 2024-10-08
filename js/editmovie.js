@@ -21,6 +21,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    function getQueryParam(param) {
+        let urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    const integerValue = parseInt(receivedValue, 10);
+    const inputField = document.getElementById('search');
+    inputField.value = integerValue;
+
+
     function fetchMovieDetails(searchValue) {
         fetch(`http://localhost:8080/api/movies?search=${encodeURIComponent(searchValue)}`)
             .then(response => {
@@ -84,4 +94,8 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(error => console.error('Error saving movie details:', error));
     }
-});
+    let receivedValue = getQueryParam('id');
+
+    window.addEventListener('load', getQueryParam); {
+        window.addEventListener('load', fetchMovieDetails(receivedValue));
+}})

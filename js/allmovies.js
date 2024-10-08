@@ -136,7 +136,7 @@ function displayMoviesAsGrid(movies) {
         // Redirect to edit //
 
         function redirectToEdit(movieId) {
-            window.location.href = "../html/edit-movie.html"
+            window.location.href = "../html/edit-movie.html?id=" + movieId;
 
         }
 
