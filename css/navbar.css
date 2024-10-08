@@ -5,8 +5,10 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    min-height: 5vw;
+    min-height: 4.5vw;
+    max-height: 4.5vw;
     font-weight: bold;
+    font-size: 1vw;
 }
 
 nav ul {
@@ -14,10 +16,12 @@ nav ul {
     margin: 0; /* Remove margin */
     padding: 0; /* Remove padding */
     display: flex; /* Horizontal layout */
+    justify-content: flex-end;
 }
 
 nav ul li {
     flex: 1; /* Equal space for each item */
+    max-width: max-content;
 }
 
 nav ul li a {
@@ -33,6 +37,73 @@ nav ul li a:hover {
 
 img {
     width: 100%;
+    cursor: pointer;
+}
+
+#navbar-logo {
+    border: revert;
+}
+
+#navbar-left-column {
+    max-width: 4vw;
+    margin-left: 1vw;
+}
+
+.anchor-container {
+    gap: 2vw;
+}
+
+#navbar-right-column {
+    margin-right: 3vw;
+}
+
+#navbar-right-column li {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/*2nd version*/
+/*
+nav {
+overflow: hidden;
+display: flex;
+justify-content: space-between;
+align-items: center;
+min-height: 4.5vw;
+max-height: 4.5vw;
+font-weight: bold;
+font-size: 1vw;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    flex: 1;
+}
+
+nav ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    color: var(--color-medium-blue);
+}
+
+img {
+    width: 100%;
+    cursor: pointer;
+}
+
+#navbar-logo {
+    border: revert;
 }
 
 .left-column {
@@ -40,8 +111,12 @@ img {
     margin-left: 3vw;
 }
 
+.anchor-container {
+    gap: 2vw;
+}
+
 .middle-column {
-    max-width: 8%;
+    max-width: 4vw;
 }
 
 .right-column {
@@ -49,11 +124,14 @@ img {
     margin-right: 3vw;
 }
 
-.left-column {
-
+.left-column li {
+    display: flex;
+    justify-content: flex-start;
+    min-width: max-content;
 }
 
 .right-column li {
     display: flex;
     justify-content: flex-end;
 }
+ */
