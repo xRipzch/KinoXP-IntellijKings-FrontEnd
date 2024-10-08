@@ -1,7 +1,12 @@
 /* navbar.css */
 nav {
-    background-color: #333; /* Dark background */
+    background-color: var(--color-dark-gray); /* Dark background */
     overflow: hidden; /* Clear floats */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 5vw;
+    font-weight: bold;
 }
 
 nav ul {
@@ -19,11 +24,36 @@ nav ul li a {
     display: block; /* Make the entire area clickable */
     color: white; /* White text */
     text-align: center; /* Center text */
-    padding: 14px 16px; /* Padding for clickable area */
     text-decoration: none; /* Remove underline */
 }
 
 nav ul li a:hover {
-    background-color: #ddd; /* Light background on hover */
-    color: black; /* Dark text on hover */
+    color: var(--color-medium-blue); /* Dark text on hover */
+}
+
+img {
+    width: 100%;
+}
+
+.left-column {
+    min-width: 30%;
+    margin-left: 3vw;
+}
+
+.middle-column {
+    max-width: 8%;
+}
+
+.right-column {
+    min-width: 30%;
+    margin-right: 3vw;
+}
+
+.left-column {
+
+}
+
+.right-column li {
+    display: flex;
+    justify-content: flex-end;
 }
