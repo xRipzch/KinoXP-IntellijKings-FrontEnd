@@ -18,8 +18,8 @@ async function deleteShowing (showingId) {
     }
 }
 
-delButton.addEventListener('click', function (event) {
-    event.preventDefault();
-    event.stopPropagation();
-    deleteShowing(inpField.value)
-})
+ delButton.addEventListener('click', function (event) {
+     event.preventDefault();
+     event.stopPropagation();
+     deleteShowing(inpField.value)
+ })
