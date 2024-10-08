@@ -24,8 +24,8 @@ function displayMoviesAsGrid(movies) {
     addNewMovieItem.classList.add('grid-item');
 
     addNewMovieItem.innerHTML = `
-        <div class="grid-image add-movie-container">
-            <h2>Add New Movie</>
+        <div class="grid-image add-new-container">
+            <i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 2.5em"></i>
         </div>
     `;
 
@@ -135,8 +135,8 @@ function displayMoviesAsGrid(movies) {
             addNewMovieItem.classList.add('grid-item');
 
             addNewMovieItem.innerHTML = `
-        <div class="grid-image add-movie-container">
-            <div class="add-movie-container">
+        <div class="grid-image add-new-container">
+            <div class="add-new-container">
                 <h2>Add New Movie</>
             </div>
         </div>
