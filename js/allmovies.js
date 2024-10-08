@@ -21,11 +21,11 @@ function displayMoviesAsGrid(movies) {
 
 
     const addNewMovieItem = document.createElement('a');
-    addNewMovieItem.classList.add('grid-item', 'add-movie-container');
+    addNewMovieItem.classList.add('grid-item');
 
     addNewMovieItem.innerHTML = `
-        <div class="add-movie-content">
-            <p>Add New Movie</p>
+        <div class="grid-image add-movie-container">
+            <h2>Add New Movie</>
         </div>
     `;
 
@@ -47,30 +47,31 @@ function displayMoviesAsGrid(movies) {
 
         movieItem.innerHTML = `
             <div class="grid-item">
+                <!-- Left side - image + 2D/3D label -->
+                <div class="grid-image">
+                    <span class="format-label-left">${movie.is3d ? '3D' : '2D'}</span>
+                    <span class="format-label-right" title="Duration">${hours}<sup>h</sup> ${minutes}<sup>m</sup></span>
+                    <span class="format-label-bottom" title="Movie ID">${movie.id}</span>
+                    
+                    <!-- Delete button with trash icon -->
+                    <button class="format-label-button button-delete" title="Delete Movie">
+                    <i class="fas fa-trash"></i>
+                    </button>
+
+                    <!-- Edit button with edit icon -->
+                    <button class="format-label-button button-edit" title="Edit Movie">
+                    <i class="fas fa-edit"></i>
+                    </button><img src="${movie.imageUrl}" alt="${movie.title} Poster" class="image-container">
+                </div>
+
                 <!-- Title -->
-                <div class="grid-top">
-                    <h2>${movie.title} <sup class="release-text">(${releaseYear})</sup></h2>
+                <div class="grid-bottom">
+                    <h2>${movie.title}</h2><h3 class="release-text">(${releaseYear})</h3>
                 </div>
 
                 <!-- Content -->
 <!--                <div class="grid-content">-->
                 
-                    <!-- Left side - image + 2D/3D label -->
-                    <div class="grid-image">
-                        <span class="format-label-left">${movie.is3d ? '3D' : '2D'}</span>
-                        <span class="format-label-right" title="Duration">${hours}<sup>h</sup> ${minutes}<sup>m</sup></span>
-                        <span class="format-label-bottom" title="Movie ID">${movie.id}</span>
-                        
-                        <!-- Delete button with trash icon -->
-                        <button class="format-label-button-delete" title="Delete Movie" style="display: none">
-                        <i class="fas fa-trash"></i>
-                        </button>
-
-                        <!-- Edit button with edit icon -->
-                        <button class="format-label-button-edit" title="Edit Movie" style="display: none">
-                        <i class="fas fa-edit"></i>
-                        </button><img src="${movie.imageUrl}" alt="${movie.title} Poster" class="image-container">
-                    </div>
 
 <!--                        </div>-->
                 </div>
@@ -89,8 +90,8 @@ function displayMoviesAsGrid(movies) {
 
         // Add event listener for mouseout to hide the edit button
         movieItem.addEventListener('mouseout', () => hideEditButton(movieItem));
-        const delbutton = movieItem.querySelector('.format-label-button-delete');
-        const editButton = movieItem.querySelector('.format-label-button-edit')
+        const delbutton = movieItem.querySelector('.button-delete');
+        const editButton = movieItem.querySelector('.button-edit')
         editButton.addEventListener('click', function (event) {
             event.preventDefault()
             event.stopPropagation()
@@ -135,11 +136,13 @@ function displayMoviesAsGrid(movies) {
         function addMovie() {
 
             const addNewMovieItem = document.createElement('div');
-            addNewMovieItem.classList.add('grid-item', 'add-movie-container');
+            addNewMovieItem.classList.add('grid-item');
 
             addNewMovieItem.innerHTML = `
-        <div class="add-movie-container">
-            <h2>Add New Movie</>
+        <div class="grid-image add-movie-container">
+            <div class="add-movie-container">
+                <h2>Add New Movie</>
+            </div>
         </div>
     `;
 
@@ -157,22 +160,22 @@ function displayMoviesAsGrid(movies) {
         // HOVER FUNCTIONS //
 
         function showDeleteButton(movieItem) {
-            const deleteButton = movieItem.querySelector('.format-label-button-delete');
+            const deleteButton = movieItem.querySelector('.button-delete');
             deleteButton.style.display = 'flex';
         }
 
         function hideDeleteButton(movieItem) {
-            const deleteButton = movieItem.querySelector('.format-label-button-delete');
+            const deleteButton = movieItem.querySelector('.button-delete');
             deleteButton.style.display = 'none';
         }
 
         function showEditButton(movieItem) {
-            const deleteButton = movieItem.querySelector('.format-label-button-edit');
+            const deleteButton = movieItem.querySelector('.button-edit');
             deleteButton.style.display = 'flex';
         }
 
         function hideEditButton(movieItem) {
-            const deleteButton = movieItem.querySelector('.format-label-button-edit');
+            const deleteButton = movieItem.querySelector('.button-edit');
             deleteButton.style.display = 'none';
         }
     });

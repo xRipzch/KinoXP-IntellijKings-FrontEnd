@@ -16,6 +16,7 @@ body {
     height: 26.5vw;
     border-radius: 0.4rem;
     box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
+    object-fit: cover;
 }
 
 .left-column {
