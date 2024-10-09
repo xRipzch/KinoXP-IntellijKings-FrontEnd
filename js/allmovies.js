@@ -43,7 +43,7 @@ function displayMoviesAsGrid(movies) {
         const hours = Math.floor(durationInMinutes / 60);
         const minutes = durationInMinutes % 60;
 
-// After appending the movieItem to the DOM
+        // After appending the movieItem to the DOM
 
         movieItem.innerHTML = `
             <div class="grid-item">
