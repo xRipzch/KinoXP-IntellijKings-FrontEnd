@@ -1,7 +1,7 @@
  console.log("jeg er i formkommune")
 
 document.addEventListener('DOMContentLoaded', createFormEventListener);
-const addMovieForm = document.getElementById("add-movie-form");
+const addMovieForm = document.getElementById("add-input-form");
 
 addMovieForm.addEventListener("submit", handleFormSubmit);
 

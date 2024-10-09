@@ -57,9 +57,7 @@ async function fetchShowingsOnDate(theaterId, selectedDate) {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        const showingsOnDate = await response.json();
-
-        return showingsOnDate;
+        return await response.json();
 
     } catch (error) {
         console.error('Error fetching showings and movies on specified date:', error);
@@ -70,42 +68,49 @@ async function fetchShowingsOnDate(theaterId, selectedDate) {
 
 
 /////////////////////////////POPULATE TIME-DROPDOWN/////////////////////////////
-function populateTimeDropdown(fetchedShowings) {
+function populateTimeDropdown(fetchedShowings, selectedMovie) {
     const timeDropdown = document.getElementById('showingTime');
     const selectedDate = document.getElementById('showingDate').value;
+    const availableSlots = [];
+    const selectedMovieDuration = selectedMovie.;
 
-    timeDropdown.innerHTML = '<option value="">-- Select a Time --</option>';
-
-    if (!selectedDate) {
-        return;
-    }
-
-    const startTime = new Date(selectedDate + 'T12:00');
-    const endTime = new Date(selectedDate + 'T21:00');
+    const firstShowingTime = new Date(selectedDate + 'T12:00');
+    const lastShowingTime = new Date(selectedDate + 'T21:00');
 
     const unavailableSlots = fetchedShowings.map(showing => {
-        const start = new Date(showing.startTime);
-        const duration = showing.movie.durationInMinutes; // Access durationInMinutes
-        const end = new Date(start.getTime() + (duration + 30) * 60000); // Calculate end time with 15 min buffer
-        return { start, end }; // Return the start and end times
+        const showingStart = new Date(showing.startTime);
+        const showingEnd = new Date(showingStart.getTime() + (showing.movie.durationInMinutes + 30) * 60000); // Calculate end time with 30 min buffer
+        return { start: showingStart, end: showingEnd };
     });
 
-    for (let currentTime = startTime; currentTime <= endTime; currentTime.setMinutes(currentTime.getMinutes() + 30)) {
+
+
+    for (let currentTime = firstShowingTime; currentTime <= lastShowingTime; currentTime.setMinutes(currentTime.getMinutes() + 30)) {
+
         const isAvailable = unavailableSlots.every(slot => {
             // Check if the current time slot overlaps with any unavailable slot
             const slotStart = currentTime;
-            const slotEnd = new Date(currentTime.getTime() + 30 * 60000); // 30-minute slots
+            const slotEnd = new Date(currentTime.getTime() + 30 * 60000);
             return !(slotStart < slot.end && slotEnd > slot.start); // Check for overlap
         });
 
         if (isAvailable) {
             const hours = currentTime.getHours().toString().padStart(2, '0'); // Ensures it is only two digits long
             const minutes = currentTime.getMinutes().toString().padStart(2, '0'); // Ensures it is only two digits long
-            const option = document.createElement('option');
-            option.value = `${hours}:${minutes}`;
-            option.textContent = `${hours}:${minutes}`;
-            timeDropdown.appendChild(option);
+            availableSlots.push(`${hours}:${minutes}`);
         }
+    }
+
+    if (availableSlots.length === 0) {
+        alert('No available times for this date. Please select another date.');
+    } else {
+        // Otherwise, add the available slots to the dropdown
+        availableSlots.forEach(slot => {
+            const option = document.createElement('option');
+            option.value = slot;
+            option.textContent = slot;
+            timeDropdown.appendChild(option);
+        });
     }
 }
 
@@ -125,6 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     movieDropdown.addEventListener('change', () => {
+        theaterDropdown.value = ''; //Reset the theater selection
+        showingDate.value = ''; // Reset the date selection
         theaterDropdown.disabled = false;
     });
 
@@ -139,8 +146,9 @@ document.addEventListener('DOMContentLoaded', () => {
     showingDate.addEventListener('change', async () => {
         const selectedTheaterId = theaterDropdown.value;
         const fetchedShowings = await fetchShowingsOnDate(selectedTheaterId, showingDate.value);
+        const selectedMovie = theaterDropdown.value;
         showingTime.disabled = false;
-        populateTimeDropdown(fetchedShowings);
+        populateTimeDropdown(fetchedShowings, selectedMovie);
     });
 });
 

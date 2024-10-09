@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const addMovieForm = document.getElementById("add-movie-form");
+    const addMovieForm = document.getElementById("add-input-form");
 
     document.getElementById('imageUrl').addEventListener('input', function() {
         const imageUrl = this.value;
