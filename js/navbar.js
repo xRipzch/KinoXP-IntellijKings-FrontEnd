@@ -16,7 +16,7 @@ class NavBar extends HTMLElement {
                         <li><a href="../html/index.html">Home</a></li>
                         <li><a href="../html/all-movies.html">All movies</a></li>
                         <li><a href="../html/admin.html">Admin</a></li>
-                        <li><a href="../html/showings.html">Showings</a></li>
+                        <li><a href="../html/all-showings.html">Showings</a></li>
                         <li><a href="../html/login.html">Login</a></li>
                     </ul>   
                 </ul>
