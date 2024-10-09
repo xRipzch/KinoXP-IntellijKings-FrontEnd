@@ -12,6 +12,28 @@ async function fetchMovies() {
     }
 }
 
+async function fetchTheaters() {
+    try {
+        const response = await fetch(`${BASE_URL}/theaters`);
+        if (!response.ok) throw new Error(`Failed to fetch theaters: ${response.statusText}`);
+        return response.json();
+    } catch (error) {
+        console.error('Error in fetchTheaters:', error);
+        throw error;
+    }
+}
+
+async function fetchShowingByTheaterAndDate(theaterId, date) {
+    try {
+        const response = await fetch(`${BASE_URL}/showings/${theaterId}/${date}`);
+        if (!response.ok) throw new Error(`Failed to fetch showing: ${response.statusText}`);
+        return response.json();
+    } catch (error) {
+        console.error('Error in fetchShowingByTheaterAndDate:', error);
+        throw error;
+    }
+}
+
 async function deleteMovieById(movieId) {
     try {
         const response = await fetch(`${BASE_URL}/movie/${movieId}`, { method: 'DELETE' });
@@ -36,4 +58,4 @@ async function fetchShowings() {
 }
 
 // Export all service functions
-export { fetchMovies, deleteMovieById, fetchShowings };
+export { fetchMovies, fetchTheaters, fetchShowingByTheaterAndDate, deleteMovieById, fetchShowings };

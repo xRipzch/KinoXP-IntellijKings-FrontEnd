@@ -1,3 +1,5 @@
+import {fetchMovies, fetchShowingByTheaterAndDate, fetchTheaters} from './api/apiservice.js';
+
 const movieDropdown = document.getElementById('movieDropdown');
 const theaterDropdown = document.getElementById('theaterDropdown');
 const showingDate = document.getElementById('showingDate');
@@ -6,38 +8,40 @@ const showingTime = document.getElementById('showingTime');
 
 /////////////////////////////POPULATE MOVIE-DROPDOWN/////////////////////////////
 async function populateMovieDropdown() {
+    let movies = [];
 
     try {
-        const response = await fetch('http://localhost:8080/movies');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        const movies = await response.json();
-        movies.sort((a, b) => a.title.localeCompare(b.title));
-
-        movies.forEach(movie => {
-            const option = document.createElement('option');
-            option.value = movie.id;
-            option.textContent = movie.title + " " + (movie.is3D ? '[3D]' : '[2D]');
-            movieDropdown.appendChild(option);
-        });
+        movies = await fetchMovies();
     } catch (error) {
         console.error('Error fetching movies:', error);
+        return;
     }
+
+    movies.sort((a, b) => a.title.localeCompare(b.title));
+    movieDropdown.innerHTML = '';
+
+    movies.forEach(movie => {
+        const option = document.createElement('option');
+        option.value = movie.id;
+        option.textContent = movie.title + " " + (movie.is3D ? '[3D]' : '[2D]');
+        movieDropdown.appendChild(option);
+})
 }
+
 
 /////////////////////////////POPULATE THEATER-DROPDOWN/////////////////////////////
 async function populateTheaterDropdown() {
+    let theaters = [];
 
     try {
-        const response = await fetch('http://localhost:8080/theaters');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+         theaters = await fetchTheaters()
+    } catch (error) {
+        console.error('Error fetching theaters:', error);
+        return;
+    }
 
-        const theaters = await response.json();
         theaters.sort((a, b) => a.name.localeCompare(b.name));
+        theaterDropdown.innerHTML = '';
 
         theaters.forEach(theater => {
             const option = document.createElement('option');
@@ -45,22 +49,14 @@ async function populateTheaterDropdown() {
             option.textContent = theater.name;
             theaterDropdown.appendChild(option);
         });
-    } catch (error) {
-        console.error('Error fetching theaters:', error);
-    }
 }
 
 /////////////////////////////FETCH SHOWINGS ON DATE/////////////////////////////
 async function fetchShowingsOnDate(theaterId, selectedDate) {
     try {
-        const response = await fetch(`http://localhost:8080/showings/${theaterId}/${selectedDate}`);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return await response.json();
-
-    } catch (error) {
-        console.error('Error fetching showings and movies on specified date:', error);
+        return await fetchShowingByTheaterAndDate(theaterId, selectedDate);
+        } catch (error) {
+        console.error('Error fetching showings on specified date:', error);
         return [];
     }
 }
@@ -72,7 +68,6 @@ function populateTimeDropdown(fetchedShowings, selectedMovie) {
     const timeDropdown = document.getElementById('showingTime');
     const selectedDate = document.getElementById('showingDate').value;
     const availableSlots = [];
-    const selectedMovieDuration = selectedMovie.;
 
     const firstShowingTime = new Date(selectedDate + 'T12:00');
     const lastShowingTime = new Date(selectedDate + 'T21:00');
