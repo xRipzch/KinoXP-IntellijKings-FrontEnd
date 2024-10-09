@@ -1,3 +1,6 @@
+// import {fetchMovies, fetchTheaters} from "../api/apiservice";
+
+
 // Function to populate the dropdown with movie options
 async function populateMovieDropdown() {
     const movieDropdown = document.getElementById('movieDropdown');

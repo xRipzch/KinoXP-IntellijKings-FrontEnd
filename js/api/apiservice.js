@@ -35,5 +35,27 @@ async function fetchShowings() {
     }
 }
 
+async function deleteShowingById(showingId) {
+    try {
+        const response = await fetch(`${BASE_URL}/showing/${showingId}`, { method: 'DELETE' });
+        if (!response.ok) throw new Error(`Failed to delete showing: ${response.statusText}`);
+        return response.text(); // Optional, could return any specific server response
+    } catch (error) {
+        console.error('Error in deleteShowings:', error);
+        throw error;
+    }
+}
+
+async function fetchTheaters() {
+    try {
+        const response = await fetch(`${BASE_URL}/theaters`, { method: 'DELETE' });
+        if (!response.ok) throw new Error(`Failed to fetch theaters: ${response.statusText}`);
+        return response.text(); // Optional, could return any specific server response
+    } catch (error) {
+        console.error('Error in fetchTheaters:', error);
+        throw error;
+    }
+}
+
 // Export all service functions
-export { fetchMovies, deleteMovieById, fetchShowings };
+export { fetchMovies, deleteMovieById, fetchShowings, deleteShowingById, fetchTheaters };

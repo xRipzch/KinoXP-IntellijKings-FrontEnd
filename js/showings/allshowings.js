@@ -1,3 +1,5 @@
+// import {fetchShowings} from "../api/apiservice";
+
 console.log('allshowings.js loaded');
 
 fetch('http://localhost:8080/showings')
@@ -29,12 +31,12 @@ function displayShowingsAsGrid(showings) {
 
     showingGrid.appendChild(addNewShowingItem);
 
-    addNewShowingItem.href = '../html/add-showing.html';
+    addNewShowingItem.href = '../html/showings/add-showing.html';
 
     showings.forEach(showing => {
         const showingItem = document.createElement('div'); // This not the container??
 
-        showingItem.href = `../html/showing-details.html?id=${showing.id}`; // Link to showing details
+        showingItem.href = `../html/showings/showing-details.html?id=${showing.id}`; // Link to showing details
 
         const movie = showing.movie;
         const theater = showing.theater;
