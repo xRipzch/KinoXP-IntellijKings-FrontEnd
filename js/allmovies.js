@@ -34,7 +34,7 @@ function displayMoviesAsGrid(movies) {
     addNewMovieItem.href = '../html/add-movie.html';
 
     movies.forEach(movie => {
-        const movieItem = document.createElement('a'); // This not the container??
+        const movieItem = document.createElement('a');
 
         movieItem.href = `../html/movie-details.html?id=${movie.id}`; // Link to movie details
 
@@ -43,7 +43,7 @@ function displayMoviesAsGrid(movies) {
         const hours = Math.floor(durationInMinutes / 60);
         const minutes = durationInMinutes % 60;
 
-// After appending the movieItem to the DOM
+        // After appending the movieItem to the DOM
 
         movieItem.innerHTML = `
             <div class="grid-item">
