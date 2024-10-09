@@ -13,3 +13,72 @@
     font-weight: bold;
     color: var(--color-light-gray);
 }
+
+.date-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 20px;
+}
+
+.date-container button {
+    background-color: #4CAF50; /* Green background */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.date-container button:hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.date-container button:active {
+    background-color: #3e8e41; /* Even darker green when clicked */
+}
+
+.date-container button:focus {
+    outline: none; /* Remove the default focus outline */
+    box-shadow: 0 0 5px 3px rgba(0, 128, 0, 0.5); /* Custom focus shadow */
+}
+
+/* Button styling */
+.date-container button {
+    min-width: 120px;
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none;
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+/* Highlight for the "Today" button */
+.date-container button:first-child {
+    font-weight: bold;
+}
+
+/* Hover effect */
+.date-container button:hover {
+    background-color: #45a049; /* Slightly brighter green on hover */
+}
+
+/* Active (clicked) effect */
+.date-container button:active {
+    background-color: #388E3C; /* Even darker green for active state */
+}
+
+/* Optional: Shadow for more depth */
+.date-container button {
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+}
