@@ -1,4 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+    let receivedValue = getQueryParam('id');
+    const integerValue = parseInt(receivedValue, 10);
+    const inputField = document.getElementById('search');
+    inputField.value = integerValue;
+
     document.getElementById('search-movie-form').addEventListener('submit', function(event) {
         event.preventDefault();
         const searchValue = document.getElementById('search').value;
@@ -26,9 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
         return urlParams.get(param);
     }
 
-    const integerValue = parseInt(receivedValue, 10);
-    const inputField = document.getElementById('search');
-    inputField.value = integerValue;
 
 
     function fetchMovieDetails(searchValue) {
@@ -72,7 +75,8 @@ document.addEventListener("DOMContentLoaded", function () {
             imageUrl: document.getElementById('imageUrl').value
         };
 
-        const movieId = document.getElementById('search').value; // Retrieve the movie ID from the search input
+       const movieId = receivedValue
+        console.log("movie id being sent" ,movieId)// Retrieve the movie ID from the search input
 
         fetch(`http://localhost:8080/api/movies/${movieId}`, {
             method: 'PUT',
@@ -88,13 +92,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (data.success) {
                         alert('Movie details updated successfully');
                     } else {
-                        alert('Error updating movie details: ' + data.message);
+                        alert('Error updating movie details: ' + data.message + data);
                     }
                 });
             })
             .catch(error => console.error('Error saving movie details:', error));
     }
-    let receivedValue = getQueryParam('id');
+
 
     window.addEventListener('load', getQueryParam); {
         window.addEventListener('load', fetchMovieDetails(receivedValue));
