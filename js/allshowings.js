@@ -32,7 +32,7 @@ function displayShowingsAsGrid(showings) {
     addNewShowingItem.href = '../html/add-showing.html';
 
     showings.forEach(showing => {
-        const showingItem = document.createElement('a'); // This not the container??
+        const showingItem = document.createElement('div'); // This not the container??
 
         showingItem.href = `../html/showing-details.html?id=${showing.id}`; // Link to showing details
 
@@ -46,7 +46,7 @@ function displayShowingsAsGrid(showings) {
 
         const showingStartTime = new Date(showing.startTime);
         const showingEndTime = showingStartTime + movieDurationInMinutes;
-        const showingReadyForNextShowingTime = Math.ceil((showingEndTime + 30) / 15) * 15; // Rounded up to the nearest 15 minutes
+        const showingReadyForNextShowingTime = Math.ceil((showingEndTime + 30) / 30) * 30; // Rounded up to the nearest 30 minutes
 
         const now = new Date();
         const showingYear = showingStartTime.getFullYear();
@@ -69,18 +69,14 @@ function displayShowingsAsGrid(showings) {
                 <div class="grid-image">
                     <span class="format-label-left">${movie.is3d ? '3D' : '2D'}</span>
                     <span class="format-label-right" title="Duration">${movieHours}<sup>h</sup> ${movieMinutes}<sup>m</sup></span>
-                    <span class="format-label-bottom" title="Movie ID">${theaterName}</span>
+                    <span class="format-label-bottom" title="Theater">${theaterName}</span>
                     
                     <!-- Delete button with trash icon -->
                     <button class="format-label-button button-delete" title="Delete Movie">
                     <i class="fas fa-trash"></i>
                     </button>
 
-                    <!-- Edit button with edit icon -->
-                    <button class="format-label-button button-edit" title="Edit Movie">
-                    <i class="fas fa-edit"></i>
-<!--                    const movieTitle = movie.title;TODO--> 
-                    </button><img src="${movie.imageUrl}" alt="${movie.title} Poster" class="image-container">
+              <img src="${movie.imageUrl}" alt="${movie.title} Poster" class="image-container">
                 </div>
 
                 <!-- Title -->
@@ -101,24 +97,13 @@ function displayShowingsAsGrid(showings) {
         // Add event listener for mouseout to hide the delete button
         showingItem.addEventListener('mouseout', () => hideDeleteButton(showingItem));
 
-        // Add event listener for mouseover to show the edit button
-        showingItem.addEventListener('mouseover', () => showEditButton(showingItem));
-
-        // Add event listener for mouseout to hide the edit button
-        showingItem.addEventListener('mouseout', () => hideEditButton(showingItem));
         const delbutton = showingItem.querySelector('.button-delete');
-        const editButton = showingItem.querySelector('.button-edit')
-        editButton.addEventListener('click', function (event) {
-            event.preventDefault()
-            event.stopPropagation()
-            redirectToEdit(showing.id)
-        })
+
         delbutton.addEventListener('click', function (event) {
             event.preventDefault()
             event.stopPropagation(); // Prevent the anchor from being triggered
             deleteShowing(showing.id); // Call deleteMovie with the current movie ID
         });
-
 
         function deleteShowing(showingId) {
             const confirmDelete = confirm(`Are you sure you want to delete the showing: ${movie.title} at ${formattedShowingStartTime}?`);
@@ -149,15 +134,6 @@ function displayShowingsAsGrid(showings) {
             }
         }
 
-
-
-        // Redirect to edit //
-
-        function redirectToEdit(movieId) {
-            window.location.href = "../html/edit-showing.html"
-
-        }
-
         // HOVER FUNCTIONS //
 
         function showDeleteButton(movieItem) {
@@ -170,14 +146,5 @@ function displayShowingsAsGrid(showings) {
             deleteButton.style.display = 'none';
         }
 
-        function showEditButton(movieItem) {
-            const deleteButton = movieItem.querySelector('.button-edit');
-            deleteButton.style.display = 'flex';
-        }
-
-        function hideEditButton(movieItem) {
-            const deleteButton = movieItem.querySelector('.button-edit');
-            deleteButton.style.display = 'none';
-        }
     });
 }
