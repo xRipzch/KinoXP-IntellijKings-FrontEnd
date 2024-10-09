@@ -4,7 +4,6 @@ const dateButtonsContainer = document.getElementById('date-container');
 const today = new Date();
 const daysToGenerate = 31; // one month
 
-let showings = [];
 // Function to generate a batch of date buttons
 function createDateButtons(startDate, days) {
     for (let i = 0; i < days; i++) {
@@ -20,25 +19,56 @@ function createDateButtons(startDate, days) {
             });
 
         dateButtonsContainer.appendChild(button);
+
+        button.addEventListener('click', () => {
+            updateUrlWithShowings(date)
+        })
     }
 }
 
-console.log(today.toISOString().split('T')[0])
+async function updateUrlWithShowings(date) {
+    const newDate = date.toISOString().split('T')[0]; // This could be dynamic if needed
+    const newUrl = `../html/index.html?date=${newDate}`;
+    window.history.pushState({}, '', newUrl);
 
-
-window.onload = (findShowingsByDate(today.getDate()))
-async function findShowingsByDate(date) {
-    const url = "http://localhost:8080/showing/" + date;
-    showings =  await fetch(url, date).then(response => {response.json()});
-
-    showings.forEach(showing => {
-
-        console.log(showing.movie.title);
-    })
+    const params = new URLSearchParams(window.location.search);
+    const formattedDate = params.get('date'); // Retrieves 'Date' from the URL like ?id=123
+    await findShowingsByDate(formattedDate);
 }
 
+window.onload = async function() {
+    updateUrlWithShowings(today)
+}
+const movieGrid = document.getElementById('movie-grid');
 
-findShowingsByDate()
+let showings = [];
+async function findShowingsByDate(date) {
+    movieGrid.innerHTML = '';
+    const url = "http://localhost:8080/showings/" + date;
+    showings =  await fetch(url).then(response => response.json());
+    console.log(showings)
+    showings.forEach(showing => {
+        const movieItem = document.createElement('div');
+        console.log(showing.movie.title)
+        movieItem.innerHTML = `
+            <div class="grid-item">
+                <div class="grid-image">
+                    <img src="${showing.movie.imageUrl}" class="image-container"> 
+                    <span class="format-label-left">${showing.movie.title}</span>
+                    <span class="format-label-right" title="Duration">${showing.movie.durationInMinutes}</span>
+                   
+                </div>
+                <div class="grid-text">
+                    <span class="format-label-left">${showing.theater.name}</span>
+                    <span class="format-label-right" title="Duration">${showing.startTime}</span>
+                    
+                </div>
+            </div>
+        `;
+        movieGrid.appendChild(movieItem);
+    });
+}
+
 
 // Initial set of date buttons
 createDateButtons(today, daysToGenerate);
