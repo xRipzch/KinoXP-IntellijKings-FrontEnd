@@ -36,9 +36,6 @@ dateButtonsContainer.addEventListener('scroll', () => {
         if (lastDateText !== "Today") {
             lastDate = new Date(lastDateText + " " + today.getFullYear());
         }
-        if (lastDate.getFullYear()>today.getFullYear()){
-
-        }
 
         // Ensure continuous date increments
         lastDate.setDate(lastDate.getDate() + 1);
