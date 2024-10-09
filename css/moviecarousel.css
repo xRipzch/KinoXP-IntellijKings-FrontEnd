@@ -25,12 +25,11 @@ p {
 /* GLOBAL STYLES */
 .card-container {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     margin: 0 auto;
     flex-wrap: nowrap;
-    overflow-x: auto;
-    width: 100vw;
+    overflow-x: scroll;
     padding: 1rem 0;
 }
 
