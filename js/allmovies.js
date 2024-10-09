@@ -24,8 +24,8 @@ function displayMoviesAsGrid(movies) {
     addNewMovieItem.classList.add('grid-item');
 
     addNewMovieItem.innerHTML = `
-        <div class="grid-image add-movie-container">
-            <h2>Add New Movie</>
+        <div class="grid-image add-new-container">
+            <i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 2.5em"></i>
         </div>
     `;
 
@@ -69,11 +69,6 @@ function displayMoviesAsGrid(movies) {
                     <h2>${movie.title}</h2><h3 class="release-text">(${releaseYear})</h3>
                 </div>
 
-                <!-- Content -->
-<!--                <div class="grid-content">-->
-                
-
-<!--                        </div>-->
                 </div>
             </div>
         `
@@ -122,7 +117,13 @@ function displayMoviesAsGrid(movies) {
                     .then(result => {
                         console.log(result); // Optional: Log the result
                         movieItem.remove(); // Remove the movie card from the DOM
-                        alert('Movie deleted successfully!');
+                        Swal.fire({
+                            title: 'Movie deleted successfully!',
+                            icon: 'success',
+                            timer: 1000,
+                            showConfirmButton: false
+                        });
+                        // window.location.replace('../html/all-movies.html');
                     })
                     .catch(error => {
                         console.error('Error deleting movie:', error);
@@ -131,24 +132,6 @@ function displayMoviesAsGrid(movies) {
             }
         }
 
-
-        /// ADD MOVIE FUNCTION ///
-        function addMovie() {
-
-            const addNewMovieItem = document.createElement('div');
-            addNewMovieItem.classList.add('grid-item');
-
-            addNewMovieItem.innerHTML = `
-        <div class="grid-image add-movie-container">
-            <div class="add-movie-container">
-                <h2>Add New Movie</>
-            </div>
-        </div>
-    `;
-
-    movieGrid.appendChild(addNewMovieItem);
-
-        }
 
         // Redirect to edit //
 

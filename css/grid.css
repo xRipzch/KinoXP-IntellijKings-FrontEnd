@@ -1,0 +1,15 @@
+.grid-right{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    padding: 10px;
+    background-color: #ffc372;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
+}
+
+.date-text{
+    font-size: small;
+    font-weight: bold;
+    color: var(--color-light-gray);
+}
