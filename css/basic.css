@@ -219,7 +219,7 @@ h1 {
     /*bottom: 1px;*/
 }
 
-.add-movie-container {
+.add-new-container {
     background-color: var(--color-green);
     border: 2px dashed var(--color-gray); /* Dashed border to indicate it's for adding */
     display: flex;
@@ -231,13 +231,13 @@ h1 {
     box-sizing: border-box;
 }
 
-.add-movie-container:hover {
+.add-new-container:hover {
     background-color: #5ca351b0;
 }
 
 
 
-.add-movie-container h2 {
+.add-new-container h2 {
     color: var(--color-light-gray);
     margin: 0;
     text-align: center;
