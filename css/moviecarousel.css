@@ -28,9 +28,9 @@ p {
     justify-content: center;
     align-items: center;
     margin: 0 auto;
-    flex-wrap: nowrap; /* Prevents cards from wrapping to the next line */
-    overflow-x: auto; /* Allows horizontal scrolling if cards overflow */
-    width: 100vw; /* Ensures the container spans the full width of the screen */
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    width: 100vw;
     padding: 1rem 0;
 }
 
