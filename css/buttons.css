@@ -1,0 +1,65 @@
+/*Button styling*/
+.button-red, .button-blue {
+    width: 150px;/*TODO*/
+    height: fit-content;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: small;
+    color: var(--color-light-gray);
+    text-align: center;
+}
+
+.format-label-button {
+    position: absolute;
+    bottom: 10px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-style: solid;
+    border-color: rgb(0 0 0 / 30%);
+    width: 20%;
+    height: 10%;
+    font-size: 1vw;
+}
+
+.button-delete {
+    background-color: var(--color-red);
+    right: 10%;
+    font-size: 0.8vw;
+}
+
+.button-delete:hover {
+    background-color: #bd6a6b;
+}
+
+.button-edit {
+    background-color: var(--color-light-blue);
+    left: 45%;
+    font-size: 0.8vw;
+}
+
+.button-edit:hover {
+    background-color: #37c7f7;
+}
+
+/* Default button styling */
+.hover-button {
+    background-color: #017FB5;
+    color: #FFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.hover-button:hover {
+    background-color: #005F8A; /* Darken color */
+    transform: scale(1.1); /* Slightly increase size */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow */
+}
