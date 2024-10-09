@@ -34,7 +34,7 @@ function displayMoviesAsGrid(movies) {
     addNewMovieItem.href = '../html/add-movie.html';
 
     movies.forEach(movie => {
-        const movieItem = document.createElement('a'); // This not the container??
+        const movieItem = document.createElement('a');
 
         movieItem.href = `../html/movie-details.html?id=${movie.id}`; // Link to movie details
 

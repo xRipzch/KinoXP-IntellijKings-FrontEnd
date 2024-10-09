@@ -14,7 +14,6 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    margin: 0;
     padding: 0;
     background-attachment: fixed;
     background-image: linear-gradient(to top, var(--color-dark-gray), var(--color-black));
@@ -29,6 +28,13 @@ h1 {
 }
 
 .all-movies-container {
+    margin: 0 20vw 0 20vw;
+}
+
+.all-showings-container {
+    margin: 0 20vw 0 20vw;
+}
+.date-container{
     margin: 0 20vw 0 20vw;
 }
 
@@ -141,16 +147,6 @@ h1 {
     font-weight: bold;
 }
 
-/* Buttons on the right */
-.grid-right {
-    /*display: flex;*/
-    /*flex-direction: column; !* Stack items vertically *!*/
-    /*justify-content: space-between; !* Push the buttons to the bottom *!*/
-    /*height: 100%; !* Ensure it takes up the full height of the container *!*/
-    /*background-color: #5ca351;*/
-
-}
-
 /* Button styling */
 .button-red, .button-blue {
     width: 150px;/*TODO*/
@@ -199,35 +195,15 @@ h1 {
     background-color: #37c7f7;
 }
 
-.upper-right {
-    /*font-size: small;*/
-    /*color: var(--color-dark-gray);*/
-    /*max-height: 4.5em; !* Control the height to display up to 3 lines, adjust as needed *!*/
-    /*margin-bottom: 10px;*/
-    /*overflow: hidden;*/
-    /*text-overflow: ellipsis;*/
-    /*max-width: 100%;*/
-    /*height: 50%;*/
-
-}
-
-.lower-right {
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*gap: 5px;*/
-    /*height: 50%;*/
-    /*bottom: 1px;*/
-}
-
 .add-new-container {
-    background-color: var(--color-green);
+    /*background-color: var(--color-green);*/
     border: 2px dashed var(--color-gray); /* Dashed border to indicate it's for adding */
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 5s;
     box-sizing: border-box;
 }
 
