@@ -18,7 +18,7 @@ async function populateMovieDropdown() {
 
         movies.forEach(movie => {
             const option = document.createElement('option');
-            option.value = movie.id; // Assuming each movie has a unique ID
+            option.value = movie.id;
             option.textContent = movie.title + " " + (movie.is3D ? '[3D]' : '[2D]');
             movieDropdown.appendChild(option);
         });
@@ -50,12 +50,30 @@ async function populateTheaterDropdown() {
     }
 }
 
+/////////////////////////////FETCH SHOWINGS ON DATE/////////////////////////////
+async function fetchShowingsOnDate(theaterId, selectedDate) {
+    try {
+        const response = await fetch(`http://localhost:8080/showings/${theaterId}/${selectedDate}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const showingsOnDate = await response.json();
+
+        return showingsOnDate;
+
+    } catch (error) {
+        console.error('Error fetching showings and movies on specified date:', error);
+        return [];
+    }
+}
+
+
+
 /////////////////////////////POPULATE TIME-DROPDOWN/////////////////////////////
-function populateTimeDropdown() {
+function populateTimeDropdown(fetchedShowings) {
     const timeDropdown = document.getElementById('showingTime');
     const selectedDate = document.getElementById('showingDate').value;
 
-    // Clear existing options
     timeDropdown.innerHTML = '<option value="">-- Select a Time --</option>';
 
     if (!selectedDate) {
@@ -65,17 +83,33 @@ function populateTimeDropdown() {
     const startTime = new Date(selectedDate + 'T12:00');
     const endTime = new Date(selectedDate + 'T21:00');
 
+    const unavailableSlots = fetchedShowings.map(showing => {
+        const start = new Date(showing.startTime);
+        const duration = showing.movie.durationInMinutes; // Access durationInMinutes
+        const end = new Date(start.getTime() + (duration + 30) * 60000); // Calculate end time with 15 min buffer
+        return { start, end }; // Return the start and end times
+    });
+
     for (let currentTime = startTime; currentTime <= endTime; currentTime.setMinutes(currentTime.getMinutes() + 30)) {
-        const hours = currentTime.getHours().toString().padStart(2, '0'); // Ensures it is only two digits long
-        const minutes = currentTime.getMinutes().toString().padStart(2, '0'); // Ensures it is only two digits long
-        const option = document.createElement('option');
-        option.value = `${hours}:${minutes}`;
-        option.textContent = `${hours}:${minutes}`;
-        timeDropdown.appendChild(option);
+        const isAvailable = unavailableSlots.every(slot => {
+            // Check if the current time slot overlaps with any unavailable slot
+            const slotStart = currentTime;
+            const slotEnd = new Date(currentTime.getTime() + 30 * 60000); // 30-minute slots
+            return !(slotStart < slot.end && slotEnd > slot.start); // Check for overlap
+        });
+
+        if (isAvailable) {
+            const hours = currentTime.getHours().toString().padStart(2, '0'); // Ensures it is only two digits long
+            const minutes = currentTime.getMinutes().toString().padStart(2, '0'); // Ensures it is only two digits long
+            const option = document.createElement('option');
+            option.value = `${hours}:${minutes}`;
+            option.textContent = `${hours}:${minutes}`;
+            timeDropdown.appendChild(option);
+        }
     }
 }
 
-/////////////////////////////EVENT LISTENERS FOR POPULATING DROPDOWNS/////////////////////////////
+/////////////////////////////EVENT LISTENERS/////////////////////////////
 document.addEventListener('DOMContentLoaded', () => {
     populateMovieDropdown().then(() => {
         console.log('Movies populated');
@@ -90,21 +124,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-/////////////////////////////EVENT LISTENERS FOR ENABLING NEXT STEPS/////////////////////////////
-
-
     movieDropdown.addEventListener('change', () => {
         theaterDropdown.disabled = false;
     });
 
-    // Enable date input when a theater is selected
     theaterDropdown.addEventListener('change', () => {
         showingDate.disabled = false;
     });
 
-    // Enable time dropdown when a date is selected
-    showingDate.addEventListener('change', () => {
+    showingDate.addEventListener('change', async () => {
+        const selectedTheaterId = theaterDropdown.value;
+        const fetchedShowings = await fetchShowingsOnDate(selectedTheaterId, showingDate.value);
         showingTime.disabled = false;
-        populateTimeDropdown();
+        populateTimeDropdown(fetchedShowings);
     });
 });
+
+const showingReadyForNextShowingTime = Math.ceil((showingEndTime + 30) / 15) * 15; // Rounded up to the nearest 15 minutes
+
