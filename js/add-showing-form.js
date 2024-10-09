@@ -1,4 +1,3 @@
-// Function to populate the dropdown with movie options
 async function populateMovieDropdown() {
     const movieDropdown = document.getElementById('movieDropdown');
 
@@ -31,7 +30,7 @@ try {
     }
 
     const theaters = await response.json();
-    theaters.sort((a, b) => a.title.localeCompare(b.title));
+    theaters.sort((a, b) => a.name.localeCompare(b.name));
 
     theaters.forEach(theater => {
         const option = document.createElement('option');
@@ -43,6 +42,31 @@ try {
 }
 }
 
+function populateTimeDropdown() {
+    const timeDropdown = document.getElementById('showingTime');
+    const selectedDate = document.getElementById('showingDate').value;
 
-document.addEventListener('DOMContentLoaded', populateMovieDropdown);
-document.addEventListener('DOMContentLoaded', populateTheaterDropdown);
+    timeDropdown.innerHTML = '<option value="">-- Select a Time --</option>';
+
+    if (!selectedDate) {
+        return;
+    }
+
+    // Generate times from 09:00 to 23:00 in 30-minute intervals
+    const startTime = new Date(selectedDate + 'T12:00'); // Start at 12:00 PM
+    const endTime = new Date(selectedDate + 'T21:00');   // End at 21:00 PM
+
+    for (let currentTime = startTime; currentTime <= endTime; currentTime.setMinutes(currentTime.getMinutes() + 30)) {
+        const hours = currentTime.getHours().toString().padStart(2, '0');
+        const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+        const option = document.createElement('option');
+        option.value = `${hours}:${minutes}`;
+        option.textContent = `${hours}:${minutes}`;
+        timeDropdown.appendChild(option);
+    }
+}
+
+    document.addEventListener('DOMContentLoaded', populateMovieDropdown);
+    document.addEventListener('DOMContentLoaded', populateTheaterDropdown);
+    document.getElementById('showingDate').addEventListener('change', populateTimeDropdown);
+
