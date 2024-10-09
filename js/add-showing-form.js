@@ -1,4 +1,4 @@
-import {fetchMovies, fetchShowingByTheaterAndDate, fetchTheaters} from './api/apiservice.js';
+import {fetchMovies, fetchMovieById, fetchShowingByTheaterAndDate, fetchTheaters} from './api/apiservice.js';
 
 const movieDropdown = document.getElementById('movieDropdown');
 const theaterDropdown = document.getElementById('theaterDropdown');
@@ -45,7 +45,7 @@ async function populateTheaterDropdown() {
 
         theaters.forEach(theater => {
             const option = document.createElement('option');
-            option.value = theater.id; // Assuming each theater has a unique ID
+            option.value = theater.id;
             option.textContent = theater.name;
             theaterDropdown.appendChild(option);
         });
@@ -67,45 +67,47 @@ async function fetchShowingsOnDate(theaterId, selectedDate) {
 function populateTimeDropdown(fetchedShowings, selectedMovie) {
     const timeDropdown = document.getElementById('showingTime');
     const selectedDate = document.getElementById('showingDate').value;
-    const availableSlots = [];
+    const selectedMovieDuration = selectedMovie.durationInMinutes;
 
     const firstShowingTime = new Date(selectedDate + 'T12:00');
     const lastShowingTime = new Date(selectedDate + 'T21:00');
 
+    // Create a mapping of unavailable times to their respective movies
     const unavailableSlots = fetchedShowings.map(showing => {
         const showingStart = new Date(showing.startTime);
-        const showingEnd = new Date(showingStart.getTime() + (showing.movie.durationInMinutes + 30) * 60000); // Calculate end time with 30 min buffer
-        return { start: showingStart, end: showingEnd };
+        const showingEnd = new Date(showingStart.getTime() + (showing.movie.durationInMinutes + 30) * 60000); // End time with buffer
+        return { start: showingStart, end: showingEnd, title: showing.movie.title, id: showing.id};
     });
 
+    // Clear the dropdown and add default option
+    timeDropdown.innerHTML = '<option value="">-- Select a Time --</option>';
 
+    for (let currentTime = new Date(firstShowingTime); currentTime <= lastShowingTime; currentTime.setMinutes(currentTime.getMinutes() + 30)) {
+        const slotEnd = new Date(currentTime.getTime() + (selectedMovieDuration + 30) * 60000); // End time for selected movie
 
-    for (let currentTime = firstShowingTime; currentTime <= lastShowingTime; currentTime.setMinutes(currentTime.getMinutes() + 30)) {
-
-        const isAvailable = unavailableSlots.every(slot => {
-            // Check if the current time slot overlaps with any unavailable slot
-            const slotStart = currentTime;
-            const slotEnd = new Date(currentTime.getTime() + 30 * 60000);
-            return !(slotStart < slot.end && slotEnd > slot.start); // Check for overlap
+        // Check if this slot is unavailable
+        const isUnavailable = unavailableSlots.some(slot => {
+            return currentTime < slot.end && slotEnd > slot.start; // Check for overlap
         });
 
-        if (isAvailable) {
-            const hours = currentTime.getHours().toString().padStart(2, '0'); // Ensures it is only two digits long
-            const minutes = currentTime.getMinutes().toString().padStart(2, '0'); // Ensures it is only two digits long
-            availableSlots.push(`${hours}:${minutes}`);
+
+        const hours = currentTime.getHours().toString().padStart(2, '0'); // Format hours
+        const minutes = currentTime.getMinutes().toString().padStart(2, '0'); // Format minutes
+        const timeSlot = `${hours}:${minutes}`;
+
+        const option = document.createElement('option');
+        option.value = timeSlot;
+
+        if (isUnavailable) {
+            // Find the movie title for the unavailable slot
+            const overlappingSlot = unavailableSlots.find(slot => currentTime < slot.end && slotEnd > slot.start);
+            option.textContent = `${timeSlot} - Unavailable (Showing id: ${overlappingSlot.id} ${overlappingSlot.title})`;
+            option.disabled = true; // Disable the option so it's not clickable
+        } else {
+            option.textContent = `${timeSlot} - Available`;
         }
-    }
 
-    if (availableSlots.length === 0) {
-        alert('No available times for this date. Please select another date.');
-    } else {
-        // Otherwise, add the available slots to the dropdown
-        availableSlots.forEach(slot => {
-            const option = document.createElement('option');
-            option.value = slot;
-            option.textContent = slot;
-            timeDropdown.appendChild(option);
-        });
+        timeDropdown.appendChild(option);
     }
 }
 
@@ -141,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showingDate.addEventListener('change', async () => {
         const selectedTheaterId = theaterDropdown.value;
         const fetchedShowings = await fetchShowingsOnDate(selectedTheaterId, showingDate.value);
-        const selectedMovie = theaterDropdown.value;
+        const selectedMovie= await fetchMovieById(movieDropdown.value);
         showingTime.disabled = false;
         populateTimeDropdown(fetchedShowings, selectedMovie);
     });

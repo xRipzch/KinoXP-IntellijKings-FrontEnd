@@ -12,6 +12,17 @@ async function fetchMovies() {
     }
 }
 
+async function fetchMovieById(id) {
+    try {
+        const response = await fetch(`${BASE_URL}/movie/${id}`);
+        if (!response.ok) throw new Error(`Failed to fetch movie: ${response.statusText}`);
+        return response.json();
+    } catch (error) {
+        console.error('Error in fetchMovieById:', error);
+        throw error;
+    }
+}
+
 async function fetchTheaters() {
     try {
         const response = await fetch(`${BASE_URL}/theaters`);
@@ -58,4 +69,4 @@ async function fetchShowings() {
 }
 
 // Export all service functions
-export { fetchMovies, fetchTheaters, fetchShowingByTheaterAndDate, deleteMovieById, fetchShowings };
+export { fetchMovies, fetchMovieById, fetchTheaters, fetchShowingByTheaterAndDate, deleteMovieById, fetchShowings };
