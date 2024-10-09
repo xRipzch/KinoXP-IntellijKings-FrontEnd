@@ -1,4 +1,11 @@
-import {fetchMovies, fetchMovieById, fetchShowingByTheaterAndDate, fetchTheaters} from './api/apiservice.js';
+import {
+    fetchMovies,
+    fetchMovieById,
+    fetchShowingByTheaterAndDate,
+    fetchTheaters,
+    addShowing,
+    fetchTheaterById
+} from './api/apiservice.js';
 
 const movieDropdown = document.getElementById('movieDropdown');
 const theaterDropdown = document.getElementById('theaterDropdown');
@@ -23,7 +30,7 @@ async function populateMovieDropdown() {
     movies.forEach(movie => {
         const option = document.createElement('option');
         option.value = movie.id;
-        option.textContent = movie.title + " " + (movie.is3D ? '[3D]' : '[2D]' + movie.durationInMinutes);
+        option.textContent = movie.title + " " + (movie.is3D ? '[3D]' : '[2D]');
         movieDropdown.appendChild(option);
 })
 }
@@ -112,7 +119,7 @@ function populateTimeDropdown(fetchedShowings, selectedMovie) {
             option.textContent = `${timeSlot} - Unavailable (Showing id: ${overlappingSlot.id} - ${overlappingSlot.title})`;
             option.disabled = true; // Disable the option so it's not clickable
         } else {
-            option.textContent = `${timeSlot} - Available`;
+            option.textContent = `${timeSlot}`;
         }
 
         timeDropdown.appendChild(option);
@@ -122,14 +129,14 @@ function populateTimeDropdown(fetchedShowings, selectedMovie) {
 
 /////////////////////////////EVENT LISTENERS/////////////////////////////
 document.addEventListener('DOMContentLoaded', () => {
+    const addShowingForm = document.getElementById("add-input-form");
+
     populateMovieDropdown().then(() => {
-        console.log('Movies populated');
     }).catch((error) => {
         console.error('Error populating movies:', error);
     });
 
     populateTheaterDropdown().then(() => {
-        console.log('Theaters populated');
     }).catch((error) => {
         console.error('Error populating theaters:', error);
     });
@@ -156,6 +163,38 @@ document.addEventListener('DOMContentLoaded', () => {
         showingTime.disabled = false;
         populateTimeDropdown(fetchedShowings, selectedMovie);
     });
+
+    addShowingForm.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        try {
+            const formData = new FormData(addShowingForm);
+
+            const showingDate = formData.get('showingDate');
+            const showingTime = formData.get('showingTime');
+
+            // Combine date and time into a LocalDateTime format
+            const startDateTime = `${showingDate}T${showingTime}`;
+
+            const showingData = {
+                movie: await fetchMovieById(movieDropdown.value),
+                theater: await fetchTheaterById(theaterDropdown.value),
+                startTime: startDateTime
+
+            };
+            console.log("Showing data being sent:", showingData);
+
+            await addShowing(showingData);
+
+            alert('Showing added successfully!');
+
+            addShowingForm.reset();
+
+        } catch (error) {
+            console.error('Error processing form data', error);
+        }
+    });
+
 });
 
 
