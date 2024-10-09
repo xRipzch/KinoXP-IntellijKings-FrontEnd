@@ -5,8 +5,8 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    min-height: 4.5vw;
-    max-height: 4.5vw;
+    min-height: 5.5vw;
+    max-height: 5.5vw;
     font-weight: bold;
     font-size: 1vw;
 }
@@ -45,7 +45,7 @@ img {
 }
 
 #navbar-left-column {
-    max-width: 4vw;
+    max-width: 5vw;
     margin-left: 1vw;
 }
 
