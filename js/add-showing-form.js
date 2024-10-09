@@ -129,7 +129,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     theaterDropdown.addEventListener('change', () => {
-        showingDate.disabled = false;
+        showingDate.value = ''; // Reset the date selection
+        showingTime.innerHTML = '<option value="">-- Select a Time --</option>'; // Reset the time dropdown
+        showingDate.disabled = false; // Enable the date selection
+        showingTime.disabled = true; // Disable the time selection until a date is selected
+
     });
 
     showingDate.addEventListener('change', async () => {
@@ -140,5 +144,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-const showingReadyForNextShowingTime = Math.ceil((showingEndTime + 30) / 15) * 15; // Rounded up to the nearest 15 minutes
 
