@@ -66,6 +66,8 @@ async function findShowingsByDate(date) {
             </div>
         `;
         movieGrid.appendChild(movieItem);
+        
+
     });
 }
 
