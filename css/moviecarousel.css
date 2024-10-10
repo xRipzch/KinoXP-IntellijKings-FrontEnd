@@ -17,9 +17,20 @@
 }
 
 body,
-h2,
-p {
+h2{
     margin: 0;
+}
+
+#movie-item-img {
+    border: revert;
+}
+
+#anchor-img {
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    width: 11vw;
+    height: 16vw;
+    object-fit: cover;
 }
 
 /* GLOBAL STYLES */
@@ -29,12 +40,13 @@ p {
     align-items: center;
     margin: 0 auto;
     flex-wrap: nowrap;
-    overflow-x: scroll;
     padding: 1rem 0;
+    gap: 1.2vw;
+    overflow-x: hidden;
 }
 
 h2 {
-    font-size: 2.25rem;
+    font-size:1vw;
     font-family: var(--font-title);
     color: var(--white);
     line-height: 1.1;
@@ -52,13 +64,12 @@ p {
 }
 
 .card {
-    margin: 0 1rem; /* Add margin between cards */
     flex: 0 0 auto;
     display: grid;
     place-items: center;
-    width: 60vw;
-    max-width: 21.875rem;
-    height: 400px;
+    max-width: 11vw;
+    min-height: 16vw;
+    max-height: 16vw;
     overflow: hidden;
     border-radius: 0.625rem;
     box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
@@ -81,15 +92,13 @@ p {
     flex-direction: column;
     justify-content: space-between;
     align-self: flex-end;
+    padding: 5% 20px 1.875rem;
     height: 55%;
-    padding: 12% 20px 1.875rem;
     width: 100%;
-    background: linear-gradient(
-            180deg,
-            hsla(0, 0%, 0%, 0) 0%,
-            hsla(0, 0%, 0%, 0.3) 10%,
-            hsl(0, 0%, 0%) 100%
-    );
+    background: linear-gradient(180deg, hsla(0, 0%, 0%, 0) 0%, hsl(0deg 0% 0% / 58%) 10%, hsl(0, 0%, 0%) 100%);
+}
+
+.grid-bottom {
 }
 
 .card__content--container {
@@ -108,7 +117,19 @@ p {
     width: calc(100% + 1.25rem);
     bottom: calc((1.25rem - 0.5rem) * -1);
     left: -1.25rem;
-    background-color: var(--brand-color);
+    background-color: var(--color-medium-blue);
+}
+
+.card-description {
+    margin: 0;
+}
+
+#top-description {
+    margin-bottom: 5px;
+}
+
+#bottom-description {
+    margin-top: 0;
 }
 
 .card__button {
@@ -118,7 +139,7 @@ p {
     font-weight: bold;
     border-radius: 0.45em;
     border: none;
-    background-color: var(--brand-color);
+    background-color: var(--color-medium-blue);
     font-family: var(--font-title);
     font-size: 1.125rem;
     color: var(--black);
@@ -127,6 +148,21 @@ p {
 .card__button:focus {
     outline: 2px solid black;
     outline-offset: -5px;
+}
+
+a:hover {
+    color: var(--color-light-gray);
+}
+
+#is-3d {
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-right-color: #ffffff63;
+    padding-right: 10px;
+}
+
+#movie-duration-in-minutes {
+    margin-left: 10px;
 }
 
 @media (any-hover: hover) and (any-pointer: fine) {
@@ -170,10 +206,6 @@ p {
         transition-duration: 0ms;
     }
 
-    .card:hover .card__background,
-    .card:focus-within .card__background {
-        transform: scale(1.3);
-    }
 
     .card:hover .card__content--container > :not(.card__title),
     .card:hover .card__button,

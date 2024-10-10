@@ -1,0 +1,119 @@
+
+.date-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    padding: 20px;
+}
+
+.date-container button:hover {
+    background-color: #9e0d5961;
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+#date-container button.active {
+    background-color: #9e0d5961;
+    border-color: var(--color-magenta);
+    border-width: 3px;
+    box-shadow: 0 0 5px 3px rgba(158, 13, 89, 0.38); /* Custom focus shadow */
+}
+
+/* Button styling */
+.date-container button {
+    min-width: 4vw;
+    min-height: 4vw;
+    background-color: rgba(255, 255, 255, 0);
+
+    color: white; /* White text */
+    border-style: solid;
+    border-width: 2px;
+    border-color: var(--color-medium-blue);
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.month .year {
+    font-size: 0.6vw;
+}
+
+.day {
+    font-size: 1.5vw;
+}
+
+/* Highlight for the "Today" button */
+.date-container button:first-child {
+    font-weight: bold;
+    font-size: 0.8vw !important;
+
+}
+
+/* Optional: Shadow for more depth */
+.date-container button {
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.date-selector {
+    position: relative; /* Establish a positioning context */
+    width: 100%;       /* Ensure it takes full width */
+}
+
+.go-arrow {
+    position: absolute;
+    display: block;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    text-align: center;
+    align-content: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.go-arrow:hover {
+    background-color: rgb(55 55 55 / 50%);
+}
+
+.go-left {
+    left: 0;
+}
+
+.go-right {
+    right: 0;
+}
+
+.date-selector-arrow {
+    width: 40px;
+    height: 4vw;
+    margin: 20px 0 20px 0;
+}
+
+.date-selector-go-left {
+    margin-left: 9vw;
+}
+
+.date-selector-go-right {
+    margin-right: 9vw;
+}
+
+.movie-selector-arrow {
+    width: 40px;
+    height: 16vw;
+    margin: 1rem 0 1rem 0;
+}
+
+.movie-selector-go-left {
+    margin-left: 18vw;
+}
+
+.movie-selector-go-right {
+    margin-right: 18vw;
+}
