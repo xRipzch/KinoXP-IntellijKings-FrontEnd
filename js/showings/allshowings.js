@@ -29,7 +29,7 @@ function displayShowingsAsGrid(showings) {
 
     showingGrid.appendChild(addNewShowingItem);
 
-    addNewShowingItem.href = '../html/add-showing.html';
+    addNewShowingItem.href = '../../html/showings/add-showing.html';
 
     showings.forEach(showing => {
         const showingItem = document.createElement('div'); // This not the container??

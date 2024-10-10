@@ -14,9 +14,9 @@ class NavBar extends HTMLElement {
                 <ul id="navbar-right-column">
                     <ul class="anchor-container">
                         <li><a href="../../html/movies/index.html">Home</a></li>
-                        <li><a href="../../html/movies/all-movies.html">All movies</a></li>
+                        <li><a href="../../html/movies/all-movies.html">All Movies</a></li>
 <!--                        <li><a href="../html/admin.html">Admin</a></li>-->
-                        <li><a href="../../html/showings/all-showings.html">Showings</a></li>
+                        <li><a href="../../html/showings/all-showings.html">All Showings</a></li>
 <!--                        <li><a href="../html/login.html">Login</a></li>-->
                     </ul>   
                 </ul>
