@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Movie Details</title>
-    <link rel="stylesheet" href="../css/movie-details.css">
-    <link rel="stylesheet" href="../css/navbar.css">
+
+    <nav-bar></nav-bar>
+
 </head>
 <body>
-<nav-bar></nav-bar>
 <div class="movie-container" style="display: none">
     <div class="left-column">
         <img id="movie-img" crossorigin="anonymous"/>
@@ -19,8 +19,15 @@
         <p id="movie-description"></p>
     </div>
 </div>
+
 </body>
+
+<link rel="stylesheet" href="../../css/reusables/basic.css">
+<link rel="stylesheet" href="../../css/reusables/navbar.css">
+<link rel="stylesheet" href="../../css/specifics/movie-details.css">
+
+<script src="../../js/misc/navbar.js"></script>
+<script src="../../js/movies/moviedetails.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
-<script src="../js/moviedetails.js"></script>
-<script src="../js/navbar.js"></script>
+
 </html>
