@@ -1,4 +1,4 @@
-import {calculateMinutesToHours, get3dValue, formatDateToShortMonth, getHourMinuteFromDateTime} from './api/movieinfoconverters.js';
+import {calculateMinutesToHours, get3dValue, formatDateToShortMonth, getHourMinuteFromDateTime} from '../api/movieinfoconverters.js';
 
 console.log("index.js loaded");
 
@@ -105,7 +105,7 @@ async function findShowingsByDate(date) {
 
         // Create the card structure with movie details
         movieItem.innerHTML = `
-            <a id="anchor-img" href="../html/movie-details.html?id=${movie.id}">
+            <a id="anchor-img" href="../movies/movie-details.html?id=${movie.id}">
                 <img id="movie-item-img" src="${movie.imageUrl}" class="card__background"> 
             </a>
             <div class="card__content | flow">
@@ -117,7 +117,7 @@ async function findShowingsByDate(date) {
                     </p>
                     <p class="card__description" id="bottom-description">${formatDateToShortMonth(movie.releaseDate)}</p>
                 </div>
-                <a href="../html/movie-details.html?id=${movie.id}" class="card__button">Read more</a>
+                <a href="../movies/movie-details.html?id=${movie.id}" class="card__button">Read more</a>
             </div>
         `;
 
@@ -180,7 +180,7 @@ dateButtonsContainer.addEventListener('scroll', () => {
             lastDate = new Date(lastDateText + " " + today.getFullYear());
         }
         if (lastDate.getFullYear() > today.getFullYear()) {
-            // Handle the case where the year is greater than the current year
+        // Handle the case where the year is greater than the current year
         }
 
         // Ensure continuous date increments
@@ -194,7 +194,7 @@ dateButtonsContainer.addEventListener('scroll', () => {
 
 async function updateUrlWithShowings(date) {
     const newDate = date.toISOString().split('T')[0]; // This could be dynamic if needed
-    const newUrl = `../html/index.html?date=${newDate}`;
+    const newUrl = `../movies/index.html?date=${newDate}`;
     window.history.pushState({}, '', newUrl);
 
     const params = new URLSearchParams(window.location.search);
@@ -207,3 +207,5 @@ window.onload = async function() {
     button.classList.add('active');
     await updateUrlWithShowings(today);
 };
+
+export {createDateButtons}

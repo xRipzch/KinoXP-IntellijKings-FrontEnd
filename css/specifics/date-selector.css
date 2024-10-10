@@ -54,8 +54,7 @@
 /* Highlight for the "Today" button */
 .date-container button:first-child {
     font-weight: bold;
-    font-size: 0.8vw !important;
-
+    font-size: 0.8vw;
 }
 
 /* Optional: Shadow for more depth */
@@ -72,7 +71,6 @@
 .go-arrow {
     position: absolute;
     display: block;
-    background-color: rgba(0, 0, 0, 0.5);
     color: #fff;
     text-align: center;
     align-content: center;
@@ -80,16 +78,14 @@
     user-select: none;
 }
 
-.go-arrow:hover {
-    background-color: rgb(55 55 55 / 50%);
-}
-
 .go-left {
     left: 0;
+    background: linear-gradient(270deg, rgb(60 60 60 / 0%) 0%, #00000045 100%);
 }
 
 .go-right {
     right: 0;
+    background: linear-gradient(90deg, rgb(60 60 60 / 0%) 0%, #00000045 100%);
 }
 
 .date-selector-arrow {

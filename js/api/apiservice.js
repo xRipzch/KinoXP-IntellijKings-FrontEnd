@@ -83,6 +83,16 @@ async function fetchShowingByTheaterAndDate(theaterId, date) {
     }
 }
 
+async function fetchShowingsByMovieAndDate(movieId, date) {
+    try {
+        const response = await fetch(`${BASE_URL}/showings/movie=${movieId}/${date}`);
+        if (!response.ok) throw new Error(`Failed to fetch showing: ${response.statusText}`);
+        return response.json();
+    } catch (error) {
+        throw error;
+    }
+}
+
 async function deleteMovieById(movieId) {
     try {
         const response = await fetch(`${BASE_URL}/movie/${movieId}`, { method: 'DELETE' });
@@ -147,5 +157,5 @@ export {
     fetchAnything,
     fetchMovies, fetchMovieById, deleteMovieById,
     fetchTheaters, fetchTheaterById,
-    fetchShowings, addShowing, deleteShowingById, fetchShowingByTheaterAndDate
+    fetchShowings, addShowing, deleteShowingById, fetchShowingByTheaterAndDate, fetchShowingsByMovieAndDate
 };
