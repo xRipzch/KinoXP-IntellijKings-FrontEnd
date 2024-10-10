@@ -1,4 +1,3 @@
-// apiService.js
 const BASE_URL = 'http://localhost:8080';
 
 async function fetchMovies() {
@@ -103,9 +102,6 @@ async function addShowing(showing) {
     }
 }
 
-
-
-// Additional centralized fetches (e.g., for showings, theaters)
 async function fetchShowings() {
     try {
         const response = await fetch(`${BASE_URL}/showings`);
@@ -128,20 +124,10 @@ async function deleteShowingById(showingId) {
     }
 }
 
-async function fetchTheaters() {
-    try {
-        const response = await fetch(`${BASE_URL}/theaters`, { method: 'DELETE' });
-        if (!response.ok) throw new Error(`Failed to fetch theaters: ${response.statusText}`);
-        return response.text(); // Optional, could return any specific server response
-    } catch (error) {
-        console.error('Error in fetchTheaters:', error);
-        throw error;
-    }
-}
-
 // Export all service functions
+
 export {
     fetchMovies, fetchMovieById, deleteMovieById,
     fetchTheaters, fetchTheaterById,
-    addShowing, fetchShowings, fetchShowingByTheaterAndDate
+    fetchShowings, addShowing, deleteShowingById, fetchShowingByTheaterAndDate
 };
