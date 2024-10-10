@@ -181,4 +181,5 @@ window.onload = async function() {
     await createShowingDateButtons(today, 31)
     displayMovie(movie)
     dateMargin.style.display = 'block';
+    document.getElementById('loader').style.display = 'none';
 };

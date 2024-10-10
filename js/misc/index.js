@@ -206,6 +206,7 @@ window.onload = async function() {
     const button = document.querySelector('button');
     button.classList.add('active');
     await updateUrlWithShowings(today);
+    document.getElementById('loader').style.display = 'none';
 };
 
 export {createDateButtons}
