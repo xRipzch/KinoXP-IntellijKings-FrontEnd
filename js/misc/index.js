@@ -104,7 +104,7 @@ async function findShowingsByDate(date) {
 
         // Create the card structure with movie details
         movieItem.innerHTML = `
-            <a id="anchor-img" href="../html/movie-details.html?id=${movie.id}">
+            <a id="anchor-img" href="../../html/movie-details.html?id=${movie.id}">
                 <img id="movie-item-img" src="${movie.imageUrl}" class="card__background"> 
             </a>
             <div class="card__content | flow">
@@ -116,7 +116,7 @@ async function findShowingsByDate(date) {
                     </p>
                     <p class="card__description" id="bottom-description">${formatDateToShortMonth(movie.releaseDate)}</p>
                 </div>
-                <a href="../html/movie-details.html?id=${movie.id}" class="card__button">Read more</a>
+                <a href="../../html/movie-details.html?id=${movie.id}" class="card__button">Read more</a>
             </div>
         `;
 
