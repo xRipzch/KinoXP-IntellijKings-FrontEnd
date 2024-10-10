@@ -3,7 +3,9 @@ console.log("index.js loaded");
 const dateButtonsContainer = document.getElementById('date-container');
 const today = new Date();
 const daysToGenerate = 31; // one month
+const movieGrid = document.getElementById('movie-grid');
 
+let showings = [];
 // Function to generate a batch of date buttons
 function createDateButtons(startDate, days) {
     for (let i = 0; i < days; i++) {
@@ -26,6 +28,7 @@ function createDateButtons(startDate, days) {
     }
 }
 
+// Function to update the URL with the selected date and fetch showings
 async function updateUrlWithShowings(date) {
     const newDate = date.toISOString().split('T')[0]; // This could be dynamic if needed
     const newUrl = `../html/index.html?date=${newDate}`;
@@ -39,9 +42,7 @@ async function updateUrlWithShowings(date) {
 window.onload = async function() {
     updateUrlWithShowings(today)
 }
-const movieGrid = document.getElementById('movie-grid');
 
-let showings = [];
 async function findShowingsByDate(date) {
     movieGrid.innerHTML = '';
     const url = "http://localhost:8080/showings/" + date;
