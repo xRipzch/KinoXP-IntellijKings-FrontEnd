@@ -80,9 +80,9 @@ function populateTimeDropdown(fetchedShowings, selectedMovie) {
     const lastShowingTime = new Date(selectedDate + 'T21:00');
 
     // Create a mapping of unavailable times to their respective movies
-    const unavailableSlots = fetchedShowings.map(showing => {
+    const occupiedSlots = fetchedShowings.map(showing => {
         const showingStart = new Date(showing.startTime);
-        const showingEnd = new Date(showingStart.getTime() + (showing.movie.durationInMinutes + 15) * 60000); // End time with buffer
+        const showingEnd = new Date(showingStart.getTime() + (showing.movie.durationInMinutes + 30) * 60000); // End time with buffer
         return { start: showingStart, end: showingEnd, title: showing.movie.title, id: showing.id };
     });
 
@@ -93,12 +93,12 @@ function populateTimeDropdown(fetchedShowings, selectedMovie) {
         const slotEnd = new Date(currentTime.getTime() + (selectedMovieDuration + 15) * 60000); // End time for selected movie
 
         // Check if this slot is unavailable due to other showings
-        const isOverlapping = unavailableSlots.some(slot => {
+        const isOverlapping = occupiedSlots.some(slot => {
             return currentTime < slot.end && slotEnd > slot.start; // Check for overlap
         });
 
         // Find the next showing start time
-        const nextShowingStart = unavailableSlots.find(slot => slot.start > currentTime)?.start || null;
+        const nextShowingStart = occupiedSlots.find(slot => slot.start > currentTime)?.start || null;
 
         // Check if the selected movie duration exceeds the time available until the next showing
         const isTooLong = nextShowingStart && slotEnd > nextShowingStart; // Only check if there is a next showing
@@ -115,7 +115,7 @@ function populateTimeDropdown(fetchedShowings, selectedMovie) {
             option.disabled = true; // Disable the option so it's not clickable
         } else if (isOverlapping) {
             // Find the movie title for the overlapping slot
-            const overlappingSlot = unavailableSlots.find(slot => currentTime < slot.end && slotEnd > slot.start);
+            const overlappingSlot = occupiedSlots.find(slot => currentTime < slot.end && slotEnd > slot.start);
             option.textContent = `${timeSlot} - Unavailable (Showing id: ${overlappingSlot.id} - ${overlappingSlot.title})`;
             option.disabled = true; // Disable the option so it's not clickable
         } else {
