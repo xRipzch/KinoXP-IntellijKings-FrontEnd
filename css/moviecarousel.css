@@ -34,13 +34,11 @@ h2{
 /* GLOBAL STYLES */
 .card-container {
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-right: 12vw;
-    margin-left: 12vw;
-    flex-wrap: nowrap;
-    padding: 1rem 0;
-    gap: 1.2vw;
+    flex-direction: row; /* Change flex direction to column */
+    align-items: flex-start;    /* Center both card and showtime box */
+    margin: 1rem 10vw;
+
+    gap: 1.5vw;
     overflow-x: auto;
     scroll-behavior: smooth;
 }
@@ -62,7 +60,6 @@ p {
 .flow > * + * {
     margin-top: var(--flow-space, 1em);
 }
-
 .card {
     flex: 0 0 auto;
     display: grid;
@@ -72,7 +69,6 @@ p {
     overflow: hidden;
     border-radius: 0.625rem;
     box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
-    margin-bottom: 1rem; /* Add margin to separate the card from the showtime box */
 }
 
 .card > * {
@@ -131,20 +127,23 @@ p {
 #bottom-description {
     margin-top: 0;
 }
+
 .showtime-box {
     background-color: var(--white);
     color: var(--black);
     padding: 10px;
     border-radius: 5px;
-    width: 100%;
+    width: 16vw; /* Match the width of the movie card */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin-top: 1rem; /* Add margin to separate the showtime box from the card */
+    text-align: center; /* Center the showtimes text */
 }
 
 .showtime {
-    display: flex;
-    justify-content: space-between;
+    display: block;
+    justify-content: end;
     padding: 5px 0;
+    font-size: 0.9rem; /* Adjust font size to fit */
 }
 
 .card__button {

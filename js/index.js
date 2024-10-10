@@ -95,25 +95,35 @@ async function findShowingsByDate(date) {
 
     // Iterate over the moviesMap and create elements
     moviesMap.forEach(({ movie, showTimes }) => {
+        // Create a wrapper div to contain both the movie card and the showtime box
+        const movieWrapper = document.createElement('div');
+        movieWrapper.classList.add('movie-wrapper');
+
         const movieItem = document.createElement('div');
         movieItem.classList.add('card');
 
         // Create the card structure with movie details
         movieItem.innerHTML = `
-        <a id="anchor-img" href="../html/movie-details.html?id=${movie.id}">
-            <img id="movie-item-img" src="${movie.imageUrl}" class="card__background"> 
-        </a>
-        <div class="card__content | flow">
-            <div class="card__content--container | flow">
-                <h2 class="card__title">${movie.title}</h2>
-                <p class="card__description" id="top-description"><span id="is-3d">${get3dValue(movie.is3d)}</span><span id="movie-duration-in-minutes">${calculateMinutesToHours(movie.durationInMinutes)}</span></p>
-                <p class="card__description" id="bottom-description">${formatDateToShortMonth(movie.releaseDate)}</p>
+            <a id="anchor-img" href="../html/movie-details.html?id=${movie.id}">
+                <img id="movie-item-img" src="${movie.imageUrl}" class="card__background"> 
+            </a>
+            <div class="card__content | flow">
+                <div class="card__content--container | flow">
+                    <h2 class="card__title">${movie.title}</h2>
+                    <p class="card__description" id="top-description">
+                        <span id="is-3d">${get3dValue(movie.is3d)}</span>
+                        <span id="movie-duration-in-minutes">${calculateMinutesToHours(movie.durationInMinutes)}</span>
+                    </p>
+                    <p class="card__description" id="bottom-description">${formatDateToShortMonth(movie.releaseDate)}</p>
+                </div>
+                <a href="../html/movie-details.html?id=${movie.id}" class="card__button">Read more</a>
             </div>
-            <a href="../html/movie-details.html?id=${movie.id}" class="card__button">Read more</a>
-        </div>
-    `;
+        `;
 
-        // Create the showing times container and add each showtime
+        // Append the card to the wrapper
+        movieWrapper.appendChild(movieItem);
+
+        // Create and append the showing times box
         const showingItem = document.createElement('div');
         showingItem.classList.add('showtime-box'); // Apply the new box style
 
@@ -122,17 +132,31 @@ async function findShowingsByDate(date) {
             const showtimeDiv = document.createElement('div');
             showtimeDiv.classList.add('showtime');
             showtimeDiv.innerHTML = `
-            <span>${showtime.theater}</span>
-            <span title="Start Time">${showtime.startTime}</span>
-        `;
+                <span>${showtime.theater}</span>
+                <span title="Start Time">${showtime.startTime}</span>
+            `;
             showingItem.appendChild(showtimeDiv);
         });
 
-        // Append the showing times box to the movie card
-        movieItem.appendChild(showingItem);
+        // Append the showtimes box to the wrapper
+        movieWrapper.appendChild(showingItem);
 
-        // Append the card to the card grid
-        cardGrid.appendChild(movieItem);
+        // Finally, append the entire wrapper to the card grid
+        cardGrid.appendChild(movieWrapper);
+
+        if (cardGrid.childElementCount > 3) {
+            movieGoLeft.style.display = "block"
+            movieGoRight.style.display = "block"
+        }
+    });
+    movieGoLeft.addEventListener('click', () => {
+        // Scroll the date container to the right by a specific amount (e.g., 100px)
+        cardGrid.scrollBy({ left: -400, behavior: 'smooth' });
+    });
+
+    movieGoRight.addEventListener('click', () => {
+        // Scroll the date container to the right by a specific amount (e.g., 100px)
+        cardGrid.scrollBy({ left: 400, behavior: 'smooth' });
     });
 }
 
