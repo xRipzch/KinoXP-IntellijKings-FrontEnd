@@ -45,8 +45,8 @@ function createDateButtons(startDate, days) {
             // Add 'active' class to the clicked button
             button.classList.add('active');
 
-            await updateUrlWithShowings(date)
-        })
+            await updateUrlWithShowings(date);
+        });
     }
 
     dateGoLeft.addEventListener('click', () => {
@@ -60,43 +60,18 @@ function createDateButtons(startDate, days) {
     });
 }
 
-/*let showings = [];
-async function findShowingsByDate(date) {
-    // Clear movie grid before adding new children :-p
-    movieGrid.innerHTML = '';
-    const url = "http://localhost:8080/showings/" + date;
-    showings =  await fetch(url).then(response => response.json());
-    console.log(showings)
-    showings.forEach(showing => {
-        const movieItem = document.createElement('div');
-        console.log(showing.movie.title)
-        movieItem.innerHTML = `
-            <div class="grid-item">
-                <div class="grid-image">
-                    <img src="${showing.movie.imageUrl}" class="image-container">
-                    <span class="format-label-left">${showing.movie.title}</span>
-                    <span class="format-label-right" title="Duration">${showing.movie.durationInMinutes}</span>
-
-                </div>
-                <div class="grid-text">
-                    <span class="format-label-left">${showing.theater.name}</span>
-                    <span class="format-label-right" title="Duration">${showing.startTime}</span>
-
-                </div>
-            </div>
-        `;
-        movieGrid.appendChild(movieItem);
-    });
-}*/
-
 const cardGrid = document.getElementById('card-grid');
+const showingGrid = document.getElementById('showing-grid');
 
-let showings = []
+let showings = [];
+
+// Adjust the findShowingsByDate function
 async function findShowingsByDate(date) {
-    // Clear movie grid before adding new children :-p
+    // Clear movie grid before adding new children
     cardGrid.innerHTML = '';
+    showingGrid.innerHTML = '';  // Clear the showings grid too
     const url = "http://localhost:8080/showings/" + date;
-    showings =  await fetch(url).then(response => response.json());
+    showings = await fetch(url).then(response => response.json());
     console.log(showings);
 
     // Group showings by movieId
@@ -105,7 +80,7 @@ async function findShowingsByDate(date) {
     showings.forEach(showing => {
         const movieId = showing.movie.id;
         if (!moviesMap.has(movieId)) {
-            // If this movie is not already in the map, add it with an empty showtimes array
+            // Add the movie with an empty showtimes array
             moviesMap.set(movieId, {
                 movie: showing.movie,
                 showTimes: []
@@ -118,51 +93,46 @@ async function findShowingsByDate(date) {
         });
     });
 
-    // Now iterate over the moviesMap and create the elements
+    // Iterate over the moviesMap and create elements
     moviesMap.forEach(({ movie, showTimes }) => {
         const movieItem = document.createElement('div');
-
-        movieItem.innerHTML = `
-                <a id="anchor-img" href="../html/movie-details.html?id=${movie.id}">
-                    <img id="movie-item-img" src="${movie.imageUrl}" class="card__background"> 
-                </a>
-                <div class="card__content | flow">
-                    <div class="card__content--container | flow">
-                        <h2 class="card__title">${movie.title}</h2>
-                        <p class="card__description" id="top-description"><span id="is-3d">${get3dValue(movie.is3d)}</span><span id="movie-duration-in-minutes">${calculateMinutesToHours(movie.durationInMinutes)}</span> </p>
-                        <p class="card__description" id="bottom-description">${formatDateToShortMonth(movie.releaseDate)}</p>
-                    </div>
-                    <a href="../html/movie-details.html?id=${movie.id}" class="card__button">Read more</a>
-                </div>
-                <div class="grid-bottom">
-<!--                Her skal den href til sædereservation for showingId-->
-<!--                <a id="anchor-img" href=">-->
-                    ${showTimes.map(showtime => `
-                        <div class="showtime">
-                            <span>${showtime.theater}</span>
-                            <span title="Start Time">${showtime.startTime}</span>
-                        </div>
-<!--                </a>-->
-                    `)}
-                </div>
-        `;
-
         movieItem.classList.add('card');
+
+        // Create the card structure with movie details
+        movieItem.innerHTML = `
+        <a id="anchor-img" href="../html/movie-details.html?id=${movie.id}">
+            <img id="movie-item-img" src="${movie.imageUrl}" class="card__background"> 
+        </a>
+        <div class="card__content | flow">
+            <div class="card__content--container | flow">
+                <h2 class="card__title">${movie.title}</h2>
+                <p class="card__description" id="top-description"><span id="is-3d">${get3dValue(movie.is3d)}</span><span id="movie-duration-in-minutes">${calculateMinutesToHours(movie.durationInMinutes)}</span></p>
+                <p class="card__description" id="bottom-description">${formatDateToShortMonth(movie.releaseDate)}</p>
+            </div>
+            <a href="../html/movie-details.html?id=${movie.id}" class="card__button">Read more</a>
+        </div>
+    `;
+
+        // Create the showing times container and add each showtime
+        const showingItem = document.createElement('div');
+        showingItem.classList.add('showtime-box'); // Apply the new box style
+
+        // Loop through showtimes and add them into the showingItem
+        showTimes.forEach(showtime => {
+            const showtimeDiv = document.createElement('div');
+            showtimeDiv.classList.add('showtime');
+            showtimeDiv.innerHTML = `
+            <span>${showtime.theater}</span>
+            <span title="Start Time">${showtime.startTime}</span>
+        `;
+            showingItem.appendChild(showtimeDiv);
+        });
+
+        // Append the showing times box to the movie card
+        movieItem.appendChild(showingItem);
+
+        // Append the card to the card grid
         cardGrid.appendChild(movieItem);
-    });
-
-    if (cardGrid.childElementCount > 5) {
-        movieGoLeft.style.display = "block";
-        movieGoRight.style.display = "block";
-    }
-    movieGoLeft.addEventListener('click', () => {
-        // Scroll the date container to the right by a specific amount (e.g., 100px)
-        cardGrid.scrollBy({ left: -400, behavior: 'smooth' });
-    });
-
-    movieGoRight.addEventListener('click', () => {
-        // Scroll the date container to the right by a specific amount (e.g., 100px)
-        cardGrid.scrollBy({ left: 400, behavior: 'smooth' });
     });
 }
 
@@ -179,8 +149,8 @@ dateButtonsContainer.addEventListener('scroll', () => {
         if (lastDateText !== "Today") {
             lastDate = new Date(lastDateText + " " + today.getFullYear());
         }
-        if (lastDate.getFullYear()>today.getFullYear()){
-
+        if (lastDate.getFullYear() > today.getFullYear()) {
+            // Handle the case where the year is greater than the current year
         }
 
         // Ensure continuous date increments
@@ -201,9 +171,8 @@ async function updateUrlWithShowings(date) {
     await findShowingsByDate(formattedDate);
 }
 
-/////////////////////////////////////////////////////////////////////
 window.onload = async function() {
     const button = document.querySelector('button');
     button.classList.add('active');
-    await updateUrlWithShowings(today)
-}
+    await updateUrlWithShowings(today);
+};

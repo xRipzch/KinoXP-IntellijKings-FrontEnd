@@ -26,10 +26,8 @@ h2{
 }
 
 #anchor-img {
-    width: -webkit-fill-available;
-    height: -webkit-fill-available;
-    width: 11vw;
-    height: 16vw;
+    width: 16vw;
+    height: 100%;
     object-fit: cover;
 }
 
@@ -38,11 +36,13 @@ h2{
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin: 0 auto;
+    margin-right: 12vw;
+    margin-left: 12vw;
     flex-wrap: nowrap;
     padding: 1rem 0;
     gap: 1.2vw;
-    overflow-x: hidden;
+    overflow-x: auto;
+    scroll-behavior: smooth;
 }
 
 h2 {
@@ -67,12 +67,12 @@ p {
     flex: 0 0 auto;
     display: grid;
     place-items: center;
-    max-width: 11vw;
-    min-height: 16vw;
-    max-height: 16vw;
+    min-width: 16vw;
+    min-height: 25vw;
     overflow: hidden;
     border-radius: 0.625rem;
     box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
+    margin-bottom: 1rem; /* Add margin to separate the card from the showtime box */
 }
 
 .card > * {
@@ -130,6 +130,21 @@ p {
 
 #bottom-description {
     margin-top: 0;
+}
+.showtime-box {
+    background-color: var(--white);
+    color: var(--black);
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem; /* Add margin to separate the showtime box from the card */
+}
+
+.showtime {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
 }
 
 .card__button {
@@ -225,4 +240,5 @@ a:hover {
         transition-delay: 500ms;
     }
 }
+
 

@@ -2,9 +2,10 @@
 .date-container {
     display: flex;
     gap: 20px;
-    overflow-x: hidden;
     white-space: nowrap;
     padding: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
 }
 
 .date-container button:hover {
@@ -65,6 +66,7 @@
 .date-selector {
     position: relative; /* Establish a positioning context */
     width: 100%;       /* Ensure it takes full width */
+
 }
 
 .go-arrow {
@@ -106,14 +108,14 @@
 
 .movie-selector-arrow {
     width: 40px;
-    height: 16vw;
+    height: 25.4vw;
     margin: 1rem 0 1rem 0;
 }
 
 .movie-selector-go-left {
-    margin-left: 18vw;
+    margin-left: 11vw;
 }
 
 .movie-selector-go-right {
-    margin-right: 18vw;
+    margin-right: 11vw;
 }
