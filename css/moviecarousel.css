@@ -90,7 +90,6 @@ p {
     justify-content: space-between;
     align-self: flex-end;
     padding: 5% 20px 1.875rem;
-    height: 55%;
     width: 100%;
     background: linear-gradient(180deg, hsla(0, 0%, 0%, 0) 0%, hsl(0deg 0% 0% / 58%) 10%, hsl(0, 0%, 0%) 100%);
 }
