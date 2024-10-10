@@ -9,7 +9,6 @@ const movieGoLeft = document.querySelector('.movie-selector-go-left');
 const movieGoRight = document.querySelector('.movie-selector-go-right');
 const today = new Date();
 const daysToGenerate = 31; // one month
-const movieGrid = document.getElementById('movie-grid');
 
 let showings = [];
 // Function to generate a batch of date buttons
@@ -65,7 +64,6 @@ function createDateButtons(startDate, days) {
 const cardGrid = document.getElementById('card-grid');
 const showingGrid = document.getElementById('showing-grid');
 
-let showings = [];
 
 // Adjust the findShowingsByDate function
 async function findShowingsByDate(date) {
