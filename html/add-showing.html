@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KinoXP</title>
+    <link rel="stylesheet" href="../css/basic.css">
+    <link rel="stylesheet" href="../css/form.css">
+    <script type="module" src="../js/add-showing-form.js" defer></script>
+
+</head>
+<body>
+<nav-bar></nav-bar>
+<h1>Add a New Showing</h1>
+<form id="add-input-form">
+    <label for="movieDropdown">Select Movie:</label>
+    <select id="movieDropdown" name="movie" required>
+        <option value="" disabled selected>Select a Movie</option>
+        <!-- Options will be inserted here dynamically by javascript -->
+    </select>
+
+    <label for="theaterDropdown">Select Theater:</label>
+    <select id="theaterDropdown" name="theater" required disabled>
+        <option value="" disabled selected>Select a Theater</option>
+        <!-- Options will be inserted here dynamically by javascript -->
+    </select>
+
+    <label for="showingDate">Select Date:</label>
+    <input type="date" id="showingDate" name="showingDate" required disabled>
+
+    <label for="showingTime">Select Time:</label>
+    <select id="showingTime" name="showingTime" required disabled>
+        <option value="">-- Select a Time --</option>
+        <!-- Options will be dynamically populated by JavaScript -->
+    </select>
+
+    <button type="submit">Add Showing</button>
+</form>
+<script src="../js/navbar.js"></script>
+</body>
+</html>

@@ -1,4 +1,5 @@
-/* Root color variables */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+
 :root {
     --color-light-gray: #F1F2F4;
     --color-gray: #B3B3B3;
@@ -14,56 +15,70 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: "Inter-Medium", sans-serif;
     margin: 0;
     padding: 0;
-    background-color: var(--color-light-gray);
+    background-attachment: fixed;
+    background-image: linear-gradient(to top, var(--color-dark-gray), var(--color-black));
+    background-color: var(--color-dark-gray);
 }
 
 h1 {
-    text-align: center;
-    color: var(--color-dark-gray);
-    font-size: 2rem;
+    color: var(--color-light-gray);
+    font-size: xx-large;
     margin-bottom: 20px;
+    padding: 20px 0 20px 0;
+    border-bottom: #f1f2f43b 1px solid;
+}
+
+.all-movies-container {
+    margin: 0 20vw 0 20vw;
+}
+
+.all-showings-container {
+    margin: 0 20vw 0 20vw;
+}
+.date-container{
+    margin: 0 10vw 0 10vw;
 }
 
 /* Grid container to hold all movies */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(9vw, 1fr));
     gap: 15px;
-    padding: 15px;
-
 }
 
 /* Movie card styling */
 .grid-item {
-    background-color: var(--color-light-gray);
-    border: 1px solid var(--color-gray);
-    border-radius: 20px;
-    padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
     position: relative;
+    width: 8.5vw;
+    height: 16vw;
 }
 
 /* Title section */
-.grid-top {
+.grid-bottom {
     width: 100%;
     text-align: center;
-    overflow: hidden; /* Ensures that overflow is hidden */
-    /*background-color: var(--color-magenta); !* TESTING *!*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.grid-top h3 {
-    margin: 0;
-    font-size: 1.8rem;
-    color: var(--color-dark-gray);
-    white-space: nowrap; /* Prevents the title from wrapping to the next line */
-    overflow: hidden; /* Ensures that the overflowing text is hidden */
-    text-overflow: ellipsis; /* Adds the ellipsis (...) when the title overflows */
-    max-width: 100%; /* Ensures it respects the container's width */
+.grid-bottom h2 {
+    font-size: large;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    margin-bottom: 0;
+}
+
+.grid-bottom h3 {
+    margin-top: 0.3vw;
+    font-size: medium;
 }
 
 
@@ -80,8 +95,13 @@ h1 {
 /* Movie image and format/duration labels */
 .grid-image {
     position: relative;
-    min-width: 200px; /* TODO */
-    height: 300px; /* Fixed image height */
+    width: 100%;
+    min-height: 12vw;
+    max-height: 12vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
 }
 
 .image-container {
@@ -100,7 +120,7 @@ h1 {
     color: var(--color-light-gray);
     padding: 5px 10px;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: small;
     font-weight: bold;
 }
 
@@ -125,18 +145,8 @@ h1 {
     color: var(--color-light-gray);
     padding: 5px 10px;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: small;
     font-weight: bold;
-}
-
-/* Buttons on the right */
-.grid-right {
-    display: flex;
-    flex-direction: column; /* Stack items vertically */
-    /*justify-content: space-between; !* Push the buttons to the bottom *!*/
-    height: 100%; /* Ensure it takes up the full height of the container */
-    /*background-color: #5ca351;*/
-
 }
 
 /* Button styling */
@@ -148,63 +158,106 @@ h1 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: small;
     color: var(--color-light-gray);
     text-align: center;
 }
 
-.button-red {
+.format-label-button {
+    position: absolute;
+    bottom: 10px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-style: solid;
+    border-color: rgb(0 0 0 / 30%);
+    width: 20%;
+    height: 10%;
+    font-size: 1vw;
+}
+
+.button-delete {
     background-color: var(--color-red);
+    right: 10%;
+    font-size: 0.8vw;
 }
 
-.button-blue {
+.button-delete:hover {
+    background-color: #bd6a6b;
+}
+
+.button-edit {
     background-color: var(--color-light-blue);
+    left: 45%;
+    font-size: 0.8vw;
 }
 
-.upper-right {
-    /*font-size: 1rem;*/
-    /*color: var(--color-dark-gray);*/
-    /*max-height: 4.5em; !* Control the height to display up to 3 lines, adjust as needed *!*/
-    margin-bottom: 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    /*max-width: 100%;*/
-    height: 50%;
-
+.button-edit:hover {
+    background-color: #37c7f7;
 }
 
-.lower-right {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    height: 50%;
-    bottom: 1px;
-}
-
-.add-movie-container {
-    background-color: var(--color-green);
+.add-new-container {
+    /*background-color: var(--color-green);*/
     border: 2px dashed var(--color-gray); /* Dashed border to indicate it's for adding */
     display: flex;
     justify-content: center;
     align-items: center;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 5s;
+    box-sizing: border-box;
 }
 
-.add-movie-container h2 {
-    color: var(--color-light-gray);
-    font-size: 1.5rem;
-    margin: 0;
+.add-new-container:hover {
+    background-color: #5ca351b0;
+}
 
+
+
+.add-new-container h2 {
+    color: var(--color-light-gray);
+    margin: 0;
+    text-align: center;
+    font-size: large;
 }
 
 a {
     text-decoration: none; /* Remove underline */
-    color: inherit; /* Inherit the text color of the parent */
+    color: var(--color-light-gray) /* Inherit the text color of the parent */
 }
 
 a:hover {
     color: var(--color-medium-blue); /* Optional: Add a hover effect */
 }
+
+img {
+    transition: border .1s linear;
+}
+
+img:hover {
+    border-color: var(--color-medium-blue);
+    border-style: solid;
+    box-sizing: border-box;
+    transition-timing-function: ease-out;
+}
+
+/* Default button styling */
+.hover-button {
+    background-color: #017FB5;
+    color: #FFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.hover-button:hover {
+    background-color: #005F8A; /* Darken color */
+    transform: scale(1.1); /* Slightly increase size */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow */
+}
+
+

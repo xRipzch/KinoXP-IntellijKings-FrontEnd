@@ -2,7 +2,7 @@ body {
     margin: 0;
     background-color: #171617;
     color: #F1F2F4;
-    font-family: "Inter-Medium",sans-serif;
+    font-family: "Inter-Medium", sans-serif;
 }
 
 .movie-container {
@@ -16,6 +16,7 @@ body {
     height: 26.5vw;
     border-radius: 0.4rem;
     box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
+    object-fit: cover;
 }
 
 .left-column {
