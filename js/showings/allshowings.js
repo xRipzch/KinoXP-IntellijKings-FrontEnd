@@ -2,15 +2,15 @@ console.log('allshowings.js loaded');
 
 fetch('http://localhost:8080/showings')
     .then(response => {
-    if (!response.ok) {
-        throw new Error('Network response was not ok: ' + response.statusText);
-    }
-    return response.json();
-})
+        if (!response.ok) {
+            throw new Error('Network response was not ok: ' + response.statusText);
+        }
+        return response.json();
+    })
     .then(data => {
-    console.log(data);
-    displayShowingsAsGrid(data);
-})
+        console.log(data);
+        displayShowingsAsGrid(data);
+    })
     .catch(error => {
         console.error('Error fetching showings:', error)
     })
@@ -29,7 +29,7 @@ function displayShowingsAsGrid(showings) {
 
     showingGrid.appendChild(addNewShowingItem);
 
-    addNewShowingItem.href = '../html/add-showing.html';
+    addNewShowingItem.href = '../../html/showings/add-showing.html';
 
     showings.forEach(showing => {
         const showingItem = document.createElement('div'); // This not the container??
@@ -62,7 +62,7 @@ function displayShowingsAsGrid(showings) {
         })}`;
 
         const theaterName = theater.name;
-        
+
         showingItem.innerHTML = `
       <div class="grid-item showing-item">
     <div class="grid-image">
