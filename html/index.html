@@ -3,13 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="../js/navbar.js"></script>
+    <nav-bar></nav-bar>
+    <link rel="stylesheet" href="../css/buttons.css">
+    <link rel="stylesheet" href="../css/grid.css">
+    <link rel="stylesheet" href="../css/basic.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/moviecarousel.css">
+    <link rel="stylesheet" href="../css/date-selector.css">
 </head>
 <body>
-<nav-bar></nav-bar>
+<div class="date-selector">
+    <div class="go-arrow date-selector-arrow go-left date-selector-go-left">‹</div>
+    <div class="go-arrow date-selector-arrow go-right date-selector-go-right">›</div>
+    <div id="date-container" class="date-container"></div>
+</div>
 
-<h1>Welcome to the Home Page</h1>
-<input id="input-showing-id" type="number">
-<button id="delete-showing" type="submit"></button>
+<div class="movie-selector">
+    <div class="go-arrow movie-selector-arrow go-left movie-selector-go-left" style="display: none">‹</div>
+    <div class="go-arrow movie-selector-arrow go-right movie-selector-go-right" style="display: none">›</div>
+    <div id="card-grid" class="card-container"></div>
+    <div id="showing-grid" class="card-container"></div>
+</div>
+<script src="../js/navbar.js"></script>
+<script src="../js/index.js" type="module"></script>
 </body>
 </html>

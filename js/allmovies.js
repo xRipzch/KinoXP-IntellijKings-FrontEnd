@@ -1,16 +1,10 @@
+import {fetchMovies, deleteMovieById} from './api/apiservice.js';
 console.log('allmovies.js loaded');
 
-
-fetch('http://localhost:8080/movies')
-    .then(response => {
-        if (!response.ok) { // Error handling if not ok
-            throw new Error('Network response was not ok: ' + response.statusText); // Error response
-        }
-        return response.json(); // Parse the JSON from the response if ok
-    })
-    .then(data => {
-        console.log(data); // Log the fetched data to the console for debugging
-        displayMoviesAsGrid(data); // Call a function to display the movies on the page
+fetchMovies()
+    .then(movies => {
+        console.log(movies); // Log the fetched movies data
+        displayMoviesAsGrid(movies);
     })
     .catch(error => {
         console.error('Error fetching movies:', error);
@@ -19,22 +13,20 @@ fetch('http://localhost:8080/movies')
 function displayMoviesAsGrid(movies) {
     const movieGrid = document.getElementById('movie-grid');
 
-
     const addNewMovieItem = document.createElement('a');
     addNewMovieItem.classList.add('grid-item');
+    addNewMovieItem.href = '../html/add-movie.html';
 
     addNewMovieItem.innerHTML = `
-        <div class="grid-image add-movie-container">
-            <h2>Add New Movie</>
+        <div class="grid-image add-new-container">
+            <i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 2.5em"></i>
         </div>
     `;
 
     movieGrid.appendChild(addNewMovieItem);
 
-    addNewMovieItem.href = '../html/add-movie.html';
-
     movies.forEach(movie => {
-        const movieItem = document.createElement('a'); // This not the container??
+        const movieItem = document.createElement('a');
 
         movieItem.href = `../html/movie-details.html?id=${movie.id}`; // Link to movie details
 
@@ -43,11 +35,9 @@ function displayMoviesAsGrid(movies) {
         const hours = Math.floor(durationInMinutes / 60);
         const minutes = durationInMinutes % 60;
 
-// After appending the movieItem to the DOM
-
         movieItem.innerHTML = `
             <div class="grid-item">
-                <!-- Left side - image + 2D/3D label -->
+                <!-- Image + labels -->
                 <div class="grid-image">
                     <span class="format-label-left">${movie.is3d ? '3D' : '2D'}</span>
                     <span class="format-label-right" title="Duration">${hours}<sup>h</sup> ${minutes}<sup>m</sup></span>
@@ -64,22 +54,17 @@ function displayMoviesAsGrid(movies) {
                     </button><img src="${movie.imageUrl}" alt="${movie.title} Poster" class="image-container">
                 </div>
 
-                <!-- Title -->
+                <!-- Title + release year -->
                 <div class="grid-bottom">
-                    <h2>${movie.title}</h2><h3 class="release-text">(${releaseYear})</h3>
+                    <h2>${movie.title}</h2>
+                    <h3 class="release-text">(${releaseYear})</h3>
                 </div>
 
-                <!-- Content -->
-<!--                <div class="grid-content">-->
-                
-
-<!--                        </div>-->
                 </div>
             </div>
         `
         movieGrid.appendChild(movieItem);
 
-        // Add event listener for mouseover to show the delete button
         movieItem.addEventListener('mouseover', () => showDeleteButton(movieItem));
 
         // Add event listener for mouseout to hide the delete button
@@ -110,19 +95,17 @@ function displayMoviesAsGrid(movies) {
             const confirmDelete = confirm(`Are you sure you want to delete "${movie.title}"?`);
             if (confirmDelete) {
                 // DELETE request to backend
-                fetch(`http://localhost:8080/movie/${movie.id}`, {
-                    method: 'DELETE'
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Failed to delete movie: ' + response.statusText);
-                        }
-                        return response.text(); // Get response text (optional)
-                    })
+                deleteMovieById(movieId)
                     .then(result => {
-                        console.log(result); // Optional: Log the result
+                        console.log(result);
                         movieItem.remove(); // Remove the movie card from the DOM
-                        alert('Movie deleted successfully!');
+                        Swal.fire({
+                            title: 'Movie deleted successfully!',
+                            icon: 'success',
+                            timer: 1000,
+                            showConfirmButton: false
+                        });
+                        // window.location.replace('../html/all-movies.html');
                     })
                     .catch(error => {
                         console.error('Error deleting movie:', error);
@@ -132,28 +115,10 @@ function displayMoviesAsGrid(movies) {
         }
 
 
-        /// ADD MOVIE FUNCTION ///
-        function addMovie() {
-
-            const addNewMovieItem = document.createElement('div');
-            addNewMovieItem.classList.add('grid-item');
-
-            addNewMovieItem.innerHTML = `
-        <div class="grid-image add-movie-container">
-            <div class="add-movie-container">
-                <h2>Add New Movie</>
-            </div>
-        </div>
-    `;
-
-    movieGrid.appendChild(addNewMovieItem);
-
-        }
-
         // Redirect to edit //
 
         function redirectToEdit(movieId) {
-            window.location.href = "../html/edit-movie.html?id=" + movieId;
+            window.location.href = "../html/edit-movie.html"
 
         }
 
