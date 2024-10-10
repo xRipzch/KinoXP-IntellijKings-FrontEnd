@@ -15,7 +15,7 @@ function displayMoviesAsGrid(movies) {
 
     const addNewMovieItem = document.createElement('a');
     addNewMovieItem.classList.add('grid-item');
-    addNewMovieItem.href = '../html/movies/add-movie.html';
+    addNewMovieItem.href = '../../html/movies/add-movie.html';
 
     addNewMovieItem.innerHTML = `
         <div class="grid-image add-new-container">
@@ -28,7 +28,7 @@ function displayMoviesAsGrid(movies) {
     movies.forEach(movie => {
         const movieItem = document.createElement('a');
 
-        movieItem.href = `../html/movies/movie-details.html?id=${movie.id}`; // Link to movie details
+        movieItem.href = `../../html/movies/movie-details.html?id=${movie.id}`; // Link to movie details
 
         const releaseYear = new Date(movie.releaseDate).getFullYear();
         const durationInMinutes = movie.durationInMinutes;
@@ -111,7 +111,7 @@ function displayMoviesAsGrid(movies) {
         // Redirect to edit //
 
         function redirectToEdit(movieId) {
-            window.location.href = "../html/movies/edit-movie.html?id=" + movieId;
+            window.location.href = "../../html/movies/edit-movie.html?id=" + movieId;
 
         }
 

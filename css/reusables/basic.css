@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+
 :root {
     --color-light-gray: #F1F2F4;
     --color-gray: #B3B3B3;
@@ -13,10 +15,12 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: "Inter-Medium", sans-serif;
+    margin: 0;
     padding: 0;
     background-attachment: fixed;
     background-image: linear-gradient(to top, var(--color-dark-gray), var(--color-black));
+    background-color: var(--color-dark-gray);
 }
 
 h1 {
@@ -43,8 +47,6 @@ h1 {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(9vw, 1fr));
     gap: 15px;
-    padding: 15px;
-
 }
 
 /* Movie card styling */
