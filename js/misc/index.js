@@ -1,3 +1,4 @@
+import {fetchShowings} from "../api/apiservice";
 import {calculateMinutesToHours, get3dValue, formatDateToShortMonth} from './api/movieinfoconverters.js';
 
 console.log("index.js loaded");
@@ -70,6 +71,7 @@ async function findShowingsByDate(date) {
     // Clear movie grid before adding new children
     cardGrid.innerHTML = '';
     showingGrid.innerHTML = '';  // Clear the showings grid too
+
     const url = "http://localhost:8080/showings/" + date;
     showings = await fetch(url).then(response => response.json());
     console.log(showings);

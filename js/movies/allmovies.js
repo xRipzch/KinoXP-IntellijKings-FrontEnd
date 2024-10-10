@@ -1,10 +1,10 @@
-import {fetchMovies, deleteMovieById} from '../api/apiservice.js';
+import {deleteMovieById, fetchAnything} from '../api/apiservice.js';
+
 console.log('allmovies.js loaded');
 
-fetchMovies()
+fetchAnything('movies')
     .then(movies => {
-        console.log(movies); // Log the fetched movies data
-        displayMoviesAsGrid(movies);
+    displayMoviesAsGrid(movies);
     })
     .catch(error => {
         console.error('Error fetching movies:', error);

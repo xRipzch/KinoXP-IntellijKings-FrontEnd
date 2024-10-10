@@ -1,5 +1,22 @@
 const BASE_URL = 'http://localhost:8080';
 
+async function fetchAnything(url1, url2 = '', url3 = '') {
+    try { // Could put infinite amounts of urls in params.
+        // Build URL dynamically based on provided segments
+        const url = `${BASE_URL}/${url1}${url2 ? `/${url2}` : ''}${url3 ? `/${url3}` : ''}`;
+        const response = await fetch(url);
+
+        if (!response.ok) throw new Error(`Failed to fetch: ${response.statusText}`);
+        console.log('Fetched successfully from:', url);
+        return response.json();
+    } catch (error) {
+        console.error('Error in fetchAnything:', error);
+        throw error;
+    }
+}
+
+////                Fetch Specifics                ////
+
 async function fetchMovies() {
     try {
         const response = await fetch(`${BASE_URL}/movies`);
@@ -127,6 +144,7 @@ async function deleteShowingById(showingId) {
 // Export all service functions
 
 export {
+    fetchAnything,
     fetchMovies, fetchMovieById, deleteMovieById,
     fetchTheaters, fetchTheaterById,
     fetchShowings, addShowing, deleteShowingById, fetchShowingByTheaterAndDate

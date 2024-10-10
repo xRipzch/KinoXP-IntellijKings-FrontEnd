@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 addMovieForm.reset();
 
                 setTimeout(function () {
-                    window.location.href = '../html/movies/index.html';
+                    window.location.href = '../../html/movies/index.html';
                 }, 1000);
             } else {
                 alert('Failed to add movie');
