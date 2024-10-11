@@ -97,8 +97,6 @@ async function updateReservedSeats() {
         return [];
     }
 
-    let allReservedSeats = [];
-
     // Loop through each reservation and fetch the reserved seats
     for (const reservation of reservations) {
         let reservedSeats = [];
