@@ -11,7 +11,7 @@ async function fetchAnything(url1, url2 = '', url3 = '') {
         return response.json();
     } catch (error) {
         console.error('Error in fetchAnything:', error);
-        throw error;
+
     }
 }
 
@@ -26,7 +26,7 @@ async function fetchMovies() {
         return response.json();
     } catch (error) {
         console.error('Error in fetchMovies:', error);
-        throw error;
+
     }
 }
 
@@ -39,7 +39,7 @@ async function fetchMovieById(id) {
         return response.json();
     } catch (error) {
         console.error('Error in fetchMovieById:', error);
-        throw error;
+
     }
 }
 
@@ -53,7 +53,6 @@ async function fetchTheaters() {
 
     } catch (error) {
         console.error('Error in fetchTheaters:', error);
-        throw error;
     }
 }
 
@@ -66,7 +65,6 @@ async function fetchTheaterById(id) {
         return response.json();
     } catch (error) {
         console.error('Error in fetchTheaterById:', error);
-        throw error;
     }
 }
 
@@ -79,7 +77,6 @@ async function fetchShowingByTheaterAndDate(theaterId, date) {
         return response.json();
     } catch (error) {
         console.error('Error in fetchShowingByTheaterAndDate:', error);
-        throw error;
     }
 }
 
@@ -89,7 +86,7 @@ async function fetchShowingsByMovieAndDate(movieId, date) {
         if (!response.ok) throw new Error(`Failed to fetch showing: ${response.statusText}`);
         return response.json();
     } catch (error) {
-        throw error;
+        console.error('Error in fetchShowingsByMovieAndDate:', error);
     }
 }
 
@@ -100,7 +97,6 @@ async function deleteMovieById(movieId) {
         return response.text(); // Optional, could return any specific server response
     } catch (error) {
         console.error('Error in deleteMovie:', error);
-        throw error;
     }
 }
 
@@ -125,7 +121,6 @@ async function addShowing(showing) {
         return response.json();
     } catch (error) {
         console.error('Error in addShowing:', error);
-        throw error;
     }
 }
 
@@ -136,7 +131,6 @@ async function fetchShowings() {
         return response.json();
     } catch (error) {
         console.error('Error in fetchShowings:', error);
-        throw error;
     }
 }
 
@@ -146,10 +140,20 @@ async function deleteShowingById(showingId) {
         if (!response.ok) throw new Error(`Failed to delete showing: ${response.statusText}`);
         return response.text(); // Optional, could return any specific server response
     } catch (error) {
-        console.error('Error in deleteShowings:', error);
-        throw error;
-    }
+        console.error('Error in deleteShowings:', error);}
 }
+
+async function fetchSeatsByTheaterId (theaterId) {
+    try {
+        const seats = await fetch(`${BASE_URL}/seats/${theaterId}`);
+        if (!seats.ok) throw new Error(`Failed to fetch seats: ${seats.statusText}`);
+        console.log('Seats fetched successfully');
+        return seats.json();
+
+    } catch (error) {
+        console.error('Error in fetchSeatsByTheaterId:', error);}
+}
+
 
 // Export all service functions
 
@@ -157,5 +161,8 @@ export {
     fetchAnything,
     fetchMovies, fetchMovieById, deleteMovieById,
     fetchTheaters, fetchTheaterById,
-    fetchShowings, addShowing, deleteShowingById, fetchShowingByTheaterAndDate, fetchShowingsByMovieAndDate
+    fetchShowings, addShowing, deleteShowingById,
+    fetchShowingByTheaterAndDate, fetchShowingsByMovieAndDate,
+    fetchSeatsByTheaterId
+
 };
