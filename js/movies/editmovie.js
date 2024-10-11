@@ -32,8 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
         return urlParams.get(param);
     }
 
-
-
     function fetchMovieDetails(searchValue) {
         fetch(`http://localhost:8080/api/movies?search=${encodeURIComponent(searchValue)}`)
             .then(response => {

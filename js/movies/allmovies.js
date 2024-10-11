@@ -1,10 +1,10 @@
-import {fetchMovies, deleteMovieById} from './api/apiservice.js';
+import {deleteMovieById, fetchAnything} from '../api/apiservice.js';
+
 console.log('allmovies.js loaded');
 
-fetchMovies()
+fetchAnything('movies')
     .then(movies => {
-        console.log(movies); // Log the fetched movies data
-        displayMoviesAsGrid(movies);
+    displayMoviesAsGrid(movies);
     })
     .catch(error => {
         console.error('Error fetching movies:', error);
@@ -15,7 +15,7 @@ function displayMoviesAsGrid(movies) {
 
     const addNewMovieItem = document.createElement('a');
     addNewMovieItem.classList.add('grid-item');
-    addNewMovieItem.href = '../html/add-movie.html';
+    addNewMovieItem.href = '../../html/movies/add-movie.html';
 
     addNewMovieItem.innerHTML = `
         <div class="grid-image add-new-container">
@@ -28,7 +28,7 @@ function displayMoviesAsGrid(movies) {
     movies.forEach(movie => {
         const movieItem = document.createElement('a');
 
-        movieItem.href = `../html/movie-details.html?id=${movie.id}`; // Link to movie details
+        movieItem.href = `../../html/movies/movie-details.html?id=${movie.id}`; // Link to movie details
 
         const releaseYear = new Date(movie.releaseDate).getFullYear();
         const durationInMinutes = movie.durationInMinutes;
@@ -66,15 +66,11 @@ function displayMoviesAsGrid(movies) {
         movieGrid.appendChild(movieItem);
 
         movieItem.addEventListener('mouseover', () => showDeleteButton(movieItem));
-
-        // Add event listener for mouseout to hide the delete button
-        movieItem.addEventListener('mouseout', () => hideDeleteButton(movieItem));
-
-        // Add event listener for mouseover to show the edit button
         movieItem.addEventListener('mouseover', () => showEditButton(movieItem));
 
-        // Add event listener for mouseout to hide the edit button
+        movieItem.addEventListener('mouseout', () => hideDeleteButton(movieItem));
         movieItem.addEventListener('mouseout', () => hideEditButton(movieItem));
+
         const delbutton = movieItem.querySelector('.button-delete');
         const editButton = movieItem.querySelector('.button-edit')
         editButton.addEventListener('click', function (event) {
@@ -88,9 +84,8 @@ function displayMoviesAsGrid(movies) {
             deleteMovie(movie.id); // Call deleteMovie with the current movie ID
         });
 
-
         // DEL FUNCITON //
-        function deleteMovie(movieId) {// Add event listener to the Delete button
+        function deleteMovie(movieId) {
             // Confirmation dialog
             const confirmDelete = confirm(`Are you sure you want to delete "${movie.title}"?`);
             if (confirmDelete) {
@@ -105,7 +100,6 @@ function displayMoviesAsGrid(movies) {
                             timer: 1000,
                             showConfirmButton: false
                         });
-                        // window.location.replace('../html/all-movies.html');
                     })
                     .catch(error => {
                         console.error('Error deleting movie:', error);
@@ -114,11 +108,10 @@ function displayMoviesAsGrid(movies) {
             }
         }
 
-
         // Redirect to edit //
 
         function redirectToEdit(movieId) {
-            window.location.href = "../html/edit-movie.html?id=" + movieId;
+            window.location.href = "../../html/movies/edit-movie.html?id=" + movieId;
 
         }
 
