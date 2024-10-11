@@ -19,7 +19,7 @@ const BASE_URL = 'http://localhost:8080';
 // }
 
 async function apiCall(urlPath, method = 'GET', options = {}) {
-    const { baseUrl = BASE_URL, timeout = 2000, headers = {}, ...otherOptions } = options;
+    const { baseUrl = BASE_URL, timeout = 5000, headers = {}, ...otherOptions } = options;
     const url = `${baseUrl}/${encodeURI(urlPath)}`;
 
     // Set fetch options with default JSON content type and merge headers
@@ -33,7 +33,7 @@ async function apiCall(urlPath, method = 'GET', options = {}) {
     const controller = new AbortController();
     fetchOptions.signal = controller.signal;
 
-    // Helper function to handle timeout (2 seconds by default)
+    // Helper function to handle timeout (5 seconds by default) // BE AWARE HERE IF SLOW NETWORK
     const timeoutFetch = (fetchPromise) =>
         new Promise((resolve, reject) => {
             const id = setTimeout(() => {
@@ -70,41 +70,7 @@ async function apiCall(urlPath, method = 'GET', options = {}) {
         }
         throw error;
     }
-}
 
-
-
-async function fetchAnythingSIMPLE(...urlSegments) { // Better to just get 1 url?
-    const url = `${BASE_URL}/${urlSegments.map(encodeURIComponent).join('/')}`;
-
-    try {
-        const response = await fetch(url);
-
-        if (!response.ok) throw new Error(`Failed to fetch: ${response.statusText}`);
-
-        console.log('Fetched successfully from:', url);
-        return response.json();
-    } catch (error) {
-        console.error('Error in fetchAnything:', error);
-        throw error;
-    }
-}
-
-async function fetchAnythingBAD(url1, url2 = '', url3 = '', url4 = '') {
-    try { // Builds url dynamically Could put infinite amounts of urls in params.
-        const url = `${BASE_URL}/${url1}
-        ${url2 ? `/${url2}` : ''}
-        ${url3 ? `/${url3}` : ''}
-        ${url4 ? `/${url4}` : ''}`;
-        const response = await fetch(url);
-
-        if (!response.ok) throw new Error(`Failed to fetch: ${response.statusText}`);
-        console.log('Fetched successfully from:', url);
-        return response.json();
-    } catch (error) {
-        console.error('Error in fetchAnything:', error);
-        throw error;
-    }
 }
 
 ////                Fetch Specifics                ////

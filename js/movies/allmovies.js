@@ -2,7 +2,7 @@ import {deleteMovieById, apiCall} from '../api/apiservice.js';
 
 console.log('allmovies.js loaded');
 
-apiCall('movies')
+apiCall('movies',)
     .then(movies => {
     displayMoviesAsGrid(movies);
     })
