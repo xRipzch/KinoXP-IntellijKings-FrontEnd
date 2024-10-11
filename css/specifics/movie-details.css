@@ -46,6 +46,7 @@ h2 {
     margin-top: 1vw;
     margin-bottom: 0;
     font-size: larger;
+    font-family: "Inter-Medium", sans-serif !important;
 }
 
 #is-3d {
