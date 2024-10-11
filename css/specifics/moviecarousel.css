@@ -136,7 +136,7 @@ p {
     width: 100%;
 }
 
-.showtime-box button {
+.showtime-box a {
     display: flex;
     justify-content: space-between;
     padding: 10px;
@@ -154,11 +154,11 @@ p {
     cursor: pointer;
 }
 
-.showtime-box button:hover {
+.showtime-box a:hover {
     background-color: #9e0d5961;
 }
 
-#showtime-box button.active {
+#showtime-box a.active {
     background-color: #9e0d5961;
     border-color: var(--color-magenta);
     border-width: 3px;

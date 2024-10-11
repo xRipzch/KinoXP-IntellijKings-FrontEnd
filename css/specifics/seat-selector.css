@@ -1,0 +1,150 @@
+/* General body and container styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+
+.seat-container {
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    gap: 7px;
+    justify-content: center;
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+
+.seat-box {
+    position: relative;
+    width: 45px;
+    height: 35px;
+    background-color: #444;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.reserved-seat {
+    background-color: #d32f2f;
+    cursor: not-allowed;
+}
+
+
+
+.seat-box input[type="checkbox"] {
+    display: none;
+}
+
+
+.seat-box::before {
+    content: ' ';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: #4CAF50;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+
+.seat-box:hover::before {
+    background-color: #76ff03;
+    transform: scale(1.1);
+}
+
+
+.seat-box input[type="checkbox"]:checked + .seat-box::before {
+    background-color: #ffc107;
+}
+
+/* Reserved seat styling */
+.seat-box.reserved::before {
+    background-color: #d32f2f;
+    cursor: not-allowed;
+}
+
+
+.seat-box.reserved {
+    pointer-events: none;
+}
+
+
+.seat-box.reserved::before {
+    animation: pulse 1.5s infinite;
+}
+
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(211, 47, 47, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(211, 47, 47, 0);
+    }
+}
+
+.seat-row-label {
+    grid-column: 1 / span 8;
+    color: #ddd;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+.price {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.total {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 500;
+}
+.total div {
+    display: flex;
+    gap: 4px;
+}
+.total span {
+    font-size: 12px;
+    font-weight: 400;
+}
+.price button {
+    background: black;
+    color: white;
+    font-size: 14px;
+    padding: 7px 14px;
+    border-radius: 2px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    overflow: hidden;
+}
+
+
+

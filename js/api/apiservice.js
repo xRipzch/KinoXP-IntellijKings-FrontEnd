@@ -56,6 +56,18 @@ async function fetchTheaters() {
     }
 }
 
+async function fetchSeatsByTheaterId (theaterId) {
+    try {
+        const seats = await fetch(`${BASE_URL}/seats/${theaterId}`);
+        if (!seats.ok) throw new Error(`Failed to fetch seats: ${seats.statusText}`);
+        console.log('Seats fetched successfully');
+        return seats.json();
+
+    } catch (error) {
+        console.error('Error in fetchSeatsByTheaterId:', error);}
+}
+
+
 async function fetchTheaterById(id) {
     try {
         const response = await fetch(`${BASE_URL}/theater/${id}`);
@@ -124,6 +136,40 @@ async function addShowing(showing) {
     }
 }
 
+async function fetchReservedSeatsByReservation(reservationId){
+    try {
+        const reservedSeats = await fetch(`${BASE_URL}/reserved-seats/${reservationId}`);
+        if (!reservedSeats.ok) throw new Error(`Failed to fetch reserved seats: ${reservedSeats.statusText}`);
+        return reservedSeats.json();
+    } catch (error) {
+        console.error('Error in fetchReservedSeatsByReservation:', error);
+    }
+
+}
+
+async function fetchReservationsByShowing(showingId){
+    try {
+        const reservations = await fetch(`${BASE_URL}/reservations/${showingId}`);
+        if (!reservations.ok) throw new Error(`Failed to fetch reservations: ${reservations.statusText}`);
+        return reservations.json();
+    } catch (error) {
+        console.error('Error in fetchReservationsByShowing:', error);
+    }
+
+}
+
+
+async function fetchTempReservedSeatsByShowing(showingId){
+    try {
+        const tempReservedSeats = await fetch(`${BASE_URL}/temp-reserved-seats/${showingId}`);
+        if (!tempReservedSeats.ok) throw new Error(`Failed to fetch temp reserved seats: ${tempReservedSeats.statusText}`);
+        return tempReservedSeats.json();
+    } catch (error) {
+        console.error('Error in fetchTempReservedSeatsByShowing:', error);
+    }
+
+}
+
 async function fetchShowings() {
     try {
         const response = await fetch(`${BASE_URL}/showings`);
@@ -143,16 +189,7 @@ async function deleteShowingById(showingId) {
         console.error('Error in deleteShowings:', error);}
 }
 
-async function fetchSeatsByTheaterId (theaterId) {
-    try {
-        const seats = await fetch(`${BASE_URL}/seats/${theaterId}`);
-        if (!seats.ok) throw new Error(`Failed to fetch seats: ${seats.statusText}`);
-        console.log('Seats fetched successfully');
-        return seats.json();
 
-    } catch (error) {
-        console.error('Error in fetchSeatsByTheaterId:', error);}
-}
 
 
 // Export all service functions
@@ -163,6 +200,6 @@ export {
     fetchTheaters, fetchTheaterById,
     fetchShowings, addShowing, deleteShowingById,
     fetchShowingByTheaterAndDate, fetchShowingsByMovieAndDate,
-    fetchSeatsByTheaterId
-
+    fetchSeatsByTheaterId, fetchReservedSeatsByReservation,
+    fetchReservationsByShowing, fetchTempReservedSeatsByShowing
 };

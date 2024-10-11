@@ -39,6 +39,7 @@ function createDateButtons(startDate, days) {
         dateButtonsContainer.appendChild(button);
 
         button.addEventListener('click', async () => {
+            document.getElementById('loader').style.display = 'block';
             // Remove 'active' class from all buttons
             const allButtons = dateButtonsContainer.querySelectorAll('button');
             allButtons.forEach(btn => btn.classList.remove('active'));
@@ -47,6 +48,7 @@ function createDateButtons(startDate, days) {
             button.classList.add('active');
 
             await updateUrlWithShowings(date);
+            document.getElementById('loader').style.display = 'none';
         });
     }
 
@@ -89,13 +91,14 @@ async function findShowingsByDate(date) {
         }
         // Add the showing time to the movie's showtimes array
         moviesMap.get(movieId).showTimes.push({
-            theater: showing.theater.name,
+            id: showing.id,
+            theater: showing.theater,
             startTime: showing.startTime
         });
     });
 
     // Iterate over the moviesMap and create elements
-    moviesMap.forEach(({ movie, showTimes }) => {
+    moviesMap.forEach(({ movie, showTimes: showings }) => {
         // Create a wrapper div to contain both the movie card and the showtime box
         const movieWrapper = document.createElement('div');
         movieWrapper.classList.add('movie-wrapper');
@@ -129,14 +132,15 @@ async function findShowingsByDate(date) {
         showingItem.classList.add('showtime-box');
 
         // Loop through showtimes and add them into the showingItem
-        showTimes.forEach(showtime => {
-            const showtimeDiv = document.createElement('button');
-            showtimeDiv.classList.add('showtime');
-            showtimeDiv.innerHTML = `
-                <span>${showtime.theater}</span>
-                <span class="start-time">${getHourMinuteFromDateTime(showtime.startTime)}</span>
+        showings.forEach(showing => {
+            const showingDiv = document.createElement('a');
+            showingDiv.href = `../seats/seat-selection.html?showing=${showing.id}&theater=${showing.theater.id}`;
+            showingDiv.classList.add('showing');
+            showingDiv.innerHTML = `
+                <span>${showing.theater.name}</span>
+                <span class="start-time">${getHourMinuteFromDateTime(showing.startTime)}</span>
             `;
-            showingItem.appendChild(showtimeDiv);
+            showingItem.appendChild(showingDiv);
         });
 
         // Append the showtimes box to the wrapper
@@ -180,7 +184,7 @@ dateButtonsContainer.addEventListener('scroll', () => {
             lastDate = new Date(lastDateText + " " + today.getFullYear());
         }
         if (lastDate.getFullYear() > today.getFullYear()) {
-        // Handle the case where the year is greater than the current year
+            // Handle the case where the year is greater than the current year
         }
 
         // Ensure continuous date increments
