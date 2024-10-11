@@ -1,9 +1,11 @@
 const BASE_URL = 'http://localhost:8080';
 
-async function fetchAnything(url1, url2 = '', url3 = '') {
-    try { // Could put infinite amounts of urls in params.
-        // Build URL dynamically based on provided segments
-        const url = `${BASE_URL}/${url1}${url2 ? `/${url2}` : ''}${url3 ? `/${url3}` : ''}`;
+async function fetchAnything(url1, url2 = '', url3 = '', url4 = '') {
+    try { // Builds url dynamically Could put infinite amounts of urls in params.
+        const url = `${BASE_URL}/${url1}
+        ${url2 ? `/${url2}` : ''}
+        ${url3 ? `/${url3}` : ''}
+        ${url4 ? `/${url4}` : ''}`;
         const response = await fetch(url);
 
         if (!response.ok) throw new Error(`Failed to fetch: ${response.statusText}`);
