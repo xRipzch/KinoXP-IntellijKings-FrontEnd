@@ -1,8 +1,8 @@
-import {deleteMovieById, fetchAnything} from '../api/apiservice.js';
+import {deleteMovieById, apiCall} from '../api/apiservice.js';
 
 console.log('allmovies.js loaded');
 
-fetchAnything('movies')
+apiCall('movies')
     .then(movies => {
     displayMoviesAsGrid(movies);
     })

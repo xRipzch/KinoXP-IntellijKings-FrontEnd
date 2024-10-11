@@ -1,6 +1,96 @@
 const BASE_URL = 'http://localhost:8080';
 
-async function fetchAnything(url1, url2 = '', url3 = '', url4 = '') {
+
+                    // REQUIRES CORS.
+// async function fetchAnything1(method = 'GET', ...urlSegments) {
+//     // Constructs URL from params with '/' between. Accepts unlimited URL's
+//     const url = `${BASE_URL}/${urlSegments.map(encodeURIComponent).join('/')}`;
+//     const options = { method };
+//
+//     try {
+//         const response = await fetch(url, options);
+//         if (!response.ok) throw new Error(`Failed to ${method} from ${url}: ${response.statusText}`);
+//         console.log(`${method} request to "${url}" successful`);
+//         return response.json();
+//     } catch (error) {
+//         console.error(`Error in fetchAnything with ${method} to ${url}:`, error);
+//         throw error;
+//     }
+// }
+
+async function apiCall(urlPath, method = 'GET', options = {}) {
+    const { baseUrl = BASE_URL, timeout = 2000, headers = {}, ...otherOptions } = options;
+    const url = `${baseUrl}/${encodeURI(urlPath)}`;
+
+    // Set fetch options with default JSON content type and merge headers
+    const fetchOptions = {
+        method,
+        headers: { 'Content-Type': 'application/json', ...headers },
+        ...otherOptions,
+    };
+
+    // Add AbortController for timeout
+    const controller = new AbortController();
+    fetchOptions.signal = controller.signal;
+
+    // Helper function to handle timeout (2 seconds by default)
+    const timeoutFetch = (fetchPromise) =>
+        new Promise((resolve, reject) => {
+            const id = setTimeout(() => {
+                controller.abort();
+                reject(new Error(`Request timed out after ${timeout}ms`));
+            }, timeout);
+            fetchPromise.then(resolve, reject).finally(() => clearTimeout(id));
+        });
+
+    // Helper to handle response content based on type
+    const parseResponse = async (response) => {
+        const contentType = response.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) return response.json();
+        if (contentType.includes('text')) return response.text();
+        if (contentType.includes('blob')) return response.blob();
+        if (contentType.includes('arrayBuffer')) return response.arrayBuffer();
+        return response.status; // Default for non-body responses (e.g., DELETE)
+    };
+
+    // Actual method
+    try {
+        const response = await timeoutFetch(fetch(url, fetchOptions));
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText} (${method} ${url})`);
+        }
+
+        return await parseResponse(response);
+    } catch (error) {
+        if (error.name === 'AbortError') {
+            console.error(`Request timed out for ${method} ${url}`);
+        } else {
+            console.error(`Error in apiCall with ${method} ${url}:`, error);
+        }
+        throw error;
+    }
+}
+
+
+
+async function fetchAnythingSIMPLE(...urlSegments) { // Better to just get 1 url?
+    const url = `${BASE_URL}/${urlSegments.map(encodeURIComponent).join('/')}`;
+
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) throw new Error(`Failed to fetch: ${response.statusText}`);
+
+        console.log('Fetched successfully from:', url);
+        return response.json();
+    } catch (error) {
+        console.error('Error in fetchAnything:', error);
+        throw error;
+    }
+}
+
+async function fetchAnythingBAD(url1, url2 = '', url3 = '', url4 = '') {
     try { // Builds url dynamically Could put infinite amounts of urls in params.
         const url = `${BASE_URL}/${url1}
         ${url2 ? `/${url2}` : ''}
@@ -146,7 +236,7 @@ async function deleteShowingById(showingId) {
 // Export all service functions
 
 export {
-    fetchAnything,
+    apiCall,
     fetchMovies, fetchMovieById, deleteMovieById,
     fetchTheaters, fetchTheaterById,
     fetchShowings, addShowing, deleteShowingById, fetchShowingByTheaterAndDate
