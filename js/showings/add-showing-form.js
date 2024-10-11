@@ -135,7 +135,7 @@ function populateTimeDropdown(fetchedShowings, selectedMovie) {
                 if (!disabledSlots.has(availableSlots[k].option.value)) { // Only disable if not already marked
                     const option = availableSlots[k].option;
                     option.disabled = true;
-                    option.textContent += ' - Unavailable (Insufficient consecutive time)';
+                    option.textContent += ' - Unavailable (Movie too long)';
                     disabledSlots.add(option.value); // Mark this option as disabled
                 }
             }
