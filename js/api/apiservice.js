@@ -1,5 +1,21 @@
-// apiService.js
 const BASE_URL = 'http://localhost:8080';
+
+async function fetchAnything(url1, url2 = '', url3 = '') {
+    try { // Could put infinite amounts of urls in params.
+        // Build URL dynamically based on provided segments
+        const url = `${BASE_URL}/${url1}${url2 ? `/${url2}` : ''}${url3 ? `/${url3}` : ''}`;
+        const response = await fetch(url);
+
+        if (!response.ok) throw new Error(`Failed to fetch: ${response.statusText}`);
+        console.log('Fetched successfully from:', url);
+        return response.json();
+    } catch (error) {
+        console.error('Error in fetchAnything:', error);
+        throw error;
+    }
+}
+
+////                Fetch Specifics                ////
 
 async function fetchMovies() {
     try {
@@ -67,6 +83,16 @@ async function fetchShowingByTheaterAndDate(theaterId, date) {
     }
 }
 
+async function fetchShowingsByMovieAndDate(movieId, date) {
+    try {
+        const response = await fetch(`${BASE_URL}/showings/movie=${movieId}/${date}`);
+        if (!response.ok) throw new Error(`Failed to fetch showing: ${response.statusText}`);
+        return response.json();
+    } catch (error) {
+        throw error;
+    }
+}
+
 async function deleteMovieById(movieId) {
     try {
         const response = await fetch(`${BASE_URL}/movie/${movieId}`, { method: 'DELETE' });
@@ -103,9 +129,6 @@ async function addShowing(showing) {
     }
 }
 
-
-
-// Additional centralized fetches (e.g., for showings, theaters)
 async function fetchShowings() {
     try {
         const response = await fetch(`${BASE_URL}/showings`);
@@ -117,6 +140,22 @@ async function fetchShowings() {
     }
 }
 
+async function deleteShowingById(showingId) {
+    try {
+        const response = await fetch(`${BASE_URL}/showing/${showingId}`, { method: 'DELETE' });
+        if (!response.ok) throw new Error(`Failed to delete showing: ${response.statusText}`);
+        return response.text(); // Optional, could return any specific server response
+    } catch (error) {
+        console.error('Error in deleteShowings:', error);
+        throw error;
+    }
+}
+
 // Export all service functions
-export { fetchMovies, fetchMovieById, fetchTheaters, fetchTheaterById,
-    fetchShowingByTheaterAndDate, deleteMovieById, addShowing, fetchShowings };
+
+export {
+    fetchAnything,
+    fetchMovies, fetchMovieById, deleteMovieById,
+    fetchTheaters, fetchTheaterById,
+    fetchShowings, addShowing, deleteShowingById, fetchShowingByTheaterAndDate, fetchShowingsByMovieAndDate
+};

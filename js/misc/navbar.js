@@ -7,17 +7,17 @@ class NavBar extends HTMLElement {
         this.innerHTML =  ` 
             <nav>
                 <ul id="navbar-left-column">
-                    <a href="../html/index.html">
-                        <img id="navbar-logo" src="../images/logo.png" alt="Logo">
+                    <a href="../../html/movies/index.html">
+                        <img id="navbar-logo" src="../../images/logo.png" alt="Logo">
                     </a>
                 </ul>
                 <ul id="navbar-right-column">
                     <ul class="anchor-container">
-                        <li><a href="../html/index.html">Home</a></li>
-                        <li><a href="../html/all-movies.html">All movies</a></li>
-                        <li><a href="../html/admin.html">Admin</a></li>
-                        <li><a href="../html/all-showings.html">Showings</a></li>
-                        <li><a href="../html/login.html">Login</a></li>
+                        <li><a href="../../html/movies/index.html">Home</a></li>
+                        <li><a href="../../html/movies/all-movies.html">All Movies</a></li>
+<!--                        <li><a href="../html/admin.html">Admin</a></li>-->
+                        <li><a href="../../html/showings/all-showings.html">All Showings</a></li>
+<!--                        <li><a href="../html/login.html">Login</a></li>-->
                     </ul>   
                 </ul>
             </nav>
