@@ -74,56 +74,76 @@ async function fetchShowingsOnDate(theaterId, selectedDate) {
 function populateTimeDropdown(fetchedShowings, selectedMovie) {
     const timeDropdown = document.getElementById('showingTime');
     const selectedDate = document.getElementById('showingDate').value;
-    const selectedMovieDuration = selectedMovie.durationInMinutes;
+    const selectedMovieDuration = selectedMovie.durationInMinutes + 30;
 
-    const firstShowingTime = new Date(selectedDate + 'T12:00');
-    const lastShowingTime = new Date(selectedDate + 'T21:00');
+    const firstShowingTime = new Date(`${selectedDate}T12:00`);
+    const lastShowingTime = new Date(`${selectedDate}T23:59`);
 
-    // Create a mapping of unavailable times to their respective movies
-    const occupiedSlots = fetchedShowings.map(showing => {
-        const showingStart = new Date(showing.startTime);
-        const showingEnd = new Date(showingStart.getTime() + (showing.movie.durationInMinutes + 30) * 60000); // End time with buffer
-        return { start: showingStart, end: showingEnd, title: showing.movie.title, id: showing.id };
-    });
+    // Map showing times to their start, end, title, and id
+    const occupiedSlots = fetchedShowings.map(showing => ({
+        start: new Date(showing.startTime),
+        end: new Date(new Date(showing.startTime).getTime() + (showing.movie.durationInMinutes + 30) * 60000), // Only based on showing's duration
+        title: showing.movie.title,
+        id: showing.id
+    }));
 
     // Clear the dropdown and add default option
     timeDropdown.innerHTML = '<option value="">-- Select a Time --</option>';
 
+    // Array to store available time slots
+    const availableSlots = [];
+
+    // Loop through available time slots in 30-minute intervals
     for (let currentTime = new Date(firstShowingTime); currentTime <= lastShowingTime; currentTime.setMinutes(currentTime.getMinutes() + 30)) {
-        const slotEnd = new Date(currentTime.getTime() + (selectedMovieDuration + 15) * 60000); // End time for selected movie
-
-        // Check if this slot is unavailable due to other showings
-        const isOverlapping = occupiedSlots.some(slot => {
-            return currentTime < slot.end && slotEnd > slot.start; // Check for overlap
-        });
-
-        // Find the next showing start time
-        const nextShowingStart = occupiedSlots.find(slot => slot.start > currentTime)?.start || null;
-
-        // Check if the selected movie duration exceeds the time available until the next showing
-        const isTooLong = nextShowingStart && slotEnd > nextShowingStart; // Only check if there is a next showing
-
-        const hours = currentTime.getHours().toString().padStart(2, '0'); // Format hours
-        const minutes = currentTime.getMinutes().toString().padStart(2, '0'); // Format minutes
-        const timeSlot = `${hours}:${minutes}`;
-
+        let optionText = `${currentTime.getHours().toString().padStart(2, '0')}:${currentTime.getMinutes().toString().padStart(2, '0')}`;
         const option = document.createElement('option');
-        option.value = timeSlot;
+        option.value = optionText;
 
-        if (isTooLong) {
-            option.textContent = `${timeSlot} - Unavailable (Conflict with next showing)`;
-            option.disabled = true; // Disable the option so it's not clickable
-        } else if (isOverlapping) {
-            // Find the movie title for the overlapping slot
-            const overlappingSlot = occupiedSlots.find(slot => currentTime < slot.end && slotEnd > slot.start);
-            option.textContent = `${timeSlot} - Unavailable (Showing id: ${overlappingSlot.id} - ${overlappingSlot.title})`;
-            option.disabled = true; // Disable the option so it's not clickable
+        // Check if this time slot overlaps with any existing showing
+        const overlappingSlot = occupiedSlots.find(slot => currentTime < slot.end && currentTime >= slot.start);
+
+        // If there's an overlap, mark the time slot as unavailable
+        if (overlappingSlot) {
+            optionText += ` - Unavailable (Showing id: ${overlappingSlot.id} - ${overlappingSlot.title})`;
+            option.disabled = true;
         } else {
-            option.textContent = `${timeSlot}`;
+            // Add available slots to the array
+            availableSlots.push({ time: new Date(currentTime), option });
         }
-
+        // Set the option text and append to the dropdown
+        option.textContent = optionText;
         timeDropdown.appendChild(option);
     }
+
+    // Loop to check for consecutive available slots
+    const disabledSlots = new Set(); // Set to keep track of slots to disable
+
+    for (let i = 0; i < availableSlots.length; i++) {
+        let consecutiveSlots = 1;
+        for (let j = i + 1; j < availableSlots.length; j++) {
+            if (availableSlots[j].time - availableSlots[j - 1].time === 30 * 60000) {
+                consecutiveSlots++;
+            } else {
+                break; // Exit the loop if the sequence is broken
+            }
+        }
+
+        // Calculate the available duration in minutes
+        const availableDuration = consecutiveSlots * 30;
+        if (availableDuration < selectedMovieDuration) {
+            for (let k = i; k < i + consecutiveSlots && k < availableSlots.length; k++) {
+                if (!disabledSlots.has(availableSlots[k].option.value)) { // Only disable if not already marked
+                    const option = availableSlots[k].option;
+                    option.disabled = true;
+                    option.textContent += ' - Unavailable (Movie too long)';
+                    disabledSlots.add(option.value); // Mark this option as disabled
+                }
+            }
+        }
+    }
+
+
+
 
 }
 

@@ -1,5 +1,4 @@
-import {fetchShowings} from "../api/apiservice";
-import {calculateMinutesToHours, get3dValue, formatDateToShortMonth} from './api/movieinfoconverters.js';
+import {calculateMinutesToHours, get3dValue, formatDateToShortMonth, getHourMinuteFromDateTime} from '../api/movieinfoconverters.js';
 
 console.log("index.js loaded");
 
@@ -106,7 +105,7 @@ async function findShowingsByDate(date) {
 
         // Create the card structure with movie details
         movieItem.innerHTML = `
-            <a id="anchor-img" href="../html/movie-details.html?id=${movie.id}">
+            <a id="anchor-img" href="../movies/movie-details.html?id=${movie.id}">
                 <img id="movie-item-img" src="${movie.imageUrl}" class="card__background"> 
             </a>
             <div class="card__content | flow">
@@ -118,7 +117,7 @@ async function findShowingsByDate(date) {
                     </p>
                     <p class="card__description" id="bottom-description">${formatDateToShortMonth(movie.releaseDate)}</p>
                 </div>
-                <a href="../html/movie-details.html?id=${movie.id}" class="card__button">Read more</a>
+                <a href="../movies/movie-details.html?id=${movie.id}" class="card__button">Read more</a>
             </div>
         `;
 
@@ -127,15 +126,15 @@ async function findShowingsByDate(date) {
 
         // Create and append the showing times box
         const showingItem = document.createElement('div');
-        showingItem.classList.add('showtime-box'); // Apply the new box style
+        showingItem.classList.add('showtime-box');
 
         // Loop through showtimes and add them into the showingItem
         showTimes.forEach(showtime => {
-            const showtimeDiv = document.createElement('div');
+            const showtimeDiv = document.createElement('button');
             showtimeDiv.classList.add('showtime');
             showtimeDiv.innerHTML = `
                 <span>${showtime.theater}</span>
-                <span title="Start Time">${showtime.startTime}</span>
+                <span class="start-time">${getHourMinuteFromDateTime(showtime.startTime)}</span>
             `;
             showingItem.appendChild(showtimeDiv);
         });
@@ -146,11 +145,16 @@ async function findShowingsByDate(date) {
         // Finally, append the entire wrapper to the card grid
         cardGrid.appendChild(movieWrapper);
 
-        if (cardGrid.childElementCount > 3) {
-            movieGoLeft.style.display = "block"
-            movieGoRight.style.display = "block"
-        }
     });
+    console.log(cardGrid.childElementCount)
+    if (cardGrid.childElementCount > 4) {
+        movieGoLeft.style.display = "block"
+        movieGoRight.style.display = "block"
+    } else {
+        movieGoLeft.style.display = "none"
+        movieGoRight.style.display = "none"
+    }
+
     movieGoLeft.addEventListener('click', () => {
         // Scroll the date container to the right by a specific amount (e.g., 100px)
         cardGrid.scrollBy({ left: -400, behavior: 'smooth' });
@@ -176,7 +180,7 @@ dateButtonsContainer.addEventListener('scroll', () => {
             lastDate = new Date(lastDateText + " " + today.getFullYear());
         }
         if (lastDate.getFullYear() > today.getFullYear()) {
-            // Handle the case where the year is greater than the current year
+        // Handle the case where the year is greater than the current year
         }
 
         // Ensure continuous date increments
@@ -190,7 +194,7 @@ dateButtonsContainer.addEventListener('scroll', () => {
 
 async function updateUrlWithShowings(date) {
     const newDate = date.toISOString().split('T')[0]; // This could be dynamic if needed
-    const newUrl = `../html/index.html?date=${newDate}`;
+    const newUrl = `../movies/index.html?date=${newDate}`;
     window.history.pushState({}, '', newUrl);
 
     const params = new URLSearchParams(window.location.search);
@@ -202,4 +206,7 @@ window.onload = async function() {
     const button = document.querySelector('button');
     button.classList.add('active');
     await updateUrlWithShowings(today);
+    document.getElementById('loader').style.display = 'none';
 };
+
+export {createDateButtons}

@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Movie Details</title>
-
     <nav-bar></nav-bar>
-
+    <link rel="stylesheet" href="../../css/specifics/moviecarousel.css">
+    <link rel="stylesheet" href="../../css/reusables/loader.css">
+    <link rel="stylesheet" href="../../css/reusables/basic.css">
+    <link rel="stylesheet" href="../../css/reusables/navbar.css">
+    <link rel="stylesheet" href="../../css/specifics/movie-details.css">
+    <link rel="stylesheet" href="../../css/specifics/date-selector.css">
 </head>
 <body>
+<div class="loader" id="loader" style="display: block"></div>
 <div class="movie-container" style="display: none">
     <div class="left-column">
         <img id="movie-img" crossorigin="anonymous"/>
@@ -20,14 +25,21 @@
     </div>
 </div>
 
+<div class="date-margin" style="display: none">
+    <div class="date-selector-title">
+        <h1 id="book-tickets">Book tickets</h1>
+    </div>
+
+    <div class="date-selector">
+        <div id="movie-details-left-arrow" class="go-arrow date-selector-arrow go-left date-selector-go-left">‹</div>
+        <div id="movie-details-right-arrow" class="go-arrow date-selector-arrow go-right date-selector-go-right">›</div>
+        <div id="date-container" class="date-container"></div>
+    </div>
+</div>
+
 </body>
 
-<link rel="stylesheet" href="../../css/reusables/basic.css">
-<link rel="stylesheet" href="../../css/reusables/navbar.css">
-<link rel="stylesheet" href="../../css/specifics/movie-details.css">
-
 <script src="../../js/misc/navbar.js"></script>
-<script src="../../js/movies/moviedetails.js"></script>
+<script type="module" src="../../js/movies/moviedetails.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
-
 </html>

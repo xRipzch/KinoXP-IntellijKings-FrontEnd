@@ -1,4 +1,4 @@
-import {deleteMovieById, apiCall} from '../api/apiservice.js';
+import {apiCall} from '../api/apiservice.js';
 
 console.log('allmovies.js loaded');
 

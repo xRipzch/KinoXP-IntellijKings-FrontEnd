@@ -65,16 +65,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function saveMovieDetails() {
         const movieDetails = {
+            id: receivedValue,
             title: document.getElementById('title').value,
             description: document.getElementById('description').value,
             durationInMinutes: document.getElementById('duration').value,
-            releaseDate: document.getElementById('releaseDate').value, // Ensure correct key
+            releaseDate: document.getElementById('releaseDate').value,
             is3d: document.getElementById('is3D').checked,
             imageUrl: document.getElementById('imageUrl').value
         };
 
-       const movieId = receivedValue
-        console.log("movie id being sent" ,movieId)// Retrieve the movie ID from the search input
+        const movieId = receivedValue;
+        console.log("movie id being sent", movieId);
 
         fetch(`http://localhost:8080/api/movies/${movieId}`, {
             method: 'PUT',
@@ -90,11 +91,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (data.success) {
                         alert('Movie details updated successfully');
                     } else {
-                        alert('Error updating movie details: ' + data.message + data);
+                        alert('Error updating movie details: ' + data.message);
                     }
                 });
             })
-            .catch(error => console.error('Error saving movie details:', error));
+            .catch(error => {
+                console.error('Error updating movie details:', error.message || error);
+                console.error('Stack trace:', error.stack);
+            });
     }
 
 

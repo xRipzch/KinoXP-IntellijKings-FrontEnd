@@ -34,8 +34,8 @@ h2{
 /* GLOBAL STYLES */
 .card-container {
     display: flex;
-    flex-direction: row; /* Change flex direction to column */
-    align-items: flex-start;    /* Center both card and showtime box */
+    flex-direction: row;
+    align-items: flex-start;
     margin: 1rem 10vw;
 
     gap: 1.5vw;
@@ -90,7 +90,6 @@ p {
     justify-content: space-between;
     align-self: flex-end;
     padding: 5% 20px 1.875rem;
-    height: 55%;
     width: 100%;
     background: linear-gradient(180deg, hsla(0, 0%, 0%, 0) 0%, hsl(0deg 0% 0% / 58%) 10%, hsl(0, 0%, 0%) 100%);
 }
@@ -130,21 +129,50 @@ p {
 }
 
 .showtime-box {
-    background-color: var(--white);
-    color: var(--black);
+    margin-top: 1vw;
+    border: none;
+    background-color: #017fb500;
+    color: var(--color-light-gray);
+    width: 100%;
+}
+
+.showtime-box button {
+    display: flex;
+    justify-content: space-between;
     padding: 10px;
+    margin-top: 0.5vw;
+    width: 100%;
+    color: var(--color-light-gray);
+    background-color: #017fb500;
+    border-color: var(--color-medium-blue);
+    border-style: solid;
+    box-shadow: 0 0 5px rgb(0 0 0 / 40%);
     border-radius: 5px;
-    width: 16vw; /* Match the width of the movie card */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-top: 1rem; /* Add margin to separate the showtime box from the card */
-    text-align: center; /* Center the showtimes text */
+    align-items: center;
+    font-size: 1.1vw;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.showtime-box button:hover {
+    background-color: #9e0d5961;
+}
+
+#showtime-box button.active {
+    background-color: #9e0d5961;
+    border-color: var(--color-magenta);
+    border-width: 3px;
+    box-shadow: 0 0 5px 3px rgba(158, 13, 89, 0.38); /* Custom focus shadow */
+}
+
+.start-time {
+    align-items: end;
 }
 
 .showtime {
-    display: block;
-    justify-content: end;
+    display: flex;
+    justify-content: space-between;
     padding: 5px 0;
-    font-size: 0.9rem; /* Adjust font size to fit */
 }
 
 .card__button {
@@ -161,7 +189,7 @@ p {
 }
 
 .card__button:focus {
-    outline: 2px solid black;
+    outline: 2px solid #cb0505;
     outline-offset: -5px;
 }
 
