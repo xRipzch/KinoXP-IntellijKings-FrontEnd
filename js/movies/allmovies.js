@@ -1,10 +1,10 @@
-import {fetchMovies, deleteMovieById} from './api/apiservice.js';
+import {deleteMovieById, fetchAnything} from '../api/apiservice.js';
+
 console.log('allmovies.js loaded');
 
-fetchMovies()
+fetchAnything('movies')
     .then(movies => {
-        console.log(movies); // Log the fetched movies data
-        displayMoviesAsGrid(movies);
+    displayMoviesAsGrid(movies);
     })
     .catch(error => {
         console.error('Error fetching movies:', error);
@@ -15,7 +15,7 @@ function displayMoviesAsGrid(movies) {
 
     const addNewMovieItem = document.createElement('a');
     addNewMovieItem.classList.add('grid-item');
-    addNewMovieItem.href = '../html/add-movie.html';
+    addNewMovieItem.href = '../../html/movies/add-movie.html';
 
     addNewMovieItem.innerHTML = `
         <div class="grid-image add-new-container">
@@ -28,7 +28,7 @@ function displayMoviesAsGrid(movies) {
     movies.forEach(movie => {
         const movieItem = document.createElement('a');
 
-        movieItem.href = `../html/movie-details.html?id=${movie.id}`; // Link to movie details
+        movieItem.href = `../../html/movies/movie-details.html?id=${movie.id}`; // Link to movie details
 
         const releaseYear = new Date(movie.releaseDate).getFullYear();
         const durationInMinutes = movie.durationInMinutes;
@@ -111,7 +111,7 @@ function displayMoviesAsGrid(movies) {
         // Redirect to edit //
 
         function redirectToEdit(movieId) {
-            window.location.href = "../html/edit-movie.html?id=" + movieId;
+            window.location.href = "../../html/movies/edit-movie.html?id=" + movieId;
 
         }
 

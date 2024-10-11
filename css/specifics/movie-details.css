@@ -1,0 +1,121 @@
+body {
+    margin: 0;
+    background-color: #171617;
+    color: #F1F2F4;
+    font-family: "Inter-Medium", sans-serif !important;
+}
+
+.movie-container {
+    display: flex;
+    justify-content: center;
+    padding: 3vw 0 ;
+}
+
+#movie-img {
+    width: 19vw;
+    height: 26.5vw;
+    border-radius: 0.4rem;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
+    object-fit: cover;
+}
+
+#movie-img:hover {
+    border: none;
+    cursor: default;
+}
+
+.left-column {
+    margin-right: 1vw;
+}
+
+.right-column {
+    margin-left: 1vw;
+    display: flex;
+    min-width: 45vw;
+    max-width: 45vw;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: 3rem;
+    font-family: "Guardian-Bold", sans-serif !important;
+    margin: 0.5vw 0 0 0 !important;
+}
+
+h2 {
+    margin-top: 1vw;
+    margin-bottom: 0;
+    font-size: larger;
+    font-family: "Inter-Medium", sans-serif !important;
+}
+
+#is-3d {
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-right-color: #ffffff36;
+    padding-right: 10px;
+}
+
+#movie-duration-in-minutes {
+    margin-left: 10px;
+}
+
+p {
+    font-size: medium;
+    line-height: 1.5;
+    margin-block-start: 2em;
+}
+
+.date-button {
+    min-width: 12vw !important;
+    transform: revert !important;
+    cursor: default !important;
+    border-style: none !important;
+    box-shadow: none !important;
+    font-size: 1vw !important;
+}
+
+.date-button:hover {
+    background-color: rgba(255, 255, 255, 0) !important;
+}
+
+.showing-button {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    transform: revert !important;
+    min-height: 3vw !important;
+    font-size: 0.8vw !important;
+}
+
+.showing-wrapper {
+    border-left: 1px solid rgba(181,204,245,.1);
+    padding: 0 20px;
+}
+
+#date-container {
+    gap: revert !important;
+    font-size: 1vw !important;
+    margin: 0 !important;
+}
+
+.date-selector-arrow {
+    height: 100% !important;
+}
+
+.date-margin {
+    margin: 0 8vw 0 8vw;
+}
+
+#book-tickets {
+    font-size: 2rem;
+    margin-top: 2vw !important;
+}
+
+#movie-details-left-arrow {
+    margin-left: 0;
+}
+
+#movie-details-right-arrow {
+    margin-right: 0;
+}

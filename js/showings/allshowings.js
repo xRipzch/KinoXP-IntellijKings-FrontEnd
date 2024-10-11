@@ -2,15 +2,15 @@ console.log('allshowings.js loaded');
 
 fetch('http://localhost:8080/showings')
     .then(response => {
-    if (!response.ok) {
-        throw new Error('Network response was not ok: ' + response.statusText);
-    }
-    return response.json();
-})
+        if (!response.ok) {
+            throw new Error('Network response was not ok: ' + response.statusText);
+        }
+        return response.json();
+    })
     .then(data => {
-    console.log(data);
-    displayShowingsAsGrid(data);
-})
+        console.log(data);
+        displayShowingsAsGrid(data);
+    })
     .catch(error => {
         console.error('Error fetching showings:', error)
     })
@@ -29,7 +29,7 @@ function displayShowingsAsGrid(showings) {
 
     showingGrid.appendChild(addNewShowingItem);
 
-    addNewShowingItem.href = '../html/add-showing.html';
+    addNewShowingItem.href = '../../html/showings/add-showing.html';
 
     showings.forEach(showing => {
         const showingItem = document.createElement('div'); // This not the container??
@@ -62,32 +62,25 @@ function displayShowingsAsGrid(showings) {
         })}`;
 
         const theaterName = theater.name;
-        
+
         showingItem.innerHTML = `
-            <div class="grid-item">
-                <!-- Left side - image + 2D/3D label -->
-                <div class="grid-image">
-                    <span class="format-label-left">${movie.is3d ? '3D' : '2D'}</span>
-                    <span class="format-label-right" title="Duration">${movieHours}<sup>h</sup> ${movieMinutes}<sup>m</sup></span>
-                    <span class="format-label-bottom" title="Theater">${theaterName}</span>
-                    
-                    <!-- Delete button with trash icon -->
-                    <button class="format-label-button button-delete" title="Delete Movie">
-                    <i class="fas fa-trash"></i>
-                    </button>
-
-              <img src="${movie.imageUrl}" alt="${movie.title} Poster" class="image-container">
-                </div>
-
-                <!-- Title -->
-                <div class="grid-right">
-                    <h2 class="date-text">${formattedShowingStartTime}</h2><br>
-<!--                    <h3>${showingEndTime}</h3>-->
-                    
-                </div>
-
-                </div>
-            </div>
+      <div class="grid-item showing-item">
+    <div class="grid-image">
+        <span class="format-label-left">${movie.is3d ? '3D' : '2D'}</span>
+        <span class="format-label-right" title="Duration">${movieHours}<sup>h</sup> ${movieMinutes}<sup>m</sup></span>
+        <span class="format-label-bottom" title="Theater">${theaterName}</span>
+        <button class="format-label-button button-delete" title="Delete Movie">
+            <i class="fas fa-trash"></i>
+        </button>
+        <img src="${movie.imageUrl}" alt="${movie.title} Poster" class="image-container">
+    </div>
+    <div class="grid-bottom">
+        <h2 class="movie-title" title="${movie.title}">${movie.title}</h2>
+    </div>
+    <div class="grid-right showing-info">
+        <h2 class="date-text">${formattedShowingStartTime}</h2>
+    </div>
+</div>
         `
         showingGrid.appendChild(showingItem);
 
@@ -96,6 +89,10 @@ function displayShowingsAsGrid(showings) {
 
         // Add event listener for mouseout to hide the delete button
         showingItem.addEventListener('mouseout', () => hideDeleteButton(showingItem));
+
+        // Event Listernes for date-text color
+        showingItem.addEventListener('mouseover', () => changeDateTextOnHover(showingItem));
+        showingItem.addEventListener('mouseout', () => revertDateTextOnHover(showingItem));
 
         const delbutton = showingItem.querySelector('.button-delete');
 
@@ -135,7 +132,15 @@ function displayShowingsAsGrid(showings) {
         }
 
         // HOVER FUNCTIONS //
+        function changeDateTextOnHover(showingItem) {
+            const dateText = showingItem.querySelector('.date-text');
+            dateText.style.color = '#9E0D59';
+        }
 
+        function revertDateTextOnHover(showingItem) {
+            const dateText = showingItem.querySelector('.date-text');
+            dateText.style.color = '#02BDFBFF';
+        }
         function showDeleteButton(movieItem) {
             const deleteButton = movieItem.querySelector('.button-delete');
             deleteButton.style.display = 'flex';

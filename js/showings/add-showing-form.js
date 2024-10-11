@@ -5,7 +5,7 @@ import {
     fetchTheaters,
     addShowing,
     fetchTheaterById
-} from './api/apiservice.js';
+} from '../api/apiservice.js';
 
 const movieDropdown = document.getElementById('movieDropdown');
 const theaterDropdown = document.getElementById('theaterDropdown');
