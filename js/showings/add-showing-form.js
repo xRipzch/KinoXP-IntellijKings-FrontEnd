@@ -162,8 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     showingDate.addEventListener('change', async () => {
         const selectedTheaterId = theaterDropdown.value;
-        const fetchedShowings = await fetchShowingsOnDate(selectedTheaterId, showingDate.value);
-        const selectedMovie= await fetchMovieById(movieDropdown.value);
+        const fetchedShowings =await apiCallWithFullUrl(`showings/${selectedTheaterId}/${showingDate.value}`)
+        const selectedMovie = await apiCallWithFullUrl(`movie/${movieDropdown.value}`)
         showingTime.disabled = false;
         populateTimeDropdown(fetchedShowings, selectedMovie);
     });
@@ -188,12 +188,13 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             console.log("Showing data being sent:", showingData);
 
-            await addShowing(showingData);
+            await apiCallWithFullUrl(`showing`, 'POST', {
+                body: JSON.stringify(showingData)
+            })
 
             alert('Showing added successfully!');
 
             addShowingForm.reset();
-
         } catch (error) {
             console.error('Error processing form data', error);
         }
