@@ -1,4 +1,4 @@
-import {apiCall} from "../api/apiservice";
+import {apiCallWithFullUrl} from "../api/apiservice";
 
 const inpField = document.getElementById("input-showing-id");
 const delButton = document.getElementById("delete-showing");
@@ -25,5 +25,5 @@ const delButton = document.getElementById("delete-showing");
      event.stopPropagation();
             // deleteShowing(inpField.value)
      // Simplified method. No await/TryCat - problem??
-     apiCall('showing/${inpField.value}', 'DELETE');
+     apiCallWithFullUrl('showing/${inpField.value}', 'DELETE');
  })

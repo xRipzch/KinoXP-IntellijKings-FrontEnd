@@ -1,8 +1,8 @@
-import {apiCall} from '../api/apiservice.js';
+import {apiCallWithFullUrl} from '../api/apiservice.js';
 
 console.log('allmovies.js loaded');
 
-apiCall('movies',)
+apiCallWithFullUrl('movies',)
     .then(movies => {
     displayMoviesAsGrid(movies);
     })

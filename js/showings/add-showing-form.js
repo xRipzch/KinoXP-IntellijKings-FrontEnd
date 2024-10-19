@@ -1,10 +1,5 @@
 import {
-    fetchMovies,
-    fetchMovieById,
-    fetchShowingByTheaterAndDate,
-    fetchTheaters,
-    addShowing,
-    fetchTheaterById
+   apiCallWithFullUrl
 } from '../api/apiservice.js';
 
 const movieDropdown = document.getElementById('movieDropdown');
@@ -18,7 +13,7 @@ async function populateMovieDropdown() {
     let movies = [];
 
     try {
-        movies = await fetchMovies();
+        movies = await apiCallWithFullUrl('movies');
     } catch (error) {
         console.error('Error fetching movies:', error);
         return;
@@ -41,7 +36,7 @@ async function populateTheaterDropdown() {
     let theaters = [];
 
     try {
-         theaters = await fetchTheaters()
+         theaters = await apiCallWithFullUrl('theaters')
     } catch (error) {
         console.error('Error fetching theaters:', error);
         return;
@@ -57,17 +52,6 @@ async function populateTheaterDropdown() {
             theaterDropdown.appendChild(option);
         });
 }
-
-/////////////////////////////FETCH SHOWINGS ON DATE/////////////////////////////
-async function fetchShowingsOnDate(theaterId, selectedDate) {
-    try {
-        return await fetchShowingByTheaterAndDate(theaterId, selectedDate);
-        } catch (error) {
-        console.error('Error fetching showings on specified date:', error);
-        return [];
-    }
-}
-
 
 
 /////////////////////////////POPULATE TIME-DROPDOWN/////////////////////////////
@@ -197,8 +181,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const startDateTime = `${showingDate}T${showingTime}`;
 
             const showingData = {
-                movie: await fetchMovieById(movieDropdown.value),
-                theater: await fetchTheaterById(theaterDropdown.value),
+                movie: await apiCallWithFullUrl(`movie/${movieDropdown.value}`),
+                theater: await apiCallWithFullUrl(`theater/${theaterDropdown.value}`),
                 startTime: startDateTime
 
             };
