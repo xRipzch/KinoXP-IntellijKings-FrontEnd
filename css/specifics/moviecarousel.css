@@ -156,6 +156,7 @@ p {
 
 .showtime-box a:hover {
     background-color: #9e0d5961;
+    color: var(--color-light-gray);
 }
 
 #showtime-box a.active {

@@ -138,7 +138,8 @@ async function createShowingDateButtons(startDate, days) {
         showingItem.classList.add('showtime-box');
 
         showings.forEach(showing => {
-            const showtimeDiv = document.createElement('button');
+            const showtimeDiv = document.createElement('a');
+            showtimeDiv.href = `../seats/seat-selection.html?showing=${showing.id}&theater=${showing.theater.id}`;
             showtimeDiv.classList.add('showing-button')
             showtimeDiv.innerHTML = `
             <span>${showing.theater.name}</span>

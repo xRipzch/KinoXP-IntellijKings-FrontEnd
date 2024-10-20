@@ -13,7 +13,6 @@ async function populateSeatHtml() {
 
     try {
         seats = await fetchSeatsByTheaterId(1);
-        console.log('Seats fetched:', seats);
     } catch (error) {
         console.error('Error fetching seats:', error);
         return;
@@ -22,22 +21,26 @@ async function populateSeatHtml() {
     const seatContainer = document.getElementById('seat-container'); // Assuming you have this container in your HTML
 
     seats.forEach(seat => {
-        //Check if the seat is reserved
-        const isReserved = allReservedSeats.some(reservedSeat => reservedSeat.id === seat.id);
-
         // Create a div for each seat
         let seatBox = document.createElement('div');
         seatBox.innerHTML = `
         <input type="checkbox" name="seat" class="seat-checkbox" id="seat-${seat.id}">
         <label for="seat-${seat.id}" class="visually-hidden">Seat ${seat.id}</label>
 `;
+
+        /* allReservedSeats er tom FORDI den bliver kørt før vi nogensinde fylder listen*/
+        //Check if the seat is reserved
+        const isReserved = allReservedSeats.some(reservedSeat => reservedSeat.seat.id === seat.id);
+
+        console.log("allreserved: " + allReservedSeats[0])
+
         if (isReserved) {
-            seatBox.classList.add('reserved-seat'); // Add reserved seat class for styling
+            seatBox.classList.add('reserved'); // Add reserved seat class for styling
+            console.log("hjehjehej")
         }
 
         seatBox.classList.add('seat-box');
         seatContainer.appendChild(seatBox);
-        console.log(`Seat ${seat.id} checkbox added`);
     });
 
     // After seats are populated, attach event listeners
@@ -107,7 +110,6 @@ async function updateReservedSeats() {
 
             // Push reserved seats into the allReservedSeats array
             allReservedSeats.push(...reservedSeats);
-
         } catch (error) {
             console.error(`Error fetching reserved seats for reservation ${reservation.id}:`, error);
         }
@@ -123,6 +125,7 @@ async function updateReservedSeats() {
     }
 
     allReservedSeats.push(...tempReservedSeats);
+    console.log("allreserved: " + allReservedSeats.length)
 
     //compare reserved and temp seats
 
@@ -136,9 +139,8 @@ console.log("seatselc js load");
 ////////////////////////////////////
 
 document.addEventListener('DOMContentLoaded', () => {
-    populateSeatHtml().then(() => {
-        updateReservedSeats().then();
-        console.log('Seat HTML populated and event listeners attached');
+    updateReservedSeats().then(() => {
+        populateSeatHtml().then()
     }).catch(error => {
         console.error('Error populating seats', error);
     });

@@ -11,42 +11,44 @@
 
 </head>
 <body>
-<h1>Edit Movie</h1>
+<div class="middle-container">
 
-<!-- Form to search for a movie -->
-<form id="search-movie-form">
-    <label for="search">Movie ID:</label>
-    <input type="text" id="search" name="search" required>
-    <button type="submit">Search</button>
-</form>
+    <h1>Edit Movie</h1>
 
-<!-- Form to edit movie details -->
-<form id="edit-movie-form">
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title" required>
+    <!-- Form to search for a movie -->
+    <form id="search-movie-form">
+        <label for="search">Movie ID:</label>
+        <input type="text" id="search" name="search" required>
+        <button type="submit">Search</button>
+    </form>
 
-    <label for="description">Description:</label>
-    <input type="text" id="description" name="description" required>
+    <!-- Form to edit movie details -->
+    <form id="edit-movie-form">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
 
-    <label for="duration">Duration: (In Minutes)</label>
-    <input type="text" id="duration" name="duration" required>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" required>
 
-    <label for="releaseDate">Release Date:</label>
-    <input type="date" id="releaseDate" name="releaseDate" required>
+        <label for="duration">Duration: (In Minutes)</label>
+        <input type="text" id="duration" name="duration" required>
 
-    <label for="is3D">Is 3D:</label>
-    <input type="checkbox" id="is3D" name="is3D">
+        <label for="releaseDate">Release Date:</label>
+        <input type="date" id="releaseDate" name="releaseDate" required>
 
-    <label for="imageUrl">Image URL:</label>
-    <input type="text" id="imageUrl" name="imageUrl" required>
-    <img id="imagePreview" src="" alt="Image Preview">
+        <label for="is3D">Is 3D:</label>
+        <input type="checkbox" id="is3D" name="is3D">
 
-    <button type="submit">Save Changes</button>
-</form>
+        <label for="imageUrl">Image URL:</label>
+        <input type="text" id="imageUrl" name="imageUrl" required>
+        <img id="imagePreview" src="" alt="Image Preview">
+
+        <button type="submit">Save Changes</button>
+    </form>
 
 
-<script src="../../js/movies/editmovie.js"></script>
-<script src="../../js/misc/navbar.js"></script>
-
+    <script src="../../js/movies/editmovie.js"></script>
+    <script src="../../js/misc/navbar.js"></script>
+</div>
 </body>
 </html>
