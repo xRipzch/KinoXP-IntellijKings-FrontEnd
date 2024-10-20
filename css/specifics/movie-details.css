@@ -86,7 +86,6 @@ p {
     justify-content: space-between !important;
     transform: revert !important;
     min-height: 3vw !important;
-    font-size: 0.8vw !important;
 }
 
 .showing-wrapper {

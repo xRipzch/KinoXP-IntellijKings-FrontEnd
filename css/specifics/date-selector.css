@@ -22,8 +22,8 @@
 
 /* Button styling */
 .date-container button {
-    min-width: 4vw;
-    min-height: 4vw;
+    min-width: 5vw;
+    min-height: 5vw;
     background-color: rgba(255, 255, 255, 0);
 
     color: white; /* White text */
